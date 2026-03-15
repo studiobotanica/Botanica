@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BotanicaAI — Your Plant Expert</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --moss:    #1a3320;
+  --forest:  #245c35;
+  --fern:    #3d7a50;
+  --sage:    #6aaa7d;
+  --leaf:    #a3c9a8;
+  --mist:    #d0e8d4;
+  --dew:     #edf6ee;
+  --cream:   #f8f4ed;
+  --bark:    #6b4f2e;
+  --gold:    #c9a84c;
+  --gold2:   #f0d080;
+  --ink:     #111a13;
+  --fog:     #9ab8a0;
+  --white:   #ffffff;
+  --premium: #c9a84c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dew);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:3px;}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(248,244,237,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--mist);
+  transition:all .3s;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+.nav-logo-icon{
+  width:38px;height:38px;background:var(--forest);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.nav-logo-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;
+  color:var(--moss);letter-spacing:-0.01em;
+}
+.nav-logo-name span{color:var(--fern);}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
+.nav-links a{
+  text-decoration:none;color:var(--forest);font-size:.8rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;transition:color .2s;cursor:pointer;
+}
+.nav-links a:hover{color:var(--sage);}
+.nav-auth{display:flex;gap:10px;align-items:center;}
+.btn-login{
+  padding:8px 20px;border-radius:30px;border:1.5px solid var(--fern);
+  background:transparent;color:var(--forest);font-family:'DM Sans',sans-serif;
+  font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;
+}
+.btn-login:hover{background:var(--dew);}
+.btn-signup{
+  padding:8px 22px;border-radius:30px;border:none;
+  background:var(--forest);color:var(--cream);font-family:'DM Sans',sans-serif;
+  font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;
+}
+.btn-signup:hover{background:var(--moss);}
+
+/* user avatar in nav */
+.nav-user{display:flex;align-items:center;gap:10px;}
+.nav-avatar{
+  width:34px;height:34px;border-radius:50%;background:var(--fern);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  font-size:.85rem;font-weight:600;cursor:pointer;border:2px solid var(--sage);
+}
+.nav-username{font-size:.85rem;font-weight:500;color:var(--forest);}
+.premium-badge{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--moss);font-size:.65rem;font-weight:700;
+  padding:2px 8px;border-radius:10px;letter-spacing:.04em;
+}
+.btn-logout{
+  padding:6px 14px;border-radius:20px;border:1px solid var(--fog);
+  background:transparent;color:var(--fog);font-family:'DM Sans',sans-serif;
+  font-size:.75rem;cursor:pointer;transition:all .2s;
+}
+.btn-logout:hover{border-color:var(--bark);color:var(--bark);}
+
+/* ── HERO ── */
+#home{
+  min-height:100vh;padding-top:80px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(61,122,80,.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(106,170,125,.1) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(208,232,212,.25) 0%, transparent 70%);
+}
+.hero-leaves{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.leaf-deco{
+  position:absolute;font-size:4rem;opacity:.06;
+  animation:floatLeaf 8s ease-in-out infinite;
+}
+.leaf-deco:nth-child(1){top:10%;left:5%;animation-delay:0s;font-size:5rem;}
+.leaf-deco:nth-child(2){top:20%;right:8%;animation-delay:2s;font-size:3rem;}
+.leaf-deco:nth-child(3){bottom:20%;left:10%;animation-delay:4s;font-size:6rem;}
+.leaf-deco:nth-child(4){bottom:30%;right:6%;animation-delay:1s;font-size:4rem;}
+.leaf-deco:nth-child(5){top:50%;left:2%;animation-delay:3s;font-size:3.5rem;}
+@keyframes floatLeaf{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-18px) rotate(5deg);}
+}
+.hero-content{position:relative;text-align:center;max-width:800px;padding:0 24px;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--dew);border:1px solid var(--mist);
+  padding:6px 16px;border-radius:30px;font-size:.78rem;
+  font-weight:500;color:var(--fern);letter-spacing:.04em;
+  margin-bottom:28px;
+  animation:fadeUp .8s ease both;
+}
+.hero-tag .dot{width:6px;height:6px;background:var(--sage);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,7vw,5.5rem);
+  font-weight:700;line-height:1.05;
+  color:var(--moss);letter-spacing:-.02em;
+  animation:fadeUp .8s .1s ease both;
+}
+h1 em{color:var(--fern);font-style:italic;}
+.hero-sub{
+  margin-top:20px;font-size:1.05rem;color:var(--fern);
+  font-weight:300;line-height:1.7;max-width:560px;margin-inline:auto;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-btns{
+  margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .8s .3s ease both;
+}
+.btn-primary{
+  padding:14px 32px;border-radius:40px;border:none;
+  background:var(--forest);color:var(--cream);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+  cursor:pointer;transition:all .3s;
+  box-shadow:0 4px 20px rgba(36,92,53,.25);
+}
+.btn-primary:hover{background:var(--moss);transform:translateY(-2px);box-shadow:0 8px 28px rgba(36,92,53,.3);}
+.btn-secondary{
+  padding:14px 32px;border-radius:40px;border:1.5px solid var(--fern);
+  background:transparent;color:var(--forest);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;
+  cursor:pointer;transition:all .3s;
+}
+.btn-secondary:hover{background:var(--dew);}
+.hero-stats{
+  margin-top:56px;display:flex;gap:48px;justify-content:center;
+  animation:fadeUp .8s .4s ease both;
+}
+.stat{text-align:center;}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;
+  font-weight:700;color:var(--moss);
+}
+.stat-label{font-size:.78rem;color:var(--fog);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── SECTION SHARED ── */
+section{padding:100px 48px;}
+.section-tag{
+  display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--fern);background:var(--dew);
+  padding:5px 14px;border-radius:20px;border:1px solid var(--mist);
+  margin-bottom:16px;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;color:var(--moss);letter-spacing:-.02em;line-height:1.15;
+}
+.section-sub{
+  margin-top:12px;font-size:.95rem;color:var(--fog);line-height:1.7;max-width:520px;
+}
+
+/* ── HOW IT WORKS ── */
+#how-it-works{background:var(--moss);}
+#how-it-works .section-tag{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:var(--leaf);}
+#how-it-works .section-title{color:var(--cream);}
+#how-it-works .section-sub{color:var(--fog);}
+.hiw-header{text-align:center;margin-bottom:64px;}
+.hiw-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:2px;max-width:1100px;margin:0 auto;
+}
+.hiw-step{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:40px 32px;position:relative;
+  transition:background .3s;
+}
+.hiw-step:hover{background:rgba(255,255,255,.07);}
+.hiw-step:first-child{border-radius:16px 0 0 16px;}
+.hiw-step:last-child{border-radius:0 16px 16px 0;}
+.step-num{
+  font-family:'Cormorant Garamond',serif;font-size:3.5rem;
+  font-weight:700;color:rgba(163,201,168,.2);line-height:1;
+  margin-bottom:16px;
+}
+.step-icon{font-size:2rem;margin-bottom:16px;}
+.step-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;
+  font-weight:600;color:var(--cream);margin-bottom:10px;
+}
+.step-desc{font-size:.85rem;color:var(--fog);line-height:1.7;}
+
+/* ── SCAN SECTION ── */
+#scan{
+  background:var(--dew);
+  display:flex;flex-direction:column;align-items:center;
+}
+#scan .section-title{text-align:center;}
+#scan .section-sub{text-align:center;margin-inline:auto;}
+.scan-box{
+  margin-top:48px;width:100%;max-width:720px;
+  background:var(--white);border-radius:24px;
+  border:1.5px solid var(--mist);overflow:hidden;
+  box-shadow:0 8px 48px rgba(36,92,53,.08);
+}
+.scan-tabs{
+  display:flex;border-bottom:1.5px solid var(--mist);
+}
+.scan-tab{
+  flex:1;padding:16px;text-align:center;cursor:pointer;
+  font-size:.85rem;font-weight:500;color:var(--fog);
+  transition:all .2s;border-bottom:2px solid transparent;
+  margin-bottom:-1.5px;
+}
+.scan-tab.active{color:var(--forest);border-bottom-color:var(--forest);background:var(--dew);}
+.scan-tab:hover:not(.active){color:var(--fern);background:var(--dew);}
+.scan-body{padding:32px;}
+
+/* upload zone */
+.upload-zone{
+  border:2px dashed var(--mist);border-radius:16px;
+  padding:48px 24px;text-align:center;cursor:pointer;
+  transition:all .3s;position:relative;background:var(--dew);
+}
+.upload-zone:hover,.upload-zone.dragover{
+  border-color:var(--sage);background:rgba(106,170,125,.05);
+}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:3rem;margin-bottom:12px;}
+.upload-title{font-size:1rem;font-weight:600;color:var(--forest);margin-bottom:6px;}
+.upload-hint{font-size:.82rem;color:var(--fog);}
+
+/* preview */
+#preview-wrap{display:none;text-align:center;}
+#preview-img{
+  max-width:100%;max-height:320px;border-radius:14px;
+  object-fit:cover;margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+.scan-limit-bar{
+  background:var(--dew);border:1px solid var(--mist);border-radius:10px;
+  padding:10px 16px;margin-bottom:20px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.82rem;
+}
+.scan-limit-text{color:var(--fern);font-weight:500;}
+.scan-limit-count{color:var(--fog);}
+.scan-limit-count span{color:var(--forest);font-weight:600;}
+
+.btn-scan{
+  width:100%;padding:15px;border-radius:14px;border:none;
+  background:linear-gradient(135deg,var(--forest),var(--fern));
+  color:var(--cream);font-family:'DM Sans',sans-serif;
+  font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;
+  box-shadow:0 4px 16px rgba(36,92,53,.2);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-scan:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(36,92,53,.25);}
+.btn-scan:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+
+/* camera tab */
+.camera-wrap{text-align:center;}
+#camera-video{
+  width:100%;max-height:320px;border-radius:14px;object-fit:cover;
+  background:#000;display:none;
+}
+.camera-placeholder{
+  border:2px dashed var(--mist);border-radius:16px;
+  padding:48px 24px;text-align:center;background:var(--dew);
+}
+.btn-cam{
+  margin-top:16px;padding:12px 28px;border-radius:30px;border:1.5px solid var(--fern);
+  background:transparent;color:var(--forest);font-family:'DM Sans',sans-serif;
+  font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;
+}
+.btn-cam:hover{background:var(--dew);}
+#capture-btn{
+  margin-top:12px;padding:12px 28px;border-radius:30px;border:none;
+  background:var(--forest);color:var(--cream);font-family:'DM Sans',sans-serif;
+  font-size:.88rem;cursor:pointer;display:none;
+}
+
+/* ── RESULT ── */
+#result-wrap{display:none;padding:0 32px 32px;}
+.result-card{
+  background:var(--dew);border-radius:16px;border:1px solid var(--mist);
+  padding:28px;
+}
+.result-header{display:flex;gap:20px;align-items:flex-start;margin-bottom:24px;}
+.result-img{
+  width:90px;height:90px;border-radius:12px;object-fit:cover;
+  border:2px solid var(--mist);flex-shrink:0;
+}
+.result-names{}
+.result-common{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;
+  font-weight:700;color:var(--moss);line-height:1.1;
+}
+.result-latin{
+  font-family:'DM Mono',monospace;font-size:.8rem;
+  color:var(--fog);margin-top:4px;font-style:italic;
+}
+.result-local{
+  margin-top:6px;font-size:.82rem;color:var(--fern);
+  background:var(--mist);padding:3px 10px;border-radius:20px;display:inline-block;
+}
+.result-confidence{
+  margin-top:8px;display:flex;align-items:center;gap:8px;
+}
+.conf-bar{height:4px;background:var(--mist);border-radius:2px;flex:1;max-width:120px;}
+.conf-fill{height:100%;background:var(--sage);border-radius:2px;transition:width 1s ease;}
+.conf-pct{font-size:.75rem;color:var(--fog);}
+
+.result-tabs{
+  display:flex;gap:4px;margin-bottom:20px;
+  background:var(--white);border-radius:10px;padding:4px;
+  border:1px solid var(--mist);
+}
+.rtab{
+  flex:1;padding:8px;text-align:center;font-size:.78rem;font-weight:500;
+  color:var(--fog);cursor:pointer;border-radius:8px;transition:all .2s;
+}
+.rtab.active{background:var(--forest);color:var(--cream);}
+.rtab:hover:not(.active){color:var(--fern);}
+.rtab-premium{position:relative;}
+.rtab-premium::after{
+  content:'★';font-size:.6rem;color:var(--gold);
+  position:absolute;top:4px;right:8px;
+}
+
+.rtab-content{display:none;font-size:.88rem;color:var(--ink);line-height:1.75;}
+.rtab-content.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.info-item{
+  background:var(--white);border-radius:10px;padding:12px 14px;
+  border:1px solid var(--mist);
+}
+.info-label{font-size:.7rem;color:var(--fog);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
+.info-value{font-size:.88rem;color:var(--ink);font-weight:500;}
+
+/* premium lock overlay */
+.premium-lock{
+  text-align:center;padding:32px 20px;
+  background:linear-gradient(160deg,rgba(201,168,76,.05),rgba(240,208,128,.08));
+  border:1.5px dashed var(--gold);border-radius:14px;
+}
+.lock-icon{font-size:2.5rem;margin-bottom:12px;}
+.lock-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--bark);margin-bottom:8px;}
+.lock-desc{font-size:.85rem;color:var(--fog);margin-bottom:16px;}
+.btn-premium{
+  padding:10px 24px;border-radius:30px;border:none;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--moss);font-family:'DM Sans',sans-serif;
+  font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-premium:hover{opacity:.9;transform:translateY(-1px);}
+
+/* hama result */
+.hama-card{
+  background:var(--white);border-radius:12px;padding:16px;
+  border:1px solid var(--mist);margin-bottom:10px;
+}
+.hama-name{font-weight:600;color:var(--moss);margin-bottom:4px;}
+.hama-desc{font-size:.83rem;color:var(--fog);line-height:1.6;}
+.hama-severity{
+  display:inline-block;font-size:.7rem;font-weight:600;
+  padding:2px 10px;border-radius:20px;margin-bottom:8px;
+}
+.sev-low{background:#d4edda;color:#155724;}
+.sev-med{background:#fff3cd;color:#856404;}
+.sev-high{background:#f8d7da;color:#721c24;}
+
+/* NFT card */
+.nft-section{margin-top:8px;}
+.nft-card-preview{
+  background:linear-gradient(135deg,var(--moss),var(--forest));
+  border-radius:16px;padding:24px;position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+}
+.nft-card-preview::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 70% 30%,rgba(163,201,168,.15),transparent 60%);
+}
+.nft-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;position:relative;}
+.nft-logo{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--leaf);letter-spacing:.06em;}
+.nft-id{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);}
+.nft-plant-img{
+  width:100%;height:160px;border-radius:10px;object-fit:cover;
+  margin-bottom:16px;border:1px solid rgba(255,255,255,.1);position:relative;
+}
+.nft-plant-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;
+  font-weight:700;color:var(--cream);margin-bottom:4px;position:relative;
+}
+.nft-plant-latin{font-size:.75rem;color:var(--leaf);font-style:italic;position:relative;}
+.nft-attrs{
+  display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;position:relative;
+}
+.nft-attr{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;padding:6px 12px;
+}
+.nft-attr-label{font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;}
+.nft-attr-val{font-size:.78rem;color:var(--cream);font-weight:500;margin-top:1px;}
+.btn-mint{
+  width:100%;margin-top:16px;padding:13px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--moss);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:700;cursor:pointer;transition:all .3s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-mint:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.3);}
+.wallet-status{
+  text-align:center;margin-bottom:12px;font-size:.82rem;color:var(--fog);
+}
+.wallet-status .connected{color:var(--sage);}
+
+/* new scan btn */
+.btn-new-scan{
+  width:calc(100% - 64px);margin:0 32px 32px;
+  padding:13px;border-radius:12px;border:1.5px solid var(--fern);
+  background:transparent;color:var(--forest);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;display:none;
+}
+.btn-new-scan:hover{background:var(--dew);}
+
+/* ── ABOUT ── */
+#about{background:var(--cream);}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;max-width:1100px;margin:0 auto;
+}
+.about-visual{position:relative;}
+.about-img-stack{position:relative;height:480px;}
+.about-card-big{
+  position:absolute;top:0;left:0;width:75%;
+  background:var(--moss);border-radius:20px;overflow:hidden;
+  height:340px;
+  box-shadow:0 20px 60px rgba(26,51,32,.25);
+}
+.about-card-big-inner{
+  height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--forest),var(--moss));
+  font-size:5rem;
+}
+.about-card-sm{
+  position:absolute;bottom:0;right:0;width:55%;
+  background:var(--white);border-radius:16px;padding:20px;
+  border:1.5px solid var(--mist);
+  box-shadow:0 10px 32px rgba(0,0,0,.08);
+}
+.about-sm-title{font-size:.8rem;font-weight:600;color:var(--fern);margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;}
+.about-sm-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.about-sm-list li{
+  display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--ink);
+}
+.about-sm-list li::before{content:'✓';color:var(--sage);font-weight:700;}
+.about-text{}
+.about-desc{
+  font-size:.95rem;color:var(--fern);line-height:1.8;margin-top:16px;
+}
+.about-features{
+  margin-top:36px;display:flex;flex-direction:column;gap:20px;
+}
+.about-feat{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:20px;background:var(--dew);border-radius:14px;
+  border:1px solid var(--mist);transition:all .2s;
+}
+.about-feat:hover{border-color:var(--sage);background:var(--white);}
+.feat-icon{
+  width:42px;height:42px;border-radius:10px;background:var(--forest);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  flex-shrink:0;
+}
+.feat-title{font-weight:600;color:var(--moss);margin-bottom:4px;font-size:.9rem;}
+.feat-desc{font-size:.82rem;color:var(--fog);line-height:1.6;}
+.feat-premium-tag{
+  font-size:.65rem;font-weight:700;letter-spacing:.06em;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--moss);padding:1px 7px;border-radius:10px;margin-left:6px;
+}
+
+/* ── FEATURES GRID ── */
+#features{background:var(--dew);}
+.features-header{text-align:center;margin-bottom:56px;}
+.features-header .section-sub{margin-inline:auto;}
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;max-width:1100px;margin:0 auto;
+}
+.feature-card{
+  background:var(--white);border-radius:20px;padding:32px;
+  border:1.5px solid var(--mist);transition:all .3s;position:relative;overflow:hidden;
+}
+.feature-card:hover{border-color:var(--sage);transform:translateY(-4px);box-shadow:0 12px 40px rgba(36,92,53,.08);}
+.feature-card.premium-card{
+  background:linear-gradient(160deg,#1a3320,#245c35);
+  border-color:rgba(201,168,76,.3);
+}
+.fc-icon{font-size:2.2rem;margin-bottom:16px;}
+.fc-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.25rem;
+  font-weight:700;color:var(--moss);margin-bottom:8px;
+}
+.premium-card .fc-title{color:var(--cream);}
+.fc-desc{font-size:.85rem;color:var(--fog);line-height:1.7;}
+.premium-card .fc-desc{color:rgba(200,223,196,.7);}
+.premium-label{
+  position:absolute;top:20px;right:20px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--moss);font-size:.65rem;font-weight:700;
+  padding:3px 10px;border-radius:10px;letter-spacing:.04em;
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,20,10,.6);
+  backdrop-filter:blur(8px);z-index:500;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;animation:fadeIn .2s ease;}
+.modal{
+  background:var(--cream);border-radius:24px;padding:40px;
+  width:100%;max-width:440px;position:relative;
+  box-shadow:0 24px 80px rgba(0,0,0,.2);
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  border-radius:50%;border:none;background:var(--dew);cursor:pointer;
+  font-size:1rem;color:var(--fog);display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.modal-close:hover{background:var(--mist);}
+.modal-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  color:var(--moss);text-align:center;margin-bottom:6px;
+}
+.modal-sub{text-align:center;font-size:.85rem;color:var(--fog);margin-bottom:28px;}
+.social-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.btn-social{
+  width:100%;padding:13px;border-radius:12px;border:1.5px solid var(--mist);
+  background:var(--white);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:500;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .2s;color:var(--ink);
+}
+.btn-social:hover{border-color:var(--sage);background:var(--dew);}
+.divider{
+  display:flex;align-items:center;gap:12px;margin:16px 0;
+  font-size:.78rem;color:var(--fog);
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--mist);}
+.modal-input{
+  width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--mist);
+  background:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;
+  color:var(--ink);margin-bottom:10px;outline:none;transition:border .2s;
+}
+.modal-input:focus{border-color:var(--sage);}
+.btn-modal-submit{
+  width:100%;padding:13px;border-radius:12px;border:none;
+  background:var(--forest);color:var(--cream);font-family:'DM Sans',sans-serif;
+  font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;
+  margin-top:4px;
+}
+.btn-modal-submit:hover{background:var(--moss);}
+.modal-switch{text-align:center;margin-top:16px;font-size:.83rem;color:var(--fog);}
+.modal-switch a{color:var(--fern);cursor:pointer;font-weight:500;}
+.modal-switch a:hover{text-decoration:underline;}
+
+/* wallet modal */
+.wallet-grid{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.wallet-option{
+  display:flex;align-items:center;gap:14px;padding:14px 18px;
+  border-radius:12px;border:1.5px solid var(--mist);background:var(--white);
+  cursor:pointer;transition:all .2s;font-size:.9rem;font-weight:500;color:var(--ink);
+}
+.wallet-option:hover{border-color:var(--sage);background:var(--dew);}
+.wallet-icon{font-size:1.4rem;}
+
+/* collection */
+#my-collection{display:none;padding:100px 48px;}
+.coll-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;}
+.coll-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;
+}
+.coll-card{
+  background:var(--white);border-radius:16px;overflow:hidden;
+  border:1.5px solid var(--mist);transition:all .3s;cursor:pointer;
+}
+.coll-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(36,92,53,.1);border-color:var(--sage);}
+.coll-img{height:140px;background:linear-gradient(135deg,var(--moss),var(--fern));display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.coll-info{padding:14px;}
+.coll-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--moss);margin-bottom:2px;}
+.coll-latin{font-size:.75rem;color:var(--fog);font-style:italic;margin-bottom:8px;}
+.coll-date{font-size:.72rem;color:var(--fog);letter-spacing:.04em;}
+.coll-nft-badge{
+  display:inline-flex;align-items:center;gap:4px;margin-top:6px;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(240,208,128,.2));
+  border:1px solid rgba(201,168,76,.3);color:var(--bark);
+  font-size:.65rem;font-weight:600;padding:2px 8px;border-radius:10px;
+}
+.empty-coll{
+  text-align:center;padding:64px;color:var(--fog);
+  border:2px dashed var(--mist);border-radius:16px;
+}
+.empty-coll-icon{font-size:3rem;margin-bottom:12px;}
+
+/* history */
+#scan-history{display:none;padding:100px 48px;}
+.history-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.history-item{
+  background:var(--white);border-radius:14px;padding:18px 22px;
+  border:1.5px solid var(--mist);display:flex;align-items:center;gap:16px;
+  transition:all .2s;cursor:pointer;
+}
+.history-item:hover{border-color:var(--sage);background:var(--dew);}
+.history-thumb{
+  width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--fern),var(--sage));
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;
+}
+.history-info{flex:1;}
+.history-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--moss);}
+.history-meta{font-size:.78rem;color:var(--fog);margin-top:2px;}
+.history-nft{font-size:.7rem;color:var(--gold);font-weight:600;}
+
+/* loading */
+.loading-wrap{
+  text-align:center;padding:40px;display:none;
+}
+.loading-spinner{
+  width:48px;height:48px;border:3px solid var(--mist);
+  border-top-color:var(--forest);border-radius:50%;
+  animation:spin .8s linear infinite;margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:.88rem;color:var(--fog);}
+.loading-steps{
+  margin-top:12px;display:flex;flex-direction:column;gap:6px;
+}
+.loading-step{
+  font-size:.78rem;color:var(--mist);transition:color .3s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.loading-step.done{color:var(--sage);}
+.loading-step.active{color:var(--forest);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--moss);color:var(--fog);
+  padding:60px 48px 32px;
+}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:48px;gap:40px;flex-wrap:wrap;
+}
+.footer-brand{}
+.footer-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.4rem;
+  font-weight:700;color:var(--cream);margin-bottom:10px;
+}
+.footer-desc{font-size:.83rem;line-height:1.7;max-width:260px;color:var(--fog);}
+.footer-links-group{}
+.footer-links-title{
+  font-size:.72rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--leaf);margin-bottom:14px;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{
+  text-decoration:none;font-size:.83rem;color:var(--fog);
+  transition:color .2s;cursor:pointer;
+}
+.footer-links a:hover{color:var(--cream);}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.78rem;color:rgba(255,255,255,.3);flex-wrap:wrap;gap:12px;
+}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:1000;
+  background:var(--moss);color:var(--cream);
+  padding:12px 20px;border-radius:12px;font-size:.85rem;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+  transform:translateY(80px);opacity:0;transition:all .3s;
+  display:flex;align-items:center;gap:8px;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--forest);}
+.toast.error{background:#8b2020;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  section,#my-collection,#scan-history{padding:80px 20px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-visual{display:none;}
+  .hiw-steps{grid-template-columns:1fr;}
+  .hiw-step:first-child,.hiw-step:last-child{border-radius:16px;}
+  .hero-stats{gap:24px;}
+  footer{padding:48px 20px 24px;}
+  .footer-top{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="main-nav">
+  <a class="nav-logo" onclick="showSection('home')">
+    <div class="nav-logo-icon">🌿</div>
+    <span class="nav-logo-name">Botanica<span>AI</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="showSection('home')">Home</a></li>
+    <li><a onclick="showSection('scan-section')">Scan Plant</a></li>
+    <li><a onclick="showSection('how-it-works')">How It Works</a></li>
+    <li><a onclick="showSection('features')">Features</a></li>
+    <li><a onclick="showSection('about')">About</a></li>
+  </ul>
+  <div class="nav-auth" id="nav-auth">
+    <button class="btn-login" onclick="openModal('login')">Login</button>
+    <button class="btn-signup" onclick="openModal('register')">Sign Up</button>
+  </div>
+  <div class="nav-user" id="nav-user" style="display:none;">
+    <div class="nav-avatar" id="nav-avatar">?</div>
+    <span class="nav-username" id="nav-username"></span>
+    <span class="premium-badge" id="nav-premium" style="display:none;">PRO</span>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="home" style="padding-top:80px;">
+  <div class="hero-bg"></div>
+  <div class="hero-leaves">
+    <div class="leaf-deco">🍃</div>
+    <div class="leaf-deco">🌿</div>
+    <div class="leaf-deco">🍀</div>
+    <div class="leaf-deco">🌱</div>
+    <div class="leaf-deco">🌾</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="dot"></span> Powered by Claude AI</div>
+    <h1>Identify Any Plant<br>or <em>Flower</em> Instantly</h1>
+    <p class="hero-sub">Upload a photo or scan with your camera. BotanicaAI tells you everything — name, traits, care tips, pest detection, and even lets you mint it as an NFT.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showSection('scan-section')">🔍 Scan a Plant</button>
+      <button class="btn-secondary" onclick="showSection('how-it-works')">How It Works</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Plant Species</div></div>
+      <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Accuracy</div></div>
+      <div class="stat"><div class="stat-num">12K+</div><div class="stat-label">Happy Users</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how-it-works">
+  <div class="hiw-header">
+    <div class="section-tag">How It Works</div>
+    <h2 class="section-title" style="color:var(--cream);">Three Simple Steps</h2>
+    <p class="section-sub" style="margin-inline:auto;text-align:center;">From photo to expert knowledge in seconds — no botany degree required.</p>
+  </div>
+  <div class="hiw-steps">
+    <div class="hiw-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">📷</div>
+      <div class="step-title">Upload or Scan</div>
+      <div class="step-desc">Take a photo with your camera or upload an existing image of any plant, flower, leaf, or tree you want to identify.</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🧠</div>
+      <div class="step-title">AI Analysis</div>
+      <div class="step-desc">Claude AI analyzes your image against a database of 50,000+ species, identifying visual traits, patterns, and characteristics.</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">📋</div>
+      <div class="step-title">Get Results</div>
+      <div class="step-desc">Receive the plant's local and Latin name, description, care guide, and pest detection. Premium users can also mint their find as an NFT.</div>
+    </div>
+    <div class="hiw-step">
+      <div class="step-num">04</div>
+      <div class="step-icon">🪙</div>
+      <div class="step-title">Mint as NFT <span style="color:var(--gold);font-size:.7rem;">PRO</span></div>
+      <div class="step-desc">Connect your wallet and mint a beautiful custom NFT card of your plant discovery — a unique digital collectible on the blockchain.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SCAN ─── -->
+<section id="scan-section">
+  <div class="section-tag" style="display:block;text-align:center;">Plant Scanner</div>
+  <h2 class="section-title" style="text-align:center;">Identify Your Plant</h2>
+  <p class="section-sub" style="text-align:center;margin-inline:auto;">Upload a clear photo or use your camera for the best results.</p>
+
+  <div class="scan-box">
+    <div class="scan-tabs">
+      <div class="scan-tab active" onclick="switchScanTab('upload',this)">📁 Upload Photo</div>
+      <div class="scan-tab" onclick="switchScanTab('camera',this)">📷 Use Camera</div>
+    </div>
+
+    <div class="scan-body" id="scan-upload-body">
+      <div class="scan-limit-bar">
+        <span class="scan-limit-text">🌿 Daily Scans</span>
+        <span class="scan-limit-count"><span id="scans-left">3</span> / 3 remaining today</span>
+      </div>
+      <div class="upload-zone" id="upload-zone" ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
+        <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])">
+        <div class="upload-icon">🖼️</div>
+        <div class="upload-title">Drop your photo here</div>
+        <div class="upload-hint">or click to browse · JPG, PNG, WEBP</div>
+      </div>
+      <div id="preview-wrap">
+        <img id="preview-img" src="" alt="Plant preview">
+        <button class="btn-scan" id="scan-btn" onclick="runScan()">
+          <span>🔍</span> Identify This Plant
+        </button>
+      </div>
+    </div>
+
+    <div class="scan-body" id="scan-camera-body" style="display:none;">
+      <div class="scan-limit-bar">
+        <span class="scan-limit-text">🌿 Daily Scans</span>
+        <span class="scan-limit-count"><span id="scans-left-cam">3</span> / 3 remaining today</span>
+      </div>
+      <div class="camera-wrap">
+        <div class="camera-placeholder" id="cam-placeholder">
+          <div style="font-size:2.5rem;margin-bottom:12px;">📷</div>
+          <div style="font-weight:600;color:var(--forest);margin-bottom:6px;">Camera Access Required</div>
+          <div style="font-size:.82rem;color:var(--fog);">Point your camera at a plant to identify it</div>
+          <button class="btn-cam" onclick="startCamera()">Start Camera</button>
+        </div>
+        <video id="camera-video" autoplay playsinline></video>
+        <canvas id="camera-canvas" style="display:none;"></canvas>
+        <button id="capture-btn" onclick="capturePhoto()">📸 Capture Photo</button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-wrap" id="loading-wrap">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Analyzing your plant...</div>
+      <div class="loading-steps">
+        <div class="loading-step active" id="ls1">🔍 Detecting plant features</div>
+        <div class="loading-step" id="ls2">🧬 Matching species database</div>
+        <div class="loading-step" id="ls3">📋 Generating plant profile</div>
+        <div class="loading-step" id="ls4">🐛 Checking for pests</div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="result-wrap">
+      <div style="padding:0 32px 16px;">
+        <div class="result-card">
+          <div class="result-header">
+            <img id="r-img" class="result-img" src="" alt="">
+            <div class="result-names">
+              <div class="result-common" id="r-common">—</div>
+              <div class="result-latin" id="r-latin">—</div>
+              <div class="result-local" id="r-local">—</div>
+              <div class="result-confidence">
+                <div class="conf-bar"><div class="conf-fill" id="r-conf-fill" style="width:0%"></div></div>
+                <span class="conf-pct" id="r-conf-pct">0% match</span>
+              </div>
+            </div>
+          </div>
+          <div class="result-tabs">
+            <div class="rtab active" onclick="switchRTab('desc',this)">Description</div>
+            <div class="rtab" onclick="switchRTab('care',this)">Care <span style="color:var(--gold);font-size:.65rem;">★</span></div>
+            <div class="rtab" onclick="switchRTab('pests',this)">Pests <span style="color:var(--gold);font-size:.65rem;">★</span></div>
+            <div class="rtab" onclick="switchRTab('nft',this)">NFT <span style="color:var(--gold);font-size:.65rem;">★</span></div>
+          </div>
+          <div class="rtab-content active" id="rtab-desc"></div>
+          <div class="rtab-content" id="rtab-care"></div>
+          <div class="rtab-content" id="rtab-pests"></div>
+          <div class="rtab-content" id="rtab-nft"></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-new-scan" id="btn-new-scan" onclick="resetScan()">🔄 Scan Another Plant</button>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section id="features">
+  <div class="features-header">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything You Need</h2>
+    <p class="section-sub">Free features to get started, premium features for plant enthusiasts.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="fc-icon">🔍</div>
+      <div class="fc-title">Plant Identification</div>
+      <div class="fc-desc">Identify 50,000+ species of plants and flowers by uploading a photo or scanning with your camera.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">📖</div>
+      <div class="fc-title">Full Plant Profile</div>
+      <div class="fc-desc">Get local name, Latin name, detailed description, physical traits, origin, and family classification.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">💧</div>
+      <div class="fc-title">Care Guide <span class="feat-premium-tag">PRO</span></div>
+      <div class="fc-desc">Watering frequency, light requirements, soil type, humidity, fertilizer needs, and seasonal tips.</div>
+    </div>
+    <div class="feature-card premium-card">
+      <div class="premium-label">PRO</div>
+      <div class="fc-icon">🐛</div>
+      <div class="fc-title">Pest & Disease Scanner</div>
+      <div class="fc-desc">Detect common pests and diseases from your plant photo. Get treatment and prevention advice instantly.</div>
+    </div>
+    <div class="feature-card premium-card">
+      <div class="premium-label">PRO</div>
+      <div class="fc-icon">📚</div>
+      <div class="fc-title">Scan History</div>
+      <div class="fc-desc">Keep a full record of all your plant scans with timestamps, results, and easy access to previous identifications.</div>
+    </div>
+    <div class="feature-card premium-card">
+      <div class="premium-label">PRO</div>
+      <div class="fc-icon">🌺</div>
+      <div class="fc-title">My Collection</div>
+      <div class="fc-desc">Build a personal botanical collection. Organize, tag, and revisit every plant you've discovered.</div>
+    </div>
+    <div class="feature-card premium-card">
+      <div class="premium-label">PRO</div>
+      <div class="fc-icon">🪙</div>
+      <div class="fc-title">Mint Plant NFTs</div>
+      <div class="fc-desc">Turn your plant discoveries into unique NFT cards. Connect MetaMask or any Web3 wallet to mint on-chain.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🔓</div>
+      <div class="fc-title">Free Plan</div>
+      <div class="fc-desc">3 free scans per day with full identification and basic plant info. No credit card required to start.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-img-stack">
+        <div class="about-card-big">
+          <div class="about-card-big-inner">🌿</div>
+        </div>
+        <div class="about-card-sm">
+          <div class="about-sm-title">Powered by</div>
+          <ul class="about-sm-list">
+            <li>Claude AI Vision Model</li>
+            <li>50,000+ Species Database</li>
+            <li>Web3 NFT Integration</li>
+            <li>Real-time Pest Detection</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">About BotanicaAI</div>
+      <h2 class="section-title">Your Personal<br>Plant Expert</h2>
+      <p class="about-desc">BotanicaAI combines the power of Claude AI's vision capabilities with a comprehensive botanical database to give everyone — from curious beginners to passionate gardeners — instant, accurate plant knowledge at their fingertips.</p>
+      <div class="about-features">
+        <div class="about-feat">
+          <div class="feat-icon">🎯</div>
+          <div>
+            <div class="feat-title">98% Accuracy</div>
+            <div class="feat-desc">Our AI model is trained on millions of plant images across 50,000+ species for near-perfect identification.</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">⚡</div>
+          <div>
+            <div class="feat-title">Instant Results</div>
+            <div class="feat-desc">Get complete plant profiles including care tips and pest analysis in under 10 seconds.</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🪙</div>
+          <div>
+            <div class="feat-title">NFT Collectibles <span class="feat-premium-tag">PRO</span></div>
+            <div class="feat-desc">Mint your plant discoveries as unique NFT cards. Connect any Web3 wallet — MetaMask, WalletConnect, and more.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MY COLLECTION ─── -->
+<section id="my-collection">
+  <div class="coll-header">
+    <div>
+      <div class="section-tag">Premium Feature</div>
+      <h2 class="section-title">My Collection</h2>
+    </div>
+    <button class="btn-primary" onclick="showSection('scan-section')" style="white-space:nowrap;">+ Add Plant</button>
+  </div>
+  <div class="coll-grid" id="coll-grid">
+    <div class="empty-coll" style="grid-column:1/-1;">
+      <div class="empty-coll-icon">🌱</div>
+      <div style="font-weight:600;color:var(--forest);margin-bottom:6px;">Your collection is empty</div>
+      <div style="font-size:.83rem;color:var(--fog);">Scan plants to start building your botanical collection</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SCAN HISTORY ─── -->
+<section id="scan-history">
+  <div style="max-width:800px;margin:0 auto;">
+    <div class="section-tag">Premium Feature</div>
+    <h2 class="section-title" style="margin-bottom:32px;">Scan History</h2>
+    <div class="history-list" id="history-list">
+      <div style="text-align:center;padding:48px;color:var(--fog);border:2px dashed var(--mist);border-radius:16px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">📋</div>
+        <div style="font-weight:600;color:var(--forest);margin-bottom:6px;">No scan history yet</div>
+        <div style="font-size:.83rem;">Your scan history will appear here after you identify plants.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">🌿 BotanicaAI</div>
+      <div class="footer-desc">Your personal plant expert powered by Claude AI. Identify, learn, collect, and mint botanical discoveries.</div>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a onclick="showSection('home')">Home</a></li>
+        <li><a onclick="showSection('scan-section')">Scan Plant</a></li>
+        <li><a onclick="showSection('how-it-works')">How It Works</a></li>
+        <li><a onclick="showSection('about')">About</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Features</div>
+      <ul class="footer-links">
+        <li><a onclick="showSection('features')">All Features</a></li>
+        <li><a onclick="openModal('register')">Sign Up Free</a></li>
+        <li><a onclick="openPremiumUpgrade()">Go Premium ★</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 BotanicaAI. All rights reserved.</span>
+    <span>Powered by Claude AI · Web3 Ready</span>
+  </div>
+</footer>
+
+<!-- ─── LOGIN MODAL ─── -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <div class="modal-logo">🌿 BotanicaAI</div>
+    <div class="modal-sub">Welcome back, plant lover</div>
+    <div class="social-btns">
+      <button class="btn-social" onclick="socialLogin('google')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <button class="btn-social" onclick="socialLogin('twitter')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Continue with X (Twitter)
+      </button>
+    </div>
+    <div class="divider">or</div>
+    <input class="modal-input" type="email" placeholder="Email address" id="login-email">
+    <input class="modal-input" type="password" placeholder="Password" id="login-pass">
+    <button class="btn-modal-submit" onclick="emailLogin()">Login</button>
+    <div class="modal-switch">Don't have an account? <a onclick="switchModal('login','register')">Sign up free</a></div>
+  </div>
+</div>
+
+<!-- ─── REGISTER MODAL ─── -->
+<div class="modal-overlay" id="modal-register">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('register')">✕</button>
+    <div class="modal-logo">🌿 BotanicaAI</div>
+    <div class="modal-sub">Start your botanical journey</div>
+    <div class="social-btns">
+      <button class="btn-social" onclick="socialLogin('google')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign up with Google
+      </button>
+      <button class="btn-social" onclick="socialLogin('twitter')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Sign up with X (Twitter)
+      </button>
+    </div>
+    <div class="divider">or</div>
+    <input class="modal-input" type="text" placeholder="Your name" id="reg-name">
+    <input class="modal-input" type="email" placeholder="Email address" id="reg-email">
+    <input class="modal-input" type="password" placeholder="Password (min 8 chars)" id="reg-pass">
+    <button class="btn-modal-submit" onclick="emailRegister()">Create Account</button>
+    <div class="modal-switch">Already have an account? <a onclick="switchModal('register','login')">Log in</a></div>
+  </div>
+</div>
+
+<!-- ─── WALLET MODAL ─── -->
+<div class="modal-overlay" id="modal-wallet">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('wallet')">✕</button>
+    <div class="modal-logo">🪙 Connect Wallet</div>
+    <div class="modal-sub">Connect your Web3 wallet to mint plant NFTs</div>
+    <div class="wallet-grid">
+      <div class="wallet-option" onclick="connectWallet('MetaMask')">
+        <span class="wallet-icon">🦊</span> MetaMask
+      </div>
+      <div class="wallet-option" onclick="connectWallet('WalletConnect')">
+        <span class="wallet-icon">🔗</span> WalletConnect
+      </div>
+      <div class="wallet-option" onclick="connectWallet('Coinbase Wallet')">
+        <span class="wallet-icon">🔵</span> Coinbase Wallet
+      </div>
+      <div class="wallet-option" onclick="connectWallet('Trust Wallet')">
+        <span class="wallet-icon">🛡️</span> Trust Wallet
+      </div>
+    </div>
+    <div style="margin-top:16px;font-size:.75rem;color:var(--fog);text-align:center;">
+      By connecting, you agree to our Terms of Service. Wallet integration is for demonstration purposes.
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST ─── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───
+const state = {
+  user: null,
+  scansLeft: 3,
+  currentImage: null,
+  currentResult: null,
+  walletConnected: false,
+  walletAddress: null,
+  collection: [],
+  history: []
+};
+
+// ─── NAV / SECTION ───
+function showSection(id) {
+  // Premium gate for collection & history
+  if ((id === 'my-collection' || id === 'scan-history') && !state.user) {
+    showToast('Please log in to access this feature', 'error'); openModal('login'); return;
+  }
+  if ((id === 'my-collection' || id === 'scan-history') && !state.user?.premium) {
+    openPremiumUpgrade(); return;
+  }
+  // Hide all sections
+  document.querySelectorAll('section, #my-collection, #scan-history').forEach(s => {
+    s.style.display = 'none';
+  });
+  const el = document.getElementById(id);
+  if (el) { el.style.display = 'flex'; el.style.flexDirection = 'column'; el.style.alignItems = 'center'; }
+
+  // Non-centered sections
+  const nonCentered = ['how-it-works','features','about','my-collection','scan-history'];
+  if (nonCentered.includes(id) && el) {
+    el.style.alignItems = 'unset';
+    el.style.flexDirection = 'unset';
+    el.style.display = 'block';
+  }
+  if (id === 'home' && el) {
+    el.style.display = 'flex';
+    el.style.flexDirection = 'column';
+    el.style.alignItems = 'center';
+    el.style.justifyContent = 'center';
+  }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (id === 'my-collection') renderCollection();
+  if (id === 'scan-history') renderHistory();
+}
+
+// Show all on init
+function initSections() {
+  const all = ['home','how-it-works','scan-section','features','about'];
+  all.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = '';
+  });
+  document.getElementById('my-collection').style.display = 'none';
+  document.getElementById('scan-history').style.display = 'none';
+}
+initSections();
+
+// ─── MODALS ───
+function openModal(type) {
+  document.getElementById('modal-' + type).classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open');
+}
+function switchModal(from, to) {
+  closeModal(from); openModal(to);
+}
+
+// ─── AUTH ───
+function socialLogin(provider) {
+  const names = { google: 'Plant Lover', twitter: 'Green Thumb' };
+  const emails = { google: 'user@gmail.com', twitter: 'user@x.com' };
+  loginUser({ name: names[provider], email: emails[provider], avatar: provider === 'google' ? 'G' : 'X', premium: false });
+  closeModal('login'); closeModal('register');
+  showToast(`✅ Signed in with ${provider === 'google' ? 'Google' : 'X'}!`, 'success');
+}
+
+function emailLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  if (!email || !pass) { showToast('Please fill all fields', 'error'); return; }
+  loginUser({ name: email.split('@')[0], email, avatar: email[0].toUpperCase(), premium: false });
+  closeModal('login');
+  showToast('✅ Welcome back!', 'success');
+}
+
+function emailRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  if (!name || !email || !pass) { showToast('Please fill all fields', 'error'); return; }
+  if (pass.length < 8) { showToast('Password must be at least 8 characters', 'error'); return; }
+  loginUser({ name, email, avatar: name[0].toUpperCase(), premium: false });
+  closeModal('register');
+  showToast(`🌿 Welcome to BotanicaAI, ${name}!`, 'success');
+}
+
+function loginUser(user) {
+  state.user = user;
+  document.getElementById('nav-auth').style.display = 'none';
+  document.getElementById('nav-user').style.display = 'flex';
+  document.getElementById('nav-avatar').textContent = user.avatar;
+  document.getElementById('nav-username').textContent = user.name;
+  if (user.premium) document.getElementById('nav-premium').style.display = 'inline-block';
+  // add premium nav links
+  updatePremiumNav();
+}
+
+function logout() {
+  state.user = null;
+  state.walletConnected = false;
+  document.getElementById('nav-auth').style.display = 'flex';
+  document.getElementById('nav-user').style.display = 'none';
+  document.getElementById('nav-premium').style.display = 'none';
+  updatePremiumNav();
+  showToast('👋 Logged out', 'success');
+}
+
+function updatePremiumNav() {
+  // Remove existing premium links
+  document.querySelectorAll('.nav-premium-link').forEach(l => l.remove());
+  if (state.user?.premium) {
+    const navLinks = document.querySelector('.nav-links');
+    ['My Collection', 'History'].forEach((label, i) => {
+      const li = document.createElement('li');
+      li.className = 'nav-premium-link';
+      li.innerHTML = `<a onclick="showSection('${i===0?'my-collection':'scan-history'}')">${label}</a>`;
+      navLinks.appendChild(li);
+    });
+  }
+}
+
+// ─── PREMIUM UPGRADE ───
+function openPremiumUpgrade() {
+  if (!state.user) { openModal('login'); return; }
+  // Simulate upgrade for demo
+  if (confirm('🌟 Upgrade to BotanicaAI Premium\n\n✅ Unlimited daily scans\n✅ Care guides & pest detection\n✅ Personal plant collection\n✅ Scan history\n✅ Mint plant NFTs\n\nClick OK to activate Premium (demo mode)')) {
+    state.user.premium = true;
+    document.getElementById('nav-premium').style.display = 'inline-block';
+    updatePremiumNav();
+    showToast('🌟 Premium activated! Enjoy all features.', 'success');
+  }
+}
+
+// ─── SCAN TABS ───
+function switchScanTab(tab, el) {
+  document.querySelectorAll('.scan-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('scan-upload-body').style.display = tab === 'upload' ? 'block' : 'none';
+  document.getElementById('scan-camera-body').style.display = tab === 'camera' ? 'block' : 'none';
+}
+
+// ─── DRAG & DROP ───
+function handleDrag(e, over) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.toggle('dragover', over);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) handleFile(file);
+}
+
+// ─── FILE HANDLE ───
+function handleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state.currentImage = e.target.result;
+    document.getElementById('preview-img').src = e.target.result;
+    document.getElementById('upload-zone').style.display = 'none';
+    document.getElementById('preview-wrap').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ─── CAMERA ───
+let stream = null;
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    .then(s => {
+      stream = s;
+      const video = document.getElementById('camera-video');
+      video.srcObject = s;
+      video.style.display = 'block';
+      document.getElementById('cam-placeholder').style.display = 'none';
+      document.getElementById('capture-btn').style.display = 'block';
+    })
+    .catch(() => showToast('Camera access denied', 'error'));
+}
+function capturePhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('camera-canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  state.currentImage = canvas.toDataURL('image/jpeg');
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  document.getElementById('camera-video').style.display = 'none';
+  document.getElementById('capture-btn').style.display = 'none';
+  document.getElementById('cam-placeholder').style.display = 'block';
+  document.getElementById('cam-placeholder').innerHTML = `
+    <img src="${state.currentImage}" style="width:100%;border-radius:12px;margin-bottom:12px;">
+    <button class="btn-scan" onclick="runScan()" style="width:100%;padding:14px;">🔍 Identify This Plant</button>
+  `;
+}
+
+// ─── RUN SCAN ───
+async function runScan() {
+  if (!state.currentImage) { showToast('Please select an image first', 'error'); return; }
+
+  // Check scan limit for non-premium
+  if (!state.user?.premium && state.scansLeft <= 0) {
+    showToast('Daily scan limit reached. Upgrade to Premium for unlimited scans!', 'error');
+    setTimeout(openPremiumUpgrade, 800);
+    return;
+  }
+
+  // Show loading
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('result-wrap').style.display = 'none';
+  document.getElementById('btn-new-scan').style.display = 'none';
+  document.getElementById('loading-wrap').style.display = 'block';
+  animateLoadingSteps();
+
+  try {
+    const imageData = state.currentImage.split(',')[1];
+    const mediaType = state.currentImage.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mediaType, data: imageData } },
+            { type: 'text', text: `You are a botanical expert. Analyze this plant image and respond ONLY with a JSON object (no markdown, no extra text) with this exact structure:
+{
+  "common_name": "Common name in English",
+  "latin_name": "Scientific/Latin name",
+  "local_name": "Local or regional name (Indonesian or other)",
+  "confidence": 92,
+  "description": "2-3 sentence description of the plant",
+  "traits": [
+    {"label": "Family", "value": "..."},
+    {"label": "Origin", "value": "..."},
+    {"label": "Type", "value": "..."},
+    {"label": "Size", "value": "..."}
+  ],
+  "care": {
+    "watering": "Watering frequency and tips",
+    "light": "Light requirements",
+    "soil": "Soil type",
+    "humidity": "Humidity level",
+    "fertilizer": "Fertilizer recommendations"
+  },
+  "pests": [
+    {
+      "name": "Pest or disease name",
+      "severity": "low|medium|high",
+      "description": "Description and treatment"
+    }
+  ],
+  "benefits": "Health or environmental benefits"
+}
+If this is not a plant, set common_name to "Not a Plant" and confidence to 0.` }
+          ]
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content[0].text.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(text);
+    state.currentResult = result;
+
+    // Deduct scan
+    if (!state.user?.premium) {
+      state.scansLeft--;
+      document.getElementById('scans-left').textContent = state.scansLeft;
+      document.getElementById('scans-left-cam').textContent = state.scansLeft;
+    }
+
+    // Add to history
+    state.history.unshift({
+      ...result,
+      image: state.currentImage,
+      date: new Date().toLocaleString()
+    });
+    if (state.user?.premium) {
+      state.collection.push({ ...result, image: state.currentImage, date: new Date().toLocaleString(), nft: false });
+    }
+
+    displayResult(result);
+  } catch (err) {
+    document.getElementById('loading-wrap').style.display = 'none';
+    document.getElementById('preview-wrap').style.display = 'block';
+    showToast('Error analyzing image. Please try again.', 'error');
+  }
+}
+
+function animateLoadingSteps() {
+  const steps = ['ls1','ls2','ls3','ls4'];
+  steps.forEach(s => { document.getElementById(s).className = 'loading-step'; });
+  document.getElementById('ls1').className = 'loading-step active';
+  let i = 1;
+  const interval = setInterval(() => {
+    if (i >= steps.length) { clearInterval(interval); return; }
+    document.getElementById(steps[i-1]).className = 'loading-step done';
+    document.getElementById(steps[i]).className = 'loading-step active';
+    i++;
+  }, 900);
+}
+
+function displayResult(r) {
+  document.getElementById('loading-wrap').style.display = 'none';
+
+  if (r.confidence === 0) {
+    document.getElementById('result-wrap').style.display = 'block';
+    document.getElementById('btn-new-scan').style.display = 'block';
+    document.getElementById('r-common').textContent = 'Not a Plant';
+    document.getElementById('r-latin').textContent = 'Please upload a clear plant photo';
+    document.getElementById('r-local').textContent = '—';
+    document.getElementById('r-img').src = state.currentImage;
+    document.getElementById('r-conf-fill').style.width = '0%';
+    document.getElementById('r-conf-pct').textContent = '0% match';
+    document.getElementById('rtab-desc').innerHTML = '<p>We couldn\'t identify a plant in this image. Please try with a clearer photo of a plant or flower.</p>';
+    return;
+  }
+
+  document.getElementById('r-common').textContent = r.common_name;
+  document.getElementById('r-latin').textContent = r.latin_name;
+  document.getElementById('r-local').textContent = r.local_name;
+  document.getElementById('r-img').src = state.currentImage;
+  setTimeout(() => {
+    document.getElementById('r-conf-fill').style.width = r.confidence + '%';
+    document.getElementById('r-conf-pct').textContent = r.confidence + '% match';
+  }, 100);
+
+  // Description tab
+  const traitsHtml = r.traits ? `<div class="info-grid">${r.traits.map(t => `
+    <div class="info-item">
+      <div class="info-label">${t.label}</div>
+      <div class="info-value">${t.value}</div>
+    </div>`).join('')}</div>` : '';
+  document.getElementById('rtab-desc').innerHTML = `
+    <p style="margin-bottom:16px;">${r.description}</p>
+    ${traitsHtml}
+    ${r.benefits ? `<div style="margin-top:14px;padding:12px 14px;background:var(--dew);border-radius:10px;border-left:3px solid var(--sage);font-size:.85rem;color:var(--fern);">🌟 ${r.benefits}</div>` : ''}
+  `;
+
+  // Care tab
+  if (!state.user?.premium) {
+    document.getElementById('rtab-care').innerHTML = premiumLock('Care Guide');
+    document.getElementById('rtab-pests').innerHTML = premiumLock('Pest & Disease Detection');
+    document.getElementById('rtab-nft').innerHTML = premiumLock('NFT Minting');
+  } else {
+    const care = r.care;
+    document.getElementById('rtab-care').innerHTML = `
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">💧 Watering</div><div class="info-value">${care.watering}</div></div>
+        <div class="info-item"><div class="info-label">☀️ Light</div><div class="info-value">${care.light}</div></div>
+        <div class="info-item"><div class="info-label">🪴 Soil</div><div class="info-value">${care.soil}</div></div>
+        <div class="info-item"><div class="info-label">💦 Humidity</div><div class="info-value">${care.humidity}</div></div>
+      </div>
+      <div style="margin-top:12px;" class="info-item">
+        <div class="info-label">🌿 Fertilizer</div>
+        <div class="info-value">${care.fertilizer}</div>
+      </div>
+    `;
+
+    const pests = r.pests || [];
+    document.getElementById('rtab-pests').innerHTML = pests.length === 0
+      ? '<div style="color:var(--sage);padding:12px;">✅ No pests or diseases detected for this plant.</div>'
+      : pests.map(p => `
+        <div class="hama-card">
+          <span class="hama-severity sev-${p.severity}">${p.severity.toUpperCase()} Risk</span>
+          <div class="hama-name">${p.name}</div>
+          <div class="hama-desc">${p.description}</div>
+        </div>`).join('');
+
+    // NFT tab
+    const nftId = '#' + Math.floor(Math.random() * 9999 + 1000);
+    document.getElementById('rtab-nft').innerHTML = `
+      <div class="nft-section">
+        <div class="wallet-status" id="wallet-status-text">${state.walletConnected ? `<span class="connected">✅ Wallet connected: ${state.walletAddress}</span>` : 'No wallet connected'}</div>
+        <div class="nft-card-preview">
+          <div class="nft-card-top">
+            <span class="nft-logo">🌿 BotanicaAI</span>
+            <span class="nft-id">${nftId}</span>
+          </div>
+          <img src="${state.currentImage}" class="nft-plant-img" alt="Plant">
+          <div class="nft-plant-name">${r.common_name}</div>
+          <div class="nft-plant-latin">${r.latin_name}</div>
+          <div class="nft-attrs">
+            ${r.traits ? r.traits.slice(0,3).map(t => `
+              <div class="nft-attr">
+                <div class="nft-attr-label">${t.label}</div>
+                <div class="nft-attr-val">${t.value}</div>
+              </div>`).join('') : ''}
+            <div class="nft-attr">
+              <div class="nft-attr-label">Confidence</div>
+              <div class="nft-attr-val">${r.confidence}%</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-mint" onclick="${state.walletConnected ? 'mintNFT()' : 'openModal(\'wallet\')'}" id="mint-action-btn">
+          ${state.walletConnected ? '🪙 Mint This NFT' : '🔗 Connect Wallet to Mint'}
+        </button>
+      </div>
+    `;
+  }
+
+  document.getElementById('result-wrap').style.display = 'block';
+  document.getElementById('btn-new-scan').style.display = 'block';
+}
+
+function premiumLock(feature) {
+  return `<div class="premium-lock">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">${feature}</div>
+    <div class="lock-desc">This is a Premium feature. Upgrade to unlock care guides, pest detection, NFT minting, and unlimited scans.</div>
+    <button class="btn-premium" onclick="openPremiumUpgrade()">🌟 Upgrade to Premium</button>
+  </div>`;
+}
+
+function switchRTab(tab, el) {
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.rtab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('rtab-' + tab).classList.add('active');
+}
+
+function resetScan() {
+  state.currentImage = null;
+  state.currentResult = null;
+  document.getElementById('upload-zone').style.display = 'block';
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('result-wrap').style.display = 'none';
+  document.getElementById('btn-new-scan').style.display = 'none';
+  document.getElementById('loading-wrap').style.display = 'none';
+  document.getElementById('file-input').value = '';
+  // Reset result tabs
+  document.querySelectorAll('.rtab').forEach((t,i) => t.classList.toggle('active', i===0));
+  document.querySelectorAll('.rtab-content').forEach((c,i) => c.classList.toggle('active', i===0));
+}
+
+// ─── WALLET ───
+function connectWallet(provider) {
+  state.walletConnected = true;
+  state.walletAddress = '0x' + Math.random().toString(16).substr(2,8).toUpperCase() + '...';
+  closeModal('wallet');
+  showToast(`🦊 ${provider} connected!`, 'success');
+  // Update wallet status if visible
+  const ws = document.getElementById('wallet-status-text');
+  if (ws) ws.innerHTML = `<span class="connected">✅ Wallet connected: ${state.walletAddress}</span>`;
+  const mintBtn = document.getElementById('mint-action-btn');
+  if (mintBtn) { mintBtn.textContent = '🪙 Mint This NFT'; mintBtn.onclick = mintNFT; }
+}
+
+function mintNFT() {
+  if (!state.currentResult) return;
+  // Mark as minted in collection
+  if (state.collection.length > 0) state.collection[state.collection.length - 1].nft = true;
+  showToast('🪙 NFT minted successfully! Check your wallet.', 'success');
+  const mintBtn = document.getElementById('mint-action-btn');
+  if (mintBtn) { mintBtn.textContent = '✅ NFT Minted!'; mintBtn.disabled = true; mintBtn.style.opacity = '.6'; }
+}
+
+// ─── COLLECTION ───
+function renderCollection() {
+  const grid = document.getElementById('coll-grid');
+  if (state.collection.length === 0) {
+    grid.innerHTML = `<div class="empty-coll" style="grid-column:1/-1;"><div class="empty-coll-icon">🌱</div><div style="font-weight:600;color:var(--forest);margin-bottom:6px;">Your collection is empty</div><div style="font-size:.83rem;color:var(--fog);">Scan plants to start building your botanical collection</div></div>`;
+    return;
+  }
+  grid.innerHTML = state.collection.map(p => `
+    <div class="coll-card">
+      <div class="coll-img" style="background-image:url(${p.image});background-size:cover;background-position:center;"></div>
+      <div class="coll-info">
+        <div class="coll-name">${p.common_name}</div>
+        <div class="coll-latin">${p.latin_name}</div>
+        <div class="coll-date">📅 ${p.date}</div>
+        ${p.nft ? '<div class="coll-nft-badge">🪙 NFT Minted</div>' : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ─── HISTORY ───
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  if (state.history.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:48px;color:var(--fog);border:2px dashed var(--mist);border-radius:16px;"><div style="font-size:2.5rem;margin-bottom:12px;">📋</div><div style="font-weight:600;color:var(--forest);margin-bottom:6px;">No scan history yet</div><div style="font-size:.83rem;">Your scan history will appear here after you identify plants.</div></div>`;
+    return;
+  }
+  list.innerHTML = state.history.map(h => `
+    <div class="history-item">
+      <div class="history-thumb" style="${h.image ? `background-image:url(${h.image});background-size:cover;background-position:center;` : ''}"></div>
+      <div class="history-info">
+        <div class="history-name">${h.common_name}</div>
+        <div class="history-meta">${h.latin_name} · ${h.confidence}% confidence · ${h.date}</div>
+        ${h.nft ? '<div class="history-nft">🪙 Minted as NFT</div>' : ''}
+      </div>
+    </div>`).join('');
+}
+
+// ─── TOAST ───
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── CLOSE MODAL ON OVERLAY CLICK ───
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      const id = overlay.id.replace('modal-', '');
+      closeModal(id);
+    }
+  });
+});
+</script>
+</body>
+</html>
