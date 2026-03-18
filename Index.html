@@ -409,7 +409,7 @@ section{padding:100px 48px;}
   padding:2px 10px;border-radius:20px;margin-bottom:8px;
 }
 .sev-low{background:#d4edda;color:#155724;}
-.sev-med{background:#fff3cd;color:#856404;}
+.sev-medium,.sev-med{background:#fff3cd;color:#856404;}
 .sev-high{background:#f8d7da;color:#721c24;}
 
 /* NFT card */
@@ -624,7 +624,7 @@ section{padding:100px 48px;}
 .wallet-icon{font-size:1.4rem;}
 
 /* collection */
-#my-collection{display:none;padding:100px 48px;}
+#my-collection{padding:100px 48px;}
 .coll-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;}
 .coll-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;
@@ -652,7 +652,7 @@ section{padding:100px 48px;}
 .empty-coll-icon{font-size:3rem;margin-bottom:12px;}
 
 /* history */
-#scan-history{display:none;padding:100px 48px;}
+#scan-history{padding:100px 48px;}
 .history-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
 .history-item{
   background:var(--white);border-radius:14px;padding:18px 22px;
@@ -689,6 +689,128 @@ section{padding:100px 48px;}
 }
 .loading-step.done{color:var(--sage);}
 .loading-step.active{color:var(--forest);}
+
+/* ── TESTNET ── */
+#testnet-section{background:var(--moss);padding:100px 48px;}
+#testnet-section .section-tag{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.25);color:var(--gold);}
+#testnet-section .section-title{color:var(--cream);}
+#testnet-section .section-sub{color:var(--fog);}
+.testnet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1100px;margin:40px auto 0;}
+.testnet-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:28px;transition:all .3s;
+}
+.testnet-card:hover{background:rgba(255,255,255,.07);border-color:rgba(201,168,76,.3);}
+.testnet-card-icon{font-size:2rem;margin-bottom:14px;}
+.testnet-card-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--cream);margin-bottom:8px;}
+.testnet-card-desc{font-size:.84rem;color:var(--fog);line-height:1.7;}
+.testnet-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(240,208,128,.15));
+  border:1px solid rgba(201,168,76,.3);color:var(--gold);
+  font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;
+  margin-top:12px;letter-spacing:.06em;text-transform:uppercase;
+}
+.testnet-notice{
+  max-width:1100px;margin:32px auto 0;
+  background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);
+  border-radius:14px;padding:18px 24px;
+  font-size:.85rem;color:var(--gold);line-height:1.6;
+}
+
+/* ── ROADMAP ── */
+#roadmap-section{background:var(--dew);padding:100px 48px;}
+.roadmap-wrapper{max-width:900px;margin:0 auto;}
+.roadmap-intro{margin-bottom:52px;}
+.timeline{position:relative;padding-left:0;}
+.timeline::before{
+  content:'';position:absolute;left:140px;top:0;bottom:0;
+  width:2px;background:linear-gradient(to bottom,var(--mist),var(--sage),var(--mist));
+}
+.tl-item{
+  display:flex;gap:0;align-items:flex-start;
+  margin-bottom:40px;position:relative;
+}
+.tl-date{
+  width:130px;flex-shrink:0;
+  font-family:'DM Mono',monospace;font-size:.78rem;font-weight:500;
+  color:var(--fern);padding-top:14px;text-align:right;padding-right:16px;
+  letter-spacing:.04em;line-height:1.4;
+}
+.tl-dot-wrap{
+  width:20px;flex-shrink:0;display:flex;flex-direction:column;
+  align-items:center;padding-top:14px;position:relative;
+  margin:0 16px;
+}
+.tl-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--forest);background:var(--white);
+  flex-shrink:0;z-index:1;transition:all .3s;
+}
+.tl-dot.active{background:var(--forest);box-shadow:0 0 0 4px rgba(36,92,53,.15);}
+.tl-dot.done{background:var(--sage);border-color:var(--sage);}
+.tl-dot.agent{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.2);}
+.tl-body{
+  flex:1;background:var(--white);border-radius:16px;padding:22px 24px;
+  border:1.5px solid var(--mist);transition:all .3s;
+}
+.tl-body:hover{border-color:var(--sage);box-shadow:0 6px 24px rgba(36,92,53,.07);}
+.tl-body.agent-card{
+  background:linear-gradient(135deg,#fffdf5,#fffbea);
+  border-color:rgba(201,168,76,.3);
+}
+.tl-body.agent-card:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(201,168,76,.12);}
+.tl-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 10px;border-radius:10px;margin-bottom:10px;
+}
+.tag-done{background:var(--dew);color:var(--fern);}
+.tag-active{background:rgba(36,92,53,.1);color:var(--forest);}
+.tag-agent{background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(240,208,128,.25));color:var(--bark);}
+.tag-chain{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:8px;margin-left:6px;
+}
+.tag-solana{background:rgba(153,69,255,.12);color:#9945FF;}
+.tag-base{background:rgba(0,82,255,.1);color:#0052FF;}
+.tl-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+  font-weight:700;color:var(--moss);margin-bottom:8px;line-height:1.2;
+}
+.tl-desc{font-size:.84rem;color:var(--fog);line-height:1.75;}
+.tl-features{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;
+}
+.tl-feat{
+  font-size:.72rem;background:var(--dew);color:var(--fern);
+  padding:3px 10px;border-radius:8px;border:1px solid var(--mist);
+}
+.tl-feat.agent-feat{
+  background:rgba(201,168,76,.1);color:var(--bark);
+  border-color:rgba(201,168,76,.2);
+}
+.agent-highlight{
+  margin-top:14px;padding:12px 16px;
+  background:rgba(201,168,76,.07);border-radius:10px;
+  border-left:3px solid var(--gold);
+  font-size:.82rem;color:var(--bark);line-height:1.6;
+}
+
+@media(max-width:768px){
+  #testnet-section,#roadmap-section{padding:72px 16px 60px;}
+  .timeline::before{display:none;}
+  .tl-item{flex-direction:column;gap:10px;}
+  .tl-date{width:auto;text-align:left;padding:0 0 2px 0;font-size:.75rem;}
+  .tl-dot-wrap{display:none;}
+  .tl-body{width:100%;}
+  .testnet-grid{grid-template-columns:1fr;}
+  .tag-chain{margin-left:0;margin-top:4px;display:inline-flex;}
+  .tl-features{gap:4px;}
+  .tl-feat{font-size:.68rem;}
+  .agent-highlight{font-size:.78rem;}
+}
 
 /* ── FOOTER ── */
 footer{
@@ -810,7 +932,7 @@ footer{
   .nav-user{display:none !important;}
   .nav-hamburger{display:flex;}
 
-  section,#my-collection,#scan-history{padding:72px 16px 60px;}
+  section,#my-collection,#scan-history,#testnet-section,#roadmap-section{padding:72px 16px 60px;}
   #home{padding-top:72px;}
   h1{font-size:clamp(2.2rem,8vw,3.2rem);}
   .hero-sub{font-size:.95rem;}
@@ -1220,6 +1342,192 @@ footer{
   </div>
 </section>
 
+<!-- ─── TESTNET ─── -->
+<section id="testnet-section">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-tag">🧪 Testnet</div>
+    <h2 class="section-title">Test Before You Mint</h2>
+    <p class="section-sub" style="color:var(--fog);margin-bottom:0;">Experiment with BOTANICA's AI Agent features in a safe testnet environment — no real funds, full functionality.</p>
+    <div class="testnet-grid">
+      <div class="testnet-card">
+        <div class="testnet-card-icon">🌿</div>
+        <div class="testnet-card-title">Plant Scan Testnet</div>
+        <div class="testnet-card-desc">Run unlimited plant identifications in our sandbox. Test the Claude AI vision pipeline with sample images or your own photos — no API limits apply.</div>
+        <div class="testnet-badge">✅ Live Now</div>
+      </div>
+      <div class="testnet-card">
+        <div class="testnet-card-icon">🪙</div>
+        <div class="testnet-card-title">NFT Mint Testnet</div>
+        <div class="testnet-card-desc">Connect a testnet wallet and mint mock plant NFT cards on Solana Devnet or Base Sepolia. Test the full minting flow before going mainnet.</div>
+        <div class="testnet-badge">🔧 In Progress</div>
+      </div>
+      <div class="testnet-card">
+        <div class="testnet-card-icon">🤖</div>
+        <div class="testnet-card-title">AI Agent Testnet</div>
+        <div class="testnet-card-desc">Try the upcoming BOTANICA AI Agent — autonomous plant care assistant that monitors, alerts, and executes on-chain actions on your behalf.</div>
+        <div class="testnet-badge">🚀 Coming Q2 2026</div>
+      </div>
+      <div class="testnet-card">
+        <div class="testnet-card-icon">🔗</div>
+        <div class="testnet-card-title">Cross-Chain Bridge</div>
+        <div class="testnet-card-desc">Test bridging your plant NFTs between Solana and Base networks. Powered by Wormhole protocol — testnet environment fully operational.</div>
+        <div class="testnet-badge">🔧 In Progress</div>
+      </div>
+    </div>
+    <div class="testnet-notice">
+      ⚠️ <strong>Testnet Notice:</strong> All testnet transactions use test tokens and have no real-world value. Connect only testnet wallets. BOTANICA is not responsible for any accidental mainnet interactions during the testnet phase.
+    </div>
+  </div>
+</section>
+
+<!-- ─── ROADMAP ─── -->
+<section id="roadmap-section">
+  <div class="roadmap-wrapper">
+    <div class="roadmap-intro">
+      <div class="section-tag">🗺 Roadmap</div>
+      <h2 class="section-title">What's Coming Next</h2>
+      <p class="section-sub">From a smart plant scanner to a fully autonomous AI Agent on Solana and Base — here's our journey from March to May 2026.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- DONE -->
+      <div class="tl-item">
+        <div class="tl-date">Jan 2026</div>
+        <div class="tl-dot-wrap"><div class="tl-dot done"></div></div>
+        <div class="tl-body">
+          <div class="tl-tag tag-done">✅ Shipped</div>
+          <div class="tl-title">BOTANICA v1.0 — Core Launch</div>
+          <div class="tl-desc">Launched the plant identification engine powered by Claude AI. Includes full plant profiles, care guides, pest detection, and basic NFT minting on mobile & web.</div>
+          <div class="tl-features">
+            <span class="tl-feat">Plant Identification</span>
+            <span class="tl-feat">Care Guides</span>
+            <span class="tl-feat">Pest Detection</span>
+            <span class="tl-feat">NFT Minting</span>
+            <span class="tl-feat">Premium Plan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE -->
+      <div class="tl-item">
+        <div class="tl-date">Feb 2026</div>
+        <div class="tl-dot-wrap"><div class="tl-dot done"></div></div>
+        <div class="tl-body">
+          <div class="tl-tag tag-done">✅ Shipped</div>
+          <div class="tl-title">Mobile Optimization & Social Layer</div>
+          <div class="tl-desc">Full mobile responsiveness audit, hamburger nav, camera improvements, and social integration — Twitter/X, GitHub, and Orynth badge launched.</div>
+          <div class="tl-features">
+            <span class="tl-feat">Mobile First UI</span>
+            <span class="tl-feat">X / Twitter</span>
+            <span class="tl-feat">GitHub</span>
+            <span class="tl-feat">Orynth Badge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARCH 2026 — AI AGENT BEGINS -->
+      <div class="tl-item">
+        <div class="tl-date">Mar 2026<br><span style="color:var(--gold);font-size:.7rem;">PHASE 1</span></div>
+        <div class="tl-dot-wrap"><div class="tl-dot active"></div></div>
+        <div class="tl-body agent-card">
+          <div>
+            <div class="tl-tag tag-agent">🤖 AI Agent — Phase 1</div>
+            <span class="tag-chain tag-solana">◎ Solana</span>
+            <span class="tag-chain tag-base">🔵 Base</span>
+          </div>
+          <div class="tl-title">BOTANICA Agent Core — Autonomous Plant Intelligence</div>
+          <div class="tl-desc">Launching the BOTANICA AI Agent — an autonomous Claude-powered agent that can independently monitor your plant collection, trigger care reminders, and execute simple on-chain actions without manual input.</div>
+          <div class="agent-highlight">
+            🧠 <strong>Agent Capabilities:</strong> The agent reads your plant collection, tracks watering schedules, detects pest risks proactively, and pushes on-chain notifications to your Solana or Base wallet as signed messages — all autonomously.
+          </div>
+          <div class="tl-features">
+            <span class="tl-feat agent-feat">Claude Agent Runtime</span>
+            <span class="tl-feat agent-feat">Autonomous Monitoring</span>
+            <span class="tl-feat agent-feat">Solana Devnet</span>
+            <span class="tl-feat agent-feat">Base Sepolia</span>
+            <span class="tl-feat agent-feat">On-chain Notifications</span>
+            <span class="tl-feat agent-feat">Care Scheduler</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- APRIL 2026 -->
+      <div class="tl-item">
+        <div class="tl-date">Apr 2026<br><span style="color:var(--gold);font-size:.7rem;">PHASE 2</span></div>
+        <div class="tl-dot-wrap"><div class="tl-dot agent"></div></div>
+        <div class="tl-body agent-card">
+          <div>
+            <div class="tl-tag tag-agent">🤖 AI Agent — Phase 2</div>
+            <span class="tag-chain tag-solana">◎ Solana</span>
+            <span class="tag-chain tag-base">🔵 Base</span>
+          </div>
+          <div class="tl-title">Agent Wallet Actions — Autonomous On-Chain Execution</div>
+          <div class="tl-desc">The agent graduates from notifications to real on-chain actions. It can autonomously mint plant NFTs when a rare species is identified, update collection metadata, and execute micro-transactions for in-app purchases — all triggered by AI decisions, not manual clicks.</div>
+          <div class="agent-highlight">
+            ⛓️ <strong>On-Chain Actions:</strong> Auto-mint NFT on rare plant detection · Update NFT metadata with care logs · Execute SPL token transfers on Solana · ERC-20 micro-payments on Base · Cross-chain bridge via Wormhole.
+          </div>
+          <div class="tl-features">
+            <span class="tl-feat agent-feat">Auto NFT Minting</span>
+            <span class="tl-feat agent-feat">Metadata Updates</span>
+            <span class="tl-feat agent-feat">SPL Token Transfers</span>
+            <span class="tl-feat agent-feat">ERC-20 on Base</span>
+            <span class="tl-feat agent-feat">Wormhole Bridge</span>
+            <span class="tl-feat agent-feat">Agent Wallet (MPC)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAY 2026 -->
+      <div class="tl-item">
+        <div class="tl-date">May 2026<br><span style="color:var(--gold);font-size:.7rem;">PHASE 3</span></div>
+        <div class="tl-dot-wrap"><div class="tl-dot agent"></div></div>
+        <div class="tl-body agent-card">
+          <div>
+            <div class="tl-tag tag-agent">🤖 AI Agent — Phase 3</div>
+            <span class="tag-chain tag-solana">◎ Solana</span>
+            <span class="tag-chain tag-base">🔵 Base</span>
+          </div>
+          <div class="tl-title">Multi-Agent Ecosystem & Agent Marketplace</div>
+          <div class="tl-desc">Scale to a full multi-agent ecosystem. The BOTANICA Agent spawns specialized sub-agents for different tasks — a Care Agent, a Pest Agent, a Market Agent — all coordinating autonomously. Users can subscribe to agent services via on-chain smart contracts, with revenue split between agent operators and the protocol.</div>
+          <div class="agent-highlight">
+            🌐 <strong>Agent Marketplace:</strong> Publish your own plant care agent · Subscribe to specialist agents · Revenue sharing via Solana SPL & Base ERC-20 · Full agent audit log on-chain · DAO governance for agent upgrades.
+          </div>
+          <div class="tl-features">
+            <span class="tl-feat agent-feat">Multi-Agent System</span>
+            <span class="tl-feat agent-feat">Sub-Agent Spawning</span>
+            <span class="tl-feat agent-feat">Agent Marketplace</span>
+            <span class="tl-feat agent-feat">Smart Contract Subscriptions</span>
+            <span class="tl-feat agent-feat">DAO Governance</span>
+            <span class="tl-feat agent-feat">On-chain Audit Log</span>
+            <span class="tl-feat agent-feat">Solana Mainnet</span>
+            <span class="tl-feat agent-feat">Base Mainnet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BEYOND -->
+      <div class="tl-item">
+        <div class="tl-date">Q3 2026+</div>
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-tag tag-active">🔭 Planned</div>
+          <div class="tl-title">Beyond — Native Mobile App & DePIN Integration</div>
+          <div class="tl-desc">Native iOS & Android apps with background agent monitoring. DePIN sensor integration for real-time soil moisture, light, and humidity data fed directly to your AI agent. Full decentralized plant knowledge graph on-chain.</div>
+          <div class="tl-features">
+            <span class="tl-feat">iOS App</span>
+            <span class="tl-feat">Android App</span>
+            <span class="tl-feat">DePIN Sensors</span>
+            <span class="tl-feat">Plant Knowledge Graph</span>
+            <span class="tl-feat">Agent API (Public)</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+</section>
+
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
@@ -1372,40 +1680,49 @@ function showSection(id) {
   if ((id === 'my-collection' || id === 'scan-history') && !state.user?.premium) {
     openPremiumUpgrade(); return;
   }
+
+  // Close mobile drawer if open
+  closeDrawer();
+
   // Hide all sections
-  document.querySelectorAll('section, #my-collection, #scan-history').forEach(s => {
+  document.querySelectorAll('section, #my-collection, #scan-history, #testnet-section, #roadmap-section').forEach(s => {
     s.style.display = 'none';
   });
-  const el = document.getElementById(id);
-  if (el) { el.style.display = 'flex'; el.style.flexDirection = 'column'; el.style.alignItems = 'center'; }
 
-  // Non-centered sections
-  const nonCentered = ['how-it-works','features','about','my-collection','scan-history'];
-  if (nonCentered.includes(id) && el) {
-    el.style.alignItems = 'unset';
-    el.style.flexDirection = 'unset';
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  // Block-display sections (no centering needed)
+  const blockSections = ['how-it-works','features','about','my-collection','scan-history','testnet-section','roadmap-section'];
+
+  if (blockSections.includes(id)) {
     el.style.display = 'block';
+  } else if (id === 'home') {
+    el.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;';
+  } else {
+    // scan-section, etc
+    el.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
   }
-  if (id === 'home' && el) {
-    el.style.display = 'flex';
-    el.style.flexDirection = 'column';
-    el.style.alignItems = 'center';
-    el.style.justifyContent = 'center';
-  }
+
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   if (id === 'my-collection') renderCollection();
   if (id === 'scan-history') renderHistory();
 }
 
-// Show all on init
+// Show all on init — hide non-default sections
 function initSections() {
-  const all = ['home','how-it-works','scan-section','features','about'];
-  all.forEach(id => {
+  // Show main landing sections
+  const show = ['home','how-it-works','scan-section','features','about'];
+  show.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.style.display = '';
+    if (el) el.style.removeProperty('display');
   });
-  document.getElementById('my-collection').style.display = 'none';
-  document.getElementById('scan-history').style.display = 'none';
+  // Hide premium + extra sections
+  const hide = ['my-collection','scan-history','testnet-section','roadmap-section'];
+  hide.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
 }
 initSections();
 
