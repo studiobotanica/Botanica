@@ -735,18 +735,117 @@ footer{
 .toast.success{background:var(--forest);}
 .toast.error{background:#8b2020;}
 
+/* store badges */
+.store-badges{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  margin-top:28px;
+  animation:fadeUp .8s .35s ease both;
+}
+.store-badge{
+  display:flex;align-items:center;gap:12px;
+  background:var(--ink);color:var(--white);
+  padding:10px 20px;border-radius:12px;text-decoration:none;
+  transition:all .2s;border:1px solid rgba(255,255,255,.1);
+}
+.store-badge:hover{background:#222;transform:translateY(-2px);}
+.store-badge-text{display:flex;flex-direction:column;}
+.store-badge-sub{font-size:.68rem;opacity:.7;letter-spacing:.04em;}
+.store-badge-main{font-size:.95rem;font-weight:600;line-height:1.2;}
+
+/* ── SOCIAL LINKS ── */
+.social-links{display:flex;gap:10px;align-items:center;}
+.social-link{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--fog);text-decoration:none;transition:all .2s;
+  flex-shrink:0;
+}
+.social-link:hover{background:rgba(255,255,255,.2);color:var(--cream);}
+.social-link svg{width:16px;height:16px;fill:currentColor;}
+.footer-social{display:flex;gap:10px;margin-top:16px;align-items:center;}
+.orynth-badge{display:block;margin-top:14px;opacity:.9;transition:opacity .2s;}
+.orynth-badge:hover{opacity:1;}
+
+/* ── HAMBURGER ── */
+.nav-hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+  padding:6px;background:none;border:none;
+}
+.nav-hamburger span{
+  display:block;width:22px;height:2px;background:var(--forest);
+  border-radius:2px;transition:all .3s;
+}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* Mobile drawer */
+.nav-drawer{
+  display:none;position:fixed;top:65px;left:0;right:0;
+  background:rgba(248,244,237,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--mist);z-index:199;
+  padding:16px 20px 24px;
+  flex-direction:column;gap:4px;
+}
+.nav-drawer.open{display:flex;}
+.nav-drawer a{
+  padding:12px 16px;border-radius:10px;color:var(--forest);
+  font-size:.9rem;font-weight:500;cursor:pointer;
+  text-decoration:none;transition:background .2s;
+  display:block;
+}
+.nav-drawer a:hover{background:var(--dew);}
+.nav-drawer-auth{
+  margin-top:12px;padding-top:12px;border-top:1px solid var(--mist);
+  display:flex;gap:10px;
+}
+.nav-drawer-auth button{flex:1;}
+
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  nav{padding:14px 20px;}
+  nav{padding:12px 16px;}
   .nav-links{display:none;}
-  section,#my-collection,#scan-history{padding:80px 20px;}
-  .about-grid{grid-template-columns:1fr;}
+  .nav-auth{display:none;}
+  .nav-user{display:none !important;}
+  .nav-hamburger{display:flex;}
+
+  section,#my-collection,#scan-history{padding:72px 16px 60px;}
+  #home{padding-top:72px;}
+  h1{font-size:clamp(2.2rem,8vw,3.2rem);}
+  .hero-sub{font-size:.95rem;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .hero-btns button{width:100%;max-width:280px;}
+  .hero-stats{gap:20px;flex-wrap:wrap;justify-content:center;}
+  .stat-num{font-size:1.8rem;}
+
+  .about-grid{grid-template-columns:1fr;gap:40px;}
   .about-visual{display:none;}
-  .hiw-steps{grid-template-columns:1fr;}
-  .hiw-step:first-child,.hiw-step:last-child{border-radius:16px;}
-  .hero-stats{gap:24px;}
-  footer{padding:48px 20px 24px;}
-  .footer-top{flex-direction:column;}
+
+  .hiw-steps{grid-template-columns:1fr;gap:0;}
+  .hiw-step{border-radius:0 !important;}
+  .hiw-step:first-child{border-radius:16px 16px 0 0 !important;}
+  .hiw-step:last-child{border-radius:0 0 16px 16px !important;}
+
+  .features-grid{grid-template-columns:1fr;}
+  .coll-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+
+  footer{padding:40px 16px 24px;}
+  .footer-top{flex-direction:column;gap:28px;}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px;}
+
+  .scan-box{border-radius:16px;}
+  .scan-body{padding:20px;}
+  #result-wrap{padding:0 16px 16px;}
+  .btn-new-scan{width:calc(100% - 32px);margin:0 16px 16px;}
+  .result-tabs{flex-wrap:wrap;gap:4px;}
+  .rtab{flex:unset;min-width:calc(50% - 4px);}
+  .info-grid{grid-template-columns:1fr;}
+
+  .modal{padding:28px 20px;border-radius:20px;}
+  .toast{bottom:16px;right:16px;left:16px;right:16px;}
+
+  .store-badges{flex-direction:column;align-items:center;}
 }
 </style>
 </head>
@@ -767,6 +866,9 @@ footer{
     <li><a onclick="showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a></li>
     <li><a onclick="showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a></li>
   </ul>
+  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleDrawer()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-auth" id="nav-auth">
     <button class="btn-login" onclick="openModal('login')">Login</button>
     <button class="btn-signup" onclick="openModal('register')">Sign Up</button>
@@ -779,7 +881,20 @@ footer{
   </div>
 </nav>
 
-<!-- ─── HERO ─── -->
+<!-- ─── MOBILE DRAWER ─── -->
+<div class="nav-drawer" id="nav-drawer">
+  <a onclick="closeDrawer();showSection('home')">🏠 Home</a>
+  <a onclick="closeDrawer();showSection('scan-section')">🔍 Scan Plant</a>
+  <a onclick="closeDrawer();showSection('how-it-works')">📖 How It Works</a>
+  <a onclick="closeDrawer();showSection('features')">✨ Features</a>
+  <a onclick="closeDrawer();showSection('about')">🌿 About</a>
+  <a onclick="closeDrawer();showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a>
+  <a onclick="closeDrawer();showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a>
+  <div class="nav-drawer-auth">
+    <button class="btn-login" onclick="closeDrawer();openModal('login')">Login</button>
+    <button class="btn-signup" onclick="closeDrawer();openModal('register')">Sign Up</button>
+  </div>
+</div>
 <section id="home" style="padding-top:80px;">
   <div class="hero-bg"></div>
   <div class="hero-leaves">
@@ -1105,12 +1220,24 @@ footer{
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-logo">🌿 BOTANICA</div>
       <div class="footer-desc">Your personal plant expert powered by Claude AI. Identify, learn, collect, and mint botanical discoveries.</div>
+      <div class="footer-social">
+        <!-- X / Twitter -->
+        <a href="https://x.com/botanicalai" target="_blank" rel="noopener" class="social-link" title="Follow on X">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- GitHub -->
+        <a href="https://github.com/studiobotanica" target="_blank" rel="noopener" class="social-link" title="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+      <a href="https://orynth.dev/projects/botanica" target="_blank" rel="noopener" class="orynth-badge">
+        <img src="https://orynth.dev/api/badge/botanica?theme=light&style=default" alt="Featured on Orynth" width="180" height="54" loading="lazy" />
+      </a>
     </div>
     <div class="footer-links-group">
       <div class="footer-links-title">Navigate</div>
@@ -1127,6 +1254,15 @@ footer{
         <li><a onclick="showSection('features')">All Features</a></li>
         <li><a onclick="openModal('register')">Sign Up Free</a></li>
         <li><a onclick="openPremiumUpgrade()">Go Premium ★</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-links-title">Links</div>
+      <ul class="footer-links">
+        <li><a href="https://x.com/botanicalai" target="_blank" rel="noopener">𝕏 Twitter / X</a></li>
+        <li><a href="https://github.com/studiobotanica" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://orynth.dev/projects/botanica" target="_blank" rel="noopener">Orynth</a></li>
+        <li><a href="https://botanica.web.id" target="_blank" rel="noopener">Website</a></li>
       </ul>
     </div>
   </div>
@@ -1733,6 +1869,26 @@ function showToast(msg, type = 'success') {
   t.className = 'toast ' + type + ' show';
   setTimeout(() => t.classList.remove('show'), 3000);
 }
+
+// ─── MOBILE DRAWER ───
+function toggleDrawer() {
+  const drawer = document.getElementById('nav-drawer');
+  const btn = document.getElementById('nav-hamburger');
+  drawer.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeDrawer() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('nav-hamburger').classList.remove('open');
+}
+// Close drawer on outside click
+document.addEventListener('click', (e) => {
+  const drawer = document.getElementById('nav-drawer');
+  const hamburger = document.getElementById('nav-hamburger');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !hamburger.contains(e.target)) {
+    closeDrawer();
+  }
+});
 
 // ─── CLOSE MODAL ON OVERLAY CLICK ───
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
