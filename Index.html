@@ -948,6 +948,128 @@ section{padding:100px 48px;}
   .contracts-summary{gap:16px;justify-content:center;}
 }
 
+/* ── TEAM SECTION ── */
+#team-section{background:var(--cream);padding:100px 48px;}
+.team-header{text-align:center;max-width:600px;margin:0 auto 72px;}
+.team-header .section-sub{margin-inline:auto;}
+
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  max-width:1000px;
+  margin:0 auto;
+}
+
+.team-card{
+  background:var(--white);
+  border-radius:28px;
+  border:1.5px solid var(--mist);
+  padding:44px 32px 36px;
+  text-align:center;
+  transition:all .35s;
+  position:relative;
+  overflow:hidden;
+}
+.team-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--forest),var(--sage));
+  opacity:0;
+  transition:opacity .3s;
+}
+.team-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 24px 56px rgba(36,92,53,.12);
+  border-color:var(--sage);
+}
+.team-card:hover::before{opacity:1;}
+
+/* Avatar */
+.team-avatar-wrap{
+  position:relative;
+  display:inline-block;
+  margin-bottom:24px;
+}
+.team-avatar{
+  width:100px;height:100px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--forest),var(--fern));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--white);
+  border:3px solid var(--mist);
+  transition:border-color .3s;
+}
+.team-card:hover .team-avatar{border-color:var(--sage);}
+.team-role-dot{
+  position:absolute;bottom:4px;right:4px;
+  width:22px;height:22px;border-radius:50%;
+  border:2.5px solid var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;
+}
+.dot-founder{background:var(--gold);}
+.dot-marketing{background:#3b82f6;}
+.dot-dev{background:#8b5cf6;}
+
+/* Info */
+.team-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:700;
+  color:var(--moss);margin-bottom:4px;
+  letter-spacing:-.01em;
+}
+.team-role{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 14px;
+  border-radius:20px;margin-bottom:20px;
+}
+.role-founder  {background:rgba(201,168,76,.12);color:var(--bark);}
+.role-marketing{background:rgba(59,130,246,.1);color:#1d4ed8;}
+.role-dev      {background:rgba(139,92,246,.1);color:#6d28d9;}
+
+.team-desc{
+  font-size:.85rem;color:var(--fog);
+  line-height:1.75;margin-bottom:24px;
+  min-height:72px;
+}
+
+/* X link button */
+.team-x-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:30px;
+  background:var(--ink);color:var(--white);
+  text-decoration:none;font-size:.82rem;font-weight:600;
+  letter-spacing:.03em;transition:all .25s;
+  border:1.5px solid transparent;
+}
+.team-x-btn:hover{
+  background:transparent;
+  border-color:var(--ink);
+  color:var(--ink);
+}
+.team-x-btn svg{width:14px;height:14px;fill:currentColor;flex-shrink:0;}
+
+/* Footer note */
+.team-note{
+  max-width:680px;margin:56px auto 0;
+  text-align:center;
+  background:var(--dew);border:1px solid var(--mist);
+  border-radius:16px;padding:24px 32px;
+  font-size:.88rem;color:var(--fern);line-height:1.7;
+}
+.team-note strong{color:var(--forest);}
+
+@media(max-width:768px){
+  #team-section{padding:72px 16px 60px;}
+  .team-grid{grid-template-columns:1fr;max-width:420px;}
+  .team-card{padding:36px 24px 28px;}
+}
+
 /* ── FOOTER ── */
 footer{
   background:var(--moss);color:var(--fog);
@@ -1121,6 +1243,7 @@ footer{
     <li><a onclick="showSection('how-it-works')">How It Works</a></li>
     <li><a onclick="showSection('features')">Features</a></li>
     <li><a onclick="showSection('about')">About</a></li>
+    <li><a onclick="showSection('team-section')" style="color:var(--sage);">👥 Team</a></li>
     <li><a onclick="showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a></li>
     <li><a onclick="showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a></li>
     <li><a onclick="showSection('contracts-section')" style="color:#7ed957;">📄 Contracts</a></li>
@@ -1147,6 +1270,7 @@ footer{
   <a onclick="closeDrawer();showSection('how-it-works')">📖 How It Works</a>
   <a onclick="closeDrawer();showSection('features')">✨ Features</a>
   <a onclick="closeDrawer();showSection('about')">🌿 About</a>
+  <a onclick="closeDrawer();showSection('team-section')" style="color:var(--sage);">👥 Team</a>
   <a onclick="closeDrawer();showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a>
   <a onclick="closeDrawer();showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a>
   <a onclick="closeDrawer();showSection('contracts-section')" style="color:#7ed957;">📄 Contracts</a>
@@ -2330,6 +2454,72 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
   </div>
 </section>
 
+<!-- ─── TEAM ─── -->
+<section id="team-section">
+  <div class="team-header">
+    <div class="section-tag">👥 The Team</div>
+    <h2 class="section-title">People Behind<br>BOTANICA</h2>
+    <p class="section-sub">A small, focused team building the future of botanical intelligence — powered by Claude AI, Solana, and Base.</p>
+  </div>
+
+  <div class="team-grid">
+
+    <!-- Founder -->
+    <div class="team-card">
+      <div class="team-avatar-wrap">
+        <div class="team-avatar">F</div>
+        <div class="team-role-dot dot-founder">★</div>
+      </div>
+      <div class="team-name">Founder</div>
+      <div class="team-role role-founder">⚡ Founder & CEO</div>
+      <p class="team-desc">Visionary behind BOTANICA. Driving the product from concept to AI Agent — building the bridge between botanical knowledge and Web3.</p>
+      <a href="https://x.com/autenticofun" target="_blank" rel="noopener" class="team-x-btn">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @autenticofun
+      </a>
+    </div>
+
+    <!-- Marketing -->
+    <div class="team-card">
+      <div class="team-avatar-wrap">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">M</div>
+        <div class="team-role-dot dot-marketing">📣</div>
+      </div>
+      <div class="team-name">Marketing</div>
+      <div class="team-role role-marketing">📣 Head of Marketing</div>
+      <p class="team-desc">Growing the BOTANICA community and brand. Crafting the story of how AI and Web3 are changing how people connect with the natural world.</p>
+      <a href="https://x.com/arthousebase" target="_blank" rel="noopener" class="team-x-btn">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @arthousebase
+      </a>
+    </div>
+
+    <!-- Dev -->
+    <div class="team-card">
+      <div class="team-avatar-wrap">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#8b5cf6);">D</div>
+        <div class="team-role-dot dot-dev">⌨</div>
+      </div>
+      <div class="team-name">Developer</div>
+      <div class="team-role role-dev">⌨️ Lead Developer</div>
+      <p class="team-desc">Architect of BOTANICA's full-stack — from the Claude AI integration and smart contracts on Solana & Base to the mobile-first web experience.</p>
+      <a href="https://x.com/rootclank" target="_blank" rel="noopener" class="team-x-btn">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @rootclank
+      </a>
+    </div>
+
+  </div>
+
+  <div class="team-note">
+    <strong>We're building in public.</strong> Follow our journey on
+    <a href="https://x.com/botanicalai" target="_blank" rel="noopener" style="color:var(--forest);font-weight:600;">@botanicalai</a>
+    and join the community shaping the future of botanical AI.
+    Have ideas, feedback, or want to collaborate?
+    Reach out to any of us directly on X.
+  </div>
+</section>
+
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
@@ -2356,6 +2546,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
         <li><a onclick="showSection('scan-section')">Scan Plant</a></li>
         <li><a onclick="showSection('how-it-works')">How It Works</a></li>
         <li><a onclick="showSection('about')">About</a></li>
+        <li><a onclick="showSection('team-section')">Team</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
@@ -2487,7 +2678,7 @@ function showSection(id) {
   closeDrawer();
 
   // Hide all sections
-  document.querySelectorAll('section, #my-collection, #scan-history, #testnet-section, #roadmap-section, #contracts-section').forEach(s => {
+  document.querySelectorAll('section, #my-collection, #scan-history, #testnet-section, #roadmap-section, #contracts-section, #team-section').forEach(s => {
     s.style.display = 'none';
   });
 
@@ -2495,7 +2686,7 @@ function showSection(id) {
   if (!el) return;
 
   // Block-display sections (no centering needed)
-  const blockSections = ['how-it-works','features','about','my-collection','scan-history','testnet-section','roadmap-section','contracts-section'];
+  const blockSections = ['how-it-works','features','about','my-collection','scan-history','testnet-section','roadmap-section','contracts-section','team-section'];
 
   if (blockSections.includes(id)) {
     el.style.display = 'block';
@@ -2520,7 +2711,7 @@ function initSections() {
     if (el) el.style.removeProperty('display');
   });
   // Hide premium + extra sections
-  const hide = ['my-collection','scan-history','testnet-section','roadmap-section','contracts-section'];
+  const hide = ['my-collection','scan-history','testnet-section','roadmap-section','contracts-section','team-section'];
   hide.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
