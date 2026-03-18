@@ -1,4 +1,4 @@
-# 🌿 BOTANICA
+# 🌿 BOTANICAL AI
 
 > **Your Plants, Identified Instantly.**
 
