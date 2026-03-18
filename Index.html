@@ -812,6 +812,142 @@ section{padding:100px 48px;}
   .agent-highlight{font-size:.78rem;}
 }
 
+/* ── SMART CONTRACT SECTION ── */
+#contracts-section{background:var(--ink);padding:100px 48px;}
+#contracts-section .section-tag{background:rgba(126,217,87,.1);border-color:rgba(126,217,87,.2);color:#7ed957;}
+#contracts-section .section-title{color:var(--white);}
+#contracts-section .section-sub{color:var(--fog);}
+
+.contracts-chain-tabs{
+  display:flex;gap:8px;margin:36px 0 32px;flex-wrap:wrap;
+}
+.chain-tab{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:30px;cursor:pointer;
+  font-size:.82rem;font-weight:600;letter-spacing:.04em;
+  border:1.5px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
+  transition:all .25s;
+}
+.chain-tab:hover{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.8);}
+.chain-tab.active-solana{background:rgba(153,69,255,.15);border-color:#9945FF;color:#b57eff;}
+.chain-tab.active-base{background:rgba(0,82,255,.15);border-color:#0052FF;color:#5c8fff;}
+
+.contracts-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;max-width:1200px;
+}
+.contract-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;overflow:hidden;transition:all .3s;
+}
+.contract-card:hover{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06);}
+.contract-card-header{
+  padding:22px 24px 18px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.contract-card-left{display:flex;align-items:center;gap:14px;}
+.contract-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  flex-shrink:0;
+}
+.ci-nft{background:rgba(153,69,255,.2);}
+.ci-token{background:rgba(0,200,150,.15);}
+.ci-sub{background:rgba(201,168,76,.15);}
+.ci-dao{background:rgba(100,180,255,.12);}
+.contract-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;
+  font-weight:700;color:var(--white);margin-bottom:3px;
+}
+.contract-type{font-size:.72rem;color:var(--fog);letter-spacing:.06em;text-transform:uppercase;}
+.contract-chain-badge{
+  font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:20px;
+  letter-spacing:.06em;text-transform:uppercase;flex-shrink:0;
+}
+.badge-solana{background:rgba(153,69,255,.2);color:#b57eff;border:1px solid rgba(153,69,255,.3);}
+.badge-base{background:rgba(0,82,255,.15);color:#5c8fff;border:1px solid rgba(0,82,255,.25);}
+
+.contract-desc{
+  padding:16px 24px;font-size:.83rem;color:var(--fog);line-height:1.7;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.contract-code-wrap{position:relative;}
+.contract-code-label{
+  padding:10px 24px 6px;font-size:.65rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.contract-code-lang{
+  font-size:.62rem;background:rgba(255,255,255,.06);
+  padding:2px 8px;border-radius:6px;color:rgba(255,255,255,.3);
+}
+.contract-code{
+  background:rgba(0,0,0,.35);margin:0 16px 16px;
+  border-radius:12px;padding:18px;overflow-x:auto;
+  font-family:'DM Mono',monospace;font-size:.72rem;
+  line-height:1.75;color:#a3c9a8;
+  border:1px solid rgba(255,255,255,.06);
+  max-height:260px;overflow-y:auto;
+}
+.contract-code::-webkit-scrollbar{width:4px;height:4px;}
+.contract-code::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px;}
+/* syntax highlight classes */
+.kw{color:#9945FF;}       /* keyword - purple for Solidity */
+.kw-s{color:#b57eff;}     /* keyword - Solana/Rust */
+.fn{color:#7ed957;}       /* function name */
+.str{color:#f0d080;}      /* string */
+.cm{color:rgba(255,255,255,.25);font-style:italic;} /* comment */
+.num{color:#5c8fff;}      /* number */
+.ty{color:#64b4ff;}       /* type */
+.kw-base{color:#5c8fff;}  /* Base/EVM keyword */
+
+.contract-footer{
+  padding:14px 24px;display:flex;align-items:center;
+  justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.contract-status{
+  display:flex;align-items:center;gap:6px;
+  font-size:.73rem;color:var(--fog);
+}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#7ed957;}
+.status-dot.pending{background:var(--gold);}
+.contract-address{
+  font-family:'DM Mono',monospace;font-size:.68rem;
+  color:rgba(255,255,255,.25);letter-spacing:.04em;
+}
+.btn-copy-addr{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.4);font-size:.68rem;padding:3px 10px;
+  border-radius:8px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;
+}
+.btn-copy-addr:hover{background:rgba(255,255,255,.12);color:var(--white);}
+
+/* chain panels */
+.chain-panel{display:none;}
+.chain-panel.active{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+
+.contracts-summary{
+  max-width:1200px;margin-top:40px;
+  background:rgba(126,217,87,.05);border:1px solid rgba(126,217,87,.12);
+  border-radius:16px;padding:24px 28px;
+  display:flex;flex-wrap:wrap;gap:24px;align-items:center;
+  justify-content:space-between;
+}
+.cs-item{text-align:center;}
+.cs-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:#7ed957;}
+.cs-label{font-size:.72rem;color:var(--fog);letter-spacing:.06em;text-transform:uppercase;margin-top:2px;}
+
+@media(max-width:768px){
+  #contracts-section{padding:72px 16px 60px;}
+  .contracts-chain-tabs{gap:6px;}
+  .chain-tab{padding:8px 14px;font-size:.76rem;}
+  .chain-panel.active{grid-template-columns:1fr;}
+  .contract-code{font-size:.68rem;}
+  .contracts-summary{gap:16px;justify-content:center;}
+}
+
 /* ── FOOTER ── */
 footer{
   background:var(--moss);color:var(--fog);
@@ -987,6 +1123,7 @@ footer{
     <li><a onclick="showSection('about')">About</a></li>
     <li><a onclick="showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a></li>
     <li><a onclick="showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a></li>
+    <li><a onclick="showSection('contracts-section')" style="color:#7ed957;">📄 Contracts</a></li>
   </ul>
   <button class="nav-hamburger" id="nav-hamburger" onclick="toggleDrawer()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1012,6 +1149,7 @@ footer{
   <a onclick="closeDrawer();showSection('about')">🌿 About</a>
   <a onclick="closeDrawer();showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a>
   <a onclick="closeDrawer();showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a>
+  <a onclick="closeDrawer();showSection('contracts-section')" style="color:#7ed957;">📄 Contracts</a>
   <div class="nav-drawer-auth">
     <button class="btn-login" onclick="closeDrawer();openModal('login')">Login</button>
     <button class="btn-signup" onclick="closeDrawer();openModal('register')">Sign Up</button>
@@ -1528,6 +1666,670 @@ footer{
   </div>
 </section>
 
+<!-- ─── SMART CONTRACTS ─── -->
+<section id="contracts-section">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-tag">📄 Smart Contracts</div>
+    <h2 class="section-title">On-Chain Architecture</h2>
+    <p class="section-sub">BOTANICA's smart contracts power NFT minting, token economy, AI Agent subscriptions, and DAO governance — deployed on Solana and Base.</p>
+
+    <!-- Chain Tabs -->
+    <div class="contracts-chain-tabs">
+      <div class="chain-tab active-solana" id="tab-solana" onclick="switchChain('solana')">
+        <span>◎</span> Solana (Anchor / Rust)
+      </div>
+      <div class="chain-tab" id="tab-base" onclick="switchChain('base')">
+        <span>🔵</span> Base (Solidity / EVM)
+      </div>
+    </div>
+
+    <!-- ═══ SOLANA PANEL ═══ -->
+    <div class="chain-panel active" id="panel-solana">
+
+      <!-- NFT Mint - Solana -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-nft">🌿</div>
+            <div>
+              <div class="contract-name">BotanicaNFT</div>
+              <div class="contract-type">Metaplex · NFT Mint Program</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-solana">◎ Solana</span>
+        </div>
+        <div class="contract-desc">Mints plant discovery NFTs using Metaplex Token Metadata standard. Each NFT stores species data, confidence score, and care traits as on-chain attributes.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>programs/botanica_nft/src/lib.rs</span>
+            <span class="contract-code-lang">Rust · Anchor</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// BOTANICA Plant NFT — Solana / Anchor</span>
+<span class="kw-s">use</span> anchor_lang::prelude::*;
+<span class="kw-s">use</span> anchor_spl::token::{self, Token, MintTo};
+<span class="kw-s">use</span> mpl_token_metadata::instruction <span class="kw-s">as</span> mpl_ix;
+
+declare_id!(<span class="str">"BotaNFT1111111111111111111111111111111111111"</span>);
+
+<span class="kw-s">#[program]</span>
+<span class="kw-s">pub mod</span> botanica_nft {
+  <span class="kw-s">use super</span>::*;
+
+  <span class="kw-s">pub fn</span> <span class="fn">mint_plant_nft</span>(
+    ctx: Context&lt;MintPlantNFT&gt;,
+    plant_name: String,
+    latin_name: String,
+    confidence: <span class="ty">u8</span>,
+    uri: String,
+  ) -&gt; Result&lt;()&gt; {
+    <span class="cm">// Mint 1 NFT to user wallet</span>
+    <span class="kw-s">let</span> cpi_ctx = CpiContext::new(
+      ctx.accounts.token_program.to_account_info(),
+      MintTo {
+        mint: ctx.accounts.mint.to_account_info(),
+        to: ctx.accounts.token_account.to_account_info(),
+        authority: ctx.accounts.payer.to_account_info(),
+      },
+    );
+    token::mint_to(cpi_ctx, <span class="num">1</span>)?;
+
+    <span class="cm">// Store plant metadata on-chain</span>
+    <span class="kw-s">let</span> plant = &amp;<span class="kw-s">mut</span> ctx.accounts.plant_data;
+    plant.owner = ctx.accounts.payer.key();
+    plant.plant_name = plant_name;
+    plant.latin_name = latin_name;
+    plant.confidence = confidence;
+    plant.mint_time = Clock::get()?.unix_timestamp;
+    plant.nft_mint = ctx.accounts.mint.key();
+    <span class="kw-s">Ok</span>(())
+  }
+}
+
+<span class="kw-s">#[account]</span>
+<span class="kw-s">pub struct</span> <span class="ty">PlantData</span> {
+  <span class="kw-s">pub</span> owner: Pubkey,
+  <span class="kw-s">pub</span> plant_name: String,
+  <span class="kw-s">pub</span> latin_name: String,
+  <span class="kw-s">pub</span> confidence: <span class="ty">u8</span>,
+  <span class="kw-s">pub</span> nft_mint: Pubkey,
+  <span class="kw-s">pub</span> mint_time: <span class="ty">i64</span>,
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Devnet Deploy</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">BotaNFT111...1111</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'BotaNFT1111111111111111111111111111111111111')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPL Token - Solana -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-token">🪙</div>
+            <div>
+              <div class="contract-name">$FLORA Token</div>
+              <div class="contract-type">SPL Token · Utility & Governance</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-solana">◎ Solana</span>
+        </div>
+        <div class="contract-desc">$FLORA is the native SPL utility token. Used for Agent subscriptions, premium plan payments, and DAO voting weight on Solana.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>programs/flora_token/src/lib.rs</span>
+            <span class="contract-code-lang">Rust · Anchor</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// $FLORA SPL Token — Botanica Utility Token</span>
+<span class="kw-s">use</span> anchor_lang::prelude::*;
+<span class="kw-s">use</span> anchor_spl::token::{self, Token, MintTo, Burn};
+
+declare_id!(<span class="str">"FLORA111111111111111111111111111111111111111"</span>);
+
+<span class="kw-s">pub const</span> TOTAL_SUPPLY: <span class="ty">u64</span> = <span class="num">1_000_000_000</span> * <span class="num">10u64</span>.pow(<span class="num">9</span>); <span class="cm">// 1B FLORA</span>
+<span class="kw-s">pub const</span> DECIMALS: <span class="ty">u8</span> = <span class="num">9</span>;
+
+<span class="kw-s">#[program]</span>
+<span class="kw-s">pub mod</span> flora_token {
+  <span class="kw-s">use super</span>::*;
+
+  <span class="cm">/// Initialize $FLORA mint with fixed supply</span>
+  <span class="kw-s">pub fn</span> <span class="fn">initialize</span>(ctx: Context&lt;Initialize&gt;) -&gt; Result&lt;()&gt; {
+    <span class="kw-s">let</span> cpi_ctx = CpiContext::new(
+      ctx.accounts.token_program.to_account_info(),
+      MintTo {
+        mint: ctx.accounts.mint.to_account_info(),
+        to: ctx.accounts.treasury.to_account_info(),
+        authority: ctx.accounts.authority.to_account_info(),
+      },
+    );
+    token::mint_to(cpi_ctx, TOTAL_SUPPLY)?;
+    <span class="kw-s">Ok</span>(())
+  }
+
+  <span class="cm">/// Reward user with FLORA on plant scan</span>
+  <span class="kw-s">pub fn</span> <span class="fn">reward_scan</span>(
+    ctx: Context&lt;RewardScan&gt;,
+    amount: <span class="ty">u64</span>,
+  ) -&gt; Result&lt;()&gt; {
+    require!(amount &lt;= <span class="num">100</span> * <span class="num">10u64</span>.pow(<span class="num">9</span>), FloraError::ExceedsRewardCap);
+    token::mint_to(
+      CpiContext::new_with_signer(/* ... */),
+      amount
+    )?;
+    <span class="kw-s">Ok</span>(())
+  }
+
+  <span class="cm">/// Burn FLORA for premium upgrade</span>
+  <span class="kw-s">pub fn</span> <span class="fn">burn_for_premium</span>(ctx: Context&lt;BurnPremium&gt;) -&gt; Result&lt;()&gt; {
+    <span class="kw-s">let</span> burn_amount = <span class="num">500</span> * <span class="num">10u64</span>.pow(<span class="num">9</span>); <span class="cm">// 500 FLORA</span>
+    token::burn(
+      CpiContext::new(/* ... */),
+      burn_amount
+    )?;
+    ctx.accounts.user_state.is_premium = <span class="kw-s">true</span>;
+    <span class="kw-s">Ok</span>(())
+  }
+}
+
+<span class="kw-s">#[error_code]</span>
+<span class="kw-s">pub enum</span> <span class="ty">FloraError</span> {
+  <span class="kw-s">#[msg("Reward exceeds daily cap")]</span>
+  ExceedsRewardCap,
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Devnet Deploy</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">FLORA111...1111</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'FLORA111111111111111111111111111111111111111')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Subscription - Solana -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-sub">🤖</div>
+            <div>
+              <div class="contract-name">AgentSubscription</div>
+              <div class="contract-type">Recurring · Agent Access</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-solana">◎ Solana</span>
+        </div>
+        <div class="contract-desc">Manages recurring FLORA token payments to unlock the BOTANICA AI Agent. Supports monthly and yearly plans with on-chain subscription state.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>programs/agent_sub/src/lib.rs</span>
+            <span class="contract-code-lang">Rust · Anchor</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// Agent Subscription — Botanica AI Agent Access</span>
+<span class="kw-s">use</span> anchor_lang::prelude::*;
+
+declare_id!(<span class="str">"AgentSub1111111111111111111111111111111111"</span>);
+
+<span class="kw-s">pub const</span> MONTHLY_PRICE: <span class="ty">u64</span> = <span class="num">50</span>  * <span class="num">10u64</span>.pow(<span class="num">9</span>); <span class="cm">// 50 FLORA/mo</span>
+<span class="kw-s">pub const</span> YEARLY_PRICE:  <span class="ty">u64</span> = <span class="num">500</span> * <span class="num">10u64</span>.pow(<span class="num">9</span>); <span class="cm">// 500 FLORA/yr</span>
+<span class="kw-s">pub const</span> MONTH_SECS:    <span class="ty">i64</span> = <span class="num">30</span> * <span class="num">24</span> * <span class="num">3600</span>;
+
+<span class="kw-s">#[program]</span>
+<span class="kw-s">pub mod</span> agent_subscription {
+  <span class="kw-s">use super</span>::*;
+
+  <span class="kw-s">pub fn</span> <span class="fn">subscribe</span>(
+    ctx: Context&lt;Subscribe&gt;,
+    plan: <span class="ty">SubscriptionPlan</span>,
+  ) -&gt; Result&lt;()&gt; {
+    <span class="kw-s">let</span> (price, duration) = <span class="kw-s">match</span> plan {
+      SubscriptionPlan::Monthly =&gt; (MONTHLY_PRICE, MONTH_SECS),
+      SubscriptionPlan::Yearly  =&gt; (YEARLY_PRICE,  MONTH_SECS * <span class="num">12</span>),
+    };
+    <span class="cm">// Transfer FLORA to protocol treasury</span>
+    anchor_spl::token::transfer(
+      CpiContext::new(/* ... */), price
+    )?;
+    <span class="cm">// Write subscription state on-chain</span>
+    <span class="kw-s">let</span> sub = &amp;<span class="kw-s">mut</span> ctx.accounts.subscription;
+    sub.subscriber  = ctx.accounts.user.key();
+    sub.plan        = plan;
+    sub.expires_at  = Clock::get()?.unix_timestamp + duration;
+    sub.agent_calls = <span class="num">0</span>;
+    <span class="kw-s">Ok</span>(())
+  }
+
+  <span class="kw-s">pub fn</span> <span class="fn">verify_active</span>(ctx: Context&lt;VerifySub&gt;) -&gt; Result&lt;<span class="ty">bool</span>&gt; {
+    <span class="kw-s">let</span> now = Clock::get()?.unix_timestamp;
+    <span class="kw-s">Ok</span>(ctx.accounts.subscription.expires_at &gt; now)
+  }
+}
+
+<span class="kw-s">#[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq)]</span>
+<span class="kw-s">pub enum</span> <span class="ty">SubscriptionPlan</span> { Monthly, Yearly }
+
+<span class="kw-s">#[account]</span>
+<span class="kw-s">pub struct</span> <span class="ty">Subscription</span> {
+  <span class="kw-s">pub</span> subscriber:  Pubkey,
+  <span class="kw-s">pub</span> plan:        <span class="ty">SubscriptionPlan</span>,
+  <span class="kw-s">pub</span> expires_at:  <span class="ty">i64</span>,
+  <span class="kw-s">pub</span> agent_calls: <span class="ty">u32</span>,
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Devnet Deploy</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">AgentSub1...1111</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'AgentSub1111111111111111111111111111111111')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAO - Solana -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-dao">🏛️</div>
+            <div>
+              <div class="contract-name">BotanicaDAO</div>
+              <div class="contract-type">Governance · Proposal &amp; Voting</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-solana">◎ Solana</span>
+        </div>
+        <div class="contract-desc">$FLORA-weighted DAO for protocol upgrades, agent parameter changes, and treasury allocation. Quorum = 5% of supply, timelock = 48h.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>programs/botanica_dao/src/lib.rs</span>
+            <span class="contract-code-lang">Rust · Anchor</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// BotanicaDAO — On-chain Governance (Solana)</span>
+<span class="kw-s">use</span> anchor_lang::prelude::*;
+
+declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</span>);
+
+<span class="kw-s">pub const</span> VOTING_PERIOD: <span class="ty">i64</span> = <span class="num">3</span> * <span class="num">24</span> * <span class="num">3600</span>; <span class="cm">// 3 days</span>
+<span class="kw-s">pub const</span> TIMELOCK:      <span class="ty">i64</span> = <span class="num">2</span> * <span class="num">24</span> * <span class="num">3600</span>; <span class="cm">// 48h execution delay</span>
+<span class="kw-s">pub const</span> QUORUM_BPS:    <span class="ty">u64</span> = <span class="num">500</span>;           <span class="cm">// 5% of total supply</span>
+
+<span class="kw-s">#[program]</span>
+<span class="kw-s">pub mod</span> botanica_dao {
+  <span class="kw-s">use super</span>::*;
+
+  <span class="kw-s">pub fn</span> <span class="fn">create_proposal</span>(
+    ctx: Context&lt;CreateProposal&gt;,
+    title: String,
+    description: String,
+    action: <span class="ty">ProposalAction</span>,
+  ) -&gt; Result&lt;()&gt; {
+    <span class="cm">// Require 10,000 FLORA to propose</span>
+    require!(ctx.accounts.proposer_balance.amount &gt;= <span class="num">10_000</span> * <span class="num">10u64</span>.pow(<span class="num">9</span>),
+             DaoError::InsufficientFloraToPropose);
+    <span class="kw-s">let</span> proposal = &amp;<span class="kw-s">mut</span> ctx.accounts.proposal;
+    proposal.proposer    = ctx.accounts.proposer.key();
+    proposal.title       = title;
+    proposal.description = description;
+    proposal.action      = action;
+    proposal.yes_votes   = <span class="num">0</span>;
+    proposal.no_votes    = <span class="num">0</span>;
+    proposal.end_time    = Clock::get()?.unix_timestamp + VOTING_PERIOD;
+    proposal.executed    = <span class="kw-s">false</span>;
+    <span class="kw-s">Ok</span>(())
+  }
+
+  <span class="kw-s">pub fn</span> <span class="fn">cast_vote</span>(
+    ctx: Context&lt;CastVote&gt;,
+    support: <span class="ty">bool</span>,
+  ) -&gt; Result&lt;()&gt; {
+    <span class="kw-s">let</span> now = Clock::get()?.unix_timestamp;
+    require!(now &lt; ctx.accounts.proposal.end_time, DaoError::VotingEnded);
+    <span class="kw-s">let</span> weight = ctx.accounts.voter_token.amount;
+    <span class="kw-s">if</span> support { ctx.accounts.proposal.yes_votes += weight; }
+    <span class="kw-s">else</span>        { ctx.accounts.proposal.no_votes  += weight; }
+    <span class="kw-s">Ok</span>(())
+  }
+
+  <span class="kw-s">pub fn</span> <span class="fn">execute_proposal</span>(ctx: Context&lt;ExecuteProposal&gt;) -&gt; Result&lt;()&gt; {
+    <span class="kw-s">let</span> p = &amp;<span class="kw-s">mut</span> ctx.accounts.proposal;
+    <span class="kw-s">let</span> now = Clock::get()?.unix_timestamp;
+    require!(now &gt;= p.end_time + TIMELOCK, DaoError::TimelockActive);
+    require!(p.yes_votes &gt; p.no_votes,     DaoError::ProposalRejected);
+    require!(!p.executed,                  DaoError::AlreadyExecuted);
+    p.executed = <span class="kw-s">true</span>;
+    <span class="kw-s">Ok</span>(())
+  }
+}
+
+<span class="kw-s">#[derive(AnchorSerialize, AnchorDeserialize, Clone)]</span>
+<span class="kw-s">pub enum</span> <span class="ty">ProposalAction</span> {
+  UpdateAgentParams { max_calls: <span class="ty">u32</span> },
+  AllocateTreasury  { recipient: Pubkey, amount: <span class="ty">u64</span> },
+  UpgradeProgram    { new_program_id: Pubkey },
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Devnet Deploy</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">BotaDAO1...1111</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'BotaDAO1111111111111111111111111111111111111')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /panel-solana -->
+
+    <!-- ═══ BASE PANEL ═══ -->
+    <div class="chain-panel" id="panel-base">
+
+      <!-- NFT Mint - Base -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-nft">🌿</div>
+            <div>
+              <div class="contract-name">BotanicaNFT</div>
+              <div class="contract-type">ERC-721 · Plant NFT</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-base">🔵 Base</span>
+        </div>
+        <div class="contract-desc">ERC-721 contract for minting plant discovery NFTs on Base. Stores species metadata on-chain, supports OpenSea royalties via EIP-2981.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>contracts/BotanicaNFT.sol</span>
+            <span class="contract-code-lang">Solidity ^0.8.24</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw-base">pragma solidity</span> ^<span class="num">0.8.24</span>;
+
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/token/ERC721/ERC721.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/interfaces/IERC2981.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/access/Ownable.sol"</span>;
+
+<span class="kw-base">contract</span> <span class="ty">BotanicaNFT</span> <span class="kw-base">is</span> ERC721URIStorage, IERC2981, Ownable {
+
+  <span class="kw-base">uint256 public</span> nextTokenId;
+  <span class="kw-base">uint96  public</span> royaltyBps = <span class="num">500</span>; <span class="cm">// 5% royalty</span>
+
+  <span class="kw-base">struct</span> <span class="ty">PlantData</span> {
+    <span class="kw-base">string</span>  plantName;
+    <span class="kw-base">string</span>  latinName;
+    <span class="kw-base">uint8</span>   confidence;
+    <span class="kw-base">uint256</span> mintedAt;
+    <span class="kw-base">address</span> discoverer;
+  }
+  <span class="kw-base">mapping</span>(<span class="ty">uint256</span> =&gt; <span class="ty">PlantData</span>) <span class="kw-base">public</span> plants;
+
+  <span class="kw-base">event</span> <span class="fn">PlantMinted</span>(
+    <span class="kw-base">address indexed</span> to,
+    <span class="ty">uint256 indexed</span>  tokenId,
+    <span class="kw-base">string</span>           plantName,
+    <span class="kw-base">uint8</span>            confidence
+  );
+
+  <span class="kw-base">constructor</span>() ERC721(<span class="str">"Botanica Plant NFT"</span>, <span class="str">"BPNFT"</span>) Ownable(msg.sender) {}
+
+  <span class="kw-base">function</span> <span class="fn">mintPlant</span>(
+    <span class="kw-base">address</span> to,
+    <span class="kw-base">string calldata</span> plantName,
+    <span class="kw-base">string calldata</span> latinName,
+    <span class="kw-base">uint8</span>           confidence,
+    <span class="kw-base">string calldata</span> tokenURI_
+  ) <span class="kw-base">external returns</span> (<span class="ty">uint256</span> tokenId) {
+    tokenId = nextTokenId++;
+    _safeMint(to, tokenId);
+    _setTokenURI(tokenId, tokenURI_);
+    plants[tokenId] = PlantData(plantName, latinName, confidence,
+                                block.timestamp, to);
+    <span class="kw-base">emit</span> <span class="fn">PlantMinted</span>(to, tokenId, plantName, confidence);
+  }
+
+  <span class="kw-base">function</span> <span class="fn">royaltyInfo</span>(<span class="ty">uint256</span>, <span class="ty">uint256</span> salePrice)
+    <span class="kw-base">external view override returns</span> (<span class="kw-base">address</span>, <span class="ty">uint256</span>) {
+    <span class="kw-base">return</span> (owner(), (salePrice * royaltyBps) / <span class="num">10000</span>);
+  }
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Base Sepolia</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">0xBota...NFT1</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'0xBotanicaNFT000000000000000000000000001')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERC-20 Token - Base -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-token">🪙</div>
+            <div>
+              <div class="contract-name">$FLORA Token</div>
+              <div class="contract-type">ERC-20 · Utility &amp; Governance</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-base">🔵 Base</span>
+        </div>
+        <div class="contract-desc">ERC-20 $FLORA token on Base. Powers Agent subscriptions, premium burns, and DAO votes. Bridged from Solana via Wormhole NTT.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>contracts/FloraToken.sol</span>
+            <span class="contract-code-lang">Solidity ^0.8.24</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw-base">pragma solidity</span> ^<span class="num">0.8.24</span>;
+
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/token/ERC20/ERC20.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/access/AccessControl.sol"</span>;
+
+<span class="kw-base">contract</span> <span class="ty">FloraToken</span> <span class="kw-base">is</span> ERC20, ERC20Burnable, AccessControl {
+
+  <span class="kw-base">bytes32 public constant</span> MINTER_ROLE  = keccak256(<span class="str">"MINTER_ROLE"</span>);
+  <span class="kw-base">bytes32 public constant</span> BRIDGE_ROLE  = keccak256(<span class="str">"BRIDGE_ROLE"</span>);
+
+  <span class="kw-base">uint256 public constant</span> MAX_SUPPLY   = <span class="num">1_000_000_000</span> * <span class="num">10</span> ** <span class="num">18</span>;
+  <span class="kw-base">uint256 public constant</span> PREMIUM_BURN = <span class="num">500</span> * <span class="num">10</span> ** <span class="num">18</span>;  <span class="cm">// 500 FLORA</span>
+  <span class="kw-base">uint256 public constant</span> AGENT_REWARD = <span class="num">10</span>  * <span class="num">10</span> ** <span class="num">18</span>;  <span class="cm">// 10 FLORA/scan</span>
+
+  <span class="kw-base">constructor</span>() ERC20(<span class="str">"Flora"</span>, <span class="str">"FLORA"</span>) {
+    _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    _mint(msg.sender, MAX_SUPPLY);
+  }
+
+  <span class="cm">/// Burn FLORA to activate Premium</span>
+  <span class="kw-base">function</span> <span class="fn">burnForPremium</span>() <span class="kw-base">external</span> {
+    burn(PREMIUM_BURN);
+    <span class="kw-base">emit</span> <span class="fn">PremiumActivated</span>(msg.sender);
+  }
+
+  <span class="cm">/// Wormhole bridge mint (cross-chain)</span>
+  <span class="kw-base">function</span> <span class="fn">bridgeMint</span>(<span class="kw-base">address</span> to, <span class="ty">uint256</span> amount)
+    <span class="kw-base">external onlyRole</span>(BRIDGE_ROLE) {
+    require(totalSupply() + amount &lt;= MAX_SUPPLY, <span class="str">"Exceeds max supply"</span>);
+    _mint(to, amount);
+  }
+
+  <span class="kw-base">event</span> <span class="fn">PremiumActivated</span>(<span class="kw-base">address indexed</span> user);
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Base Sepolia</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">0xFLOR...A001</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'0xFloraToken000000000000000000000000001')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Subscription - Base -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-sub">🤖</div>
+            <div>
+              <div class="contract-name">AgentSubscription</div>
+              <div class="contract-type">ERC-20 Pay · Recurring Access</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-base">🔵 Base</span>
+        </div>
+        <div class="contract-desc">Pull-payment subscription contract. Users approve FLORA allowance once; agent auto-renews monthly via on-chain keeper. Supports cancellation and refunds.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>contracts/AgentSubscription.sol</span>
+            <span class="contract-code-lang">Solidity ^0.8.24</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw-base">pragma solidity</span> ^<span class="num">0.8.24</span>;
+
+<span class="kw-base">import</span> <span class="str">"./FloraToken.sol"</span>;
+
+<span class="kw-base">contract</span> <span class="ty">AgentSubscription</span> {
+
+  FloraToken <span class="kw-base">public immutable</span> flora;
+  <span class="kw-base">address    public immutable</span> treasury;
+
+  <span class="kw-base">uint256 public constant</span> MONTHLY_PRICE = <span class="num">50</span>  * <span class="num">10</span> ** <span class="num">18</span>;
+  <span class="kw-base">uint256 public constant</span> YEARLY_PRICE  = <span class="num">500</span> * <span class="num">10</span> ** <span class="num">18</span>;
+  <span class="kw-base">uint256 public constant</span> MONTH         = <span class="num">30 days</span>;
+
+  <span class="kw-base">struct</span> <span class="ty">Sub</span> {
+    <span class="kw-base">uint256</span> expiresAt;
+    <span class="kw-base">bool</span>    yearly;
+    <span class="kw-base">uint256</span> agentCalls;
+  }
+  <span class="kw-base">mapping</span>(<span class="kw-base">address</span> =&gt; <span class="ty">Sub</span>) <span class="kw-base">public</span> subscriptions;
+
+  <span class="kw-base">event</span> <span class="fn">Subscribed</span>(<span class="kw-base">address indexed</span> user, <span class="ty">uint256</span> expiresAt, <span class="kw-base">bool</span> yearly);
+  <span class="kw-base">event</span> <span class="fn">Cancelled</span>(<span class="kw-base">address indexed</span> user);
+
+  <span class="kw-base">constructor</span>(<span class="kw-base">address</span> _flora, <span class="kw-base">address</span> _treasury) {
+    flora = FloraToken(_flora);
+    treasury = _treasury;
+  }
+
+  <span class="kw-base">function</span> <span class="fn">subscribe</span>(<span class="kw-base">bool</span> yearly) <span class="kw-base">external</span> {
+    <span class="kw-base">uint256</span> price    = yearly ? YEARLY_PRICE : MONTHLY_PRICE;
+    <span class="kw-base">uint256</span> duration = yearly ? MONTH * <span class="num">12</span>   : MONTH;
+    flora.transferFrom(msg.sender, treasury, price);
+    subscriptions[msg.sender] = Sub(block.timestamp + duration, yearly, <span class="num">0</span>);
+    <span class="kw-base">emit</span> <span class="fn">Subscribed</span>(msg.sender, block.timestamp + duration, yearly);
+  }
+
+  <span class="kw-base">function</span> <span class="fn">isActive</span>(<span class="kw-base">address</span> user) <span class="kw-base">external view returns</span> (<span class="kw-base">bool</span>) {
+    <span class="kw-base">return</span> subscriptions[user].expiresAt &gt; block.timestamp;
+  }
+
+  <span class="kw-base">function</span> <span class="fn">cancel</span>() <span class="kw-base">external</span> {
+    subscriptions[msg.sender].expiresAt = block.timestamp;
+    <span class="kw-base">emit</span> <span class="fn">Cancelled</span>(msg.sender);
+  }
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Base Sepolia</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">0xAgnt...Sub1</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'0xAgentSubscription0000000000000000001')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAO - Base -->
+      <div class="contract-card">
+        <div class="contract-card-header">
+          <div class="contract-card-left">
+            <div class="contract-icon ci-dao">🏛️</div>
+            <div>
+              <div class="contract-name">BotanicaDAO</div>
+              <div class="contract-type">ERC-20 Votes · OpenZeppelin Governor</div>
+            </div>
+          </div>
+          <span class="contract-chain-badge badge-base">🔵 Base</span>
+        </div>
+        <div class="contract-desc">OpenZeppelin Governor-based DAO with $FLORA voting weight. 3-day voting, 48h timelock, 5% quorum. Controls protocol upgrades and treasury.</div>
+        <div class="contract-code-wrap">
+          <div class="contract-code-label">
+            <span>contracts/BotanicaDAO.sol</span>
+            <span class="contract-code-lang">Solidity ^0.8.24</span>
+          </div>
+          <pre class="contract-code"><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw-base">pragma solidity</span> ^<span class="num">0.8.24</span>;
+
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/Governor.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/extensions/GovernorSettings.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/extensions/GovernorVotes.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol"</span>;
+<span class="kw-base">import</span> <span class="str">"@openzeppelin/contracts/governance/utils/IVotes.sol"</span>;
+
+<span class="kw-base">contract</span> <span class="ty">BotanicaDAO</span> <span class="kw-base">is</span>
+  Governor, GovernorSettings, GovernorCountingSimple,
+  GovernorVotes, GovernorTimelockControl
+{
+  <span class="cm">/// @param token_  $FLORA ERC20Votes token address</span>
+  <span class="cm">/// @param tlock_  TimelockController (48h delay)</span>
+  <span class="kw-base">constructor</span>(IVotes token_, TimelockController tlock_)
+    Governor(<span class="str">"BotanicaDAO"</span>)
+    GovernorSettings(
+      <span class="num">1</span>,           <span class="cm">// 1 block voting delay</span>
+      <span class="num">21600</span>,       <span class="cm">// ~3 days voting period (Base ~2s/block)</span>
+      <span class="num">10_000e18</span>   <span class="cm">// 10,000 FLORA to propose</span>
+    )
+    GovernorVotes(token_)
+    GovernorTimelockControl(tlock_)
+  {}
+
+  <span class="cm">/// 5% of total $FLORA supply = quorum</span>
+  <span class="kw-base">function</span> <span class="fn">quorum</span>(<span class="ty">uint256</span> blockNumber)
+    <span class="kw-base">public view override returns</span> (<span class="ty">uint256</span>)
+  {
+    <span class="kw-base">return</span> token.getPastTotalSupply(blockNumber) * <span class="num">5</span> / <span class="num">100</span>;
+  }
+
+  <span class="cm">// Required overrides</span>
+  <span class="kw-base">function</span> <span class="fn">votingDelay</span>() <span class="kw-base">public view override</span>
+    (<span class="ty">Governor</span>, <span class="ty">GovernorSettings</span>) <span class="kw-base">returns</span> (<span class="ty">uint256</span>)
+  { <span class="kw-base">return super</span>.votingDelay(); }
+
+  <span class="kw-base">function</span> <span class="fn">votingPeriod</span>() <span class="kw-base">public view override</span>
+    (<span class="ty">Governor</span>, <span class="ty">GovernorSettings</span>) <span class="kw-base">returns</span> (<span class="ty">uint256</span>)
+  { <span class="kw-base">return super</span>.votingPeriod(); }
+
+  <span class="kw-base">function</span> <span class="fn">state</span>(<span class="ty">uint256</span> proposalId) <span class="kw-base">public view override</span>
+    (<span class="ty">Governor</span>, <span class="ty">GovernorTimelockControl</span>) <span class="kw-base">returns</span> (ProposalState)
+  { <span class="kw-base">return super</span>.state(proposalId); }
+}</pre>
+        </div>
+        <div class="contract-footer">
+          <div class="contract-status"><div class="status-dot pending"></div> Base Sepolia</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="contract-address">0xBota...DAO1</span>
+            <button class="btn-copy-addr" onclick="copyAddr(this,'0xBotanicaDAO0000000000000000000000001')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /panel-base -->
+
+    <!-- Summary -->
+    <div class="contracts-summary">
+      <div class="cs-item"><div class="cs-num">8</div><div class="cs-label">Contracts Total</div></div>
+      <div class="cs-item"><div class="cs-num">2</div><div class="cs-label">Chains</div></div>
+      <div class="cs-item"><div class="cs-num">4</div><div class="cs-label">Contract Types</div></div>
+      <div class="cs-item"><div class="cs-num">1B</div><div class="cs-label">$FLORA Supply</div></div>
+      <div class="cs-item"><div class="cs-num">5%</div><div class="cs-label">DAO Quorum</div></div>
+      <div class="cs-item"><div class="cs-num">48h</div><div class="cs-label">Timelock</div></div>
+    </div>
+
+  </div>
+</section>
+
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
@@ -1685,7 +2487,7 @@ function showSection(id) {
   closeDrawer();
 
   // Hide all sections
-  document.querySelectorAll('section, #my-collection, #scan-history, #testnet-section, #roadmap-section').forEach(s => {
+  document.querySelectorAll('section, #my-collection, #scan-history, #testnet-section, #roadmap-section, #contracts-section').forEach(s => {
     s.style.display = 'none';
   });
 
@@ -1693,7 +2495,7 @@ function showSection(id) {
   if (!el) return;
 
   // Block-display sections (no centering needed)
-  const blockSections = ['how-it-works','features','about','my-collection','scan-history','testnet-section','roadmap-section'];
+  const blockSections = ['how-it-works','features','about','my-collection','scan-history','testnet-section','roadmap-section','contracts-section'];
 
   if (blockSections.includes(id)) {
     el.style.display = 'block';
@@ -1718,7 +2520,7 @@ function initSections() {
     if (el) el.style.removeProperty('display');
   });
   // Hide premium + extra sections
-  const hide = ['my-collection','scan-history','testnet-section','roadmap-section'];
+  const hide = ['my-collection','scan-history','testnet-section','roadmap-section','contracts-section'];
   hide.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
@@ -2185,6 +2987,24 @@ function showToast(msg, type = 'success') {
   t.textContent = msg;
   t.className = 'toast ' + type + ' show';
   setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── SMART CONTRACTS ───
+function switchChain(chain) {
+  // Tabs
+  document.getElementById('tab-solana').className = 'chain-tab' + (chain==='solana' ? ' active-solana' : '');
+  document.getElementById('tab-base').className   = 'chain-tab' + (chain==='base'   ? ' active-base'   : '');
+  // Panels
+  document.getElementById('panel-solana').className = 'chain-panel' + (chain==='solana' ? ' active' : '');
+  document.getElementById('panel-base').className   = 'chain-panel' + (chain==='base'   ? ' active' : '');
+}
+function copyAddr(btn, addr) {
+  navigator.clipboard.writeText(addr).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.color = '#7ed957';
+    setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1500);
+  }).catch(() => showToast('Copy failed', 'error'));
 }
 
 // ─── MOBILE DRAWER ───
