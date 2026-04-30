@@ -1,0 +1,37 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Editors
+.vscode/
+.idea/
+*.sublime-*
+
+# Node (in case anyone adds a build step later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Build output
+dist/
+build/
+_site/
+.cache/
+
+# Env files — never commit secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Local artifacts
+*.tmp
+.tmp/
+coverage/

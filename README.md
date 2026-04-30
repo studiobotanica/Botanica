@@ -157,18 +157,38 @@ BOTANICA Root Agent
 
 ```
 botanica/
-├── index.html
+├── index.html              ← single-file static app
 ├── README.md
-└── assets/
+├── LICENSE
+├── SECURITY.md             ← vulnerability disclosure policy
+├── CONTRIBUTING.md
+├── .gitignore
+├── .github/
+│   ├── dependabot.yml
+│   ├── ISSUE_TEMPLATE/
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows/          ← CI: CodeQL, gitleaks, html-validate, link-check, GH Pages
+└── assets/                  (optional — referenced from README)
     ├── botanica_logo.jpg
-    ├── botanica_cover.jpg
-    ├── botanica_p1_identifier.jpg
-    ├── botanica_p2_care.jpg
-    ├── botanica_p3_pest.jpg
-    ├── botanica_p4_nft.jpg
-    ├── botanica_p5_collection.jpg
-    └── botanica_infographic.jpg
+    └── ...
 ```
+
+## 🛡️ Security & CI
+
+The repo ships with a hardened CI pipeline:
+
+| Workflow | Purpose |
+|----------|---------|
+| `codeql.yml` | Weekly + per-PR CodeQL static analysis (`security-and-quality`) for JavaScript |
+| `gitleaks.yml` | Detect accidental secret leaks on every push |
+| `html-validate.yml` | Lint `index.html` markup on every push |
+| `link-check.yml` | Catch broken links with Lychee |
+| `pages-deploy.yml` | Auto-publish `main` to GitHub Pages |
+| `dependabot.yml` | Weekly bump of GitHub Actions versions |
+
+The frontend also enforces a strict **Content-Security-Policy**, escapes
+all AI/user data before injecting into the DOM, and follows the
+disclosure policy in [SECURITY.md](./SECURITY.md).
 
 ---
 
