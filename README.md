@@ -4,7 +4,7 @@
 
 ![Last Updated](https://img.shields.io/badge/last%20updated-2026-05-01-brightgreen) ![Interactive Demo](https://img.shields.io/badge/demo-live%20samples-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-BOTANICA is an AI-powered plant identification web app that lets you scan any plant or flower and instantly get its name, care guide, pest diagnosis, and more — powered by Claude AI. Starting March 2026, BOTANICA evolves into a fully autonomous **AI Agent** with deep integration on **Solana** and **Base**.
+BOTANICA is an AI-powered plant identification web app that lets you scan any plant or flower and instantly get its name, care guide, pest diagnosis, and more — powered by AI. Starting March 2026, BOTANICA evolves into a fully autonomous **AI Agent** with deep integration on **Solana** and **Base**.
 
 
 ---
@@ -43,7 +43,7 @@ BOTANICA is an AI-powered plant identification web app that lets you scan any pl
 ## 🚀 How It Works
 
 1. **Upload or Scan** — Take a photo or upload any image of a plant, flower, leaf, or tree.
-2. **AI Analysis** — Claude AI analyzes against a database of 50,000+ species.
+2. **AI Analysis** — AI analyzes against a database of 50,000+ species.
 3. **Get Results** — Name, Latin name, origin, description, care guide & pest detection.
 4. **Mint as NFT** *(PRO)* — Connect your wallet and mint your discovery as a digital collectible.
 
@@ -55,7 +55,7 @@ BOTANICA is evolving beyond a plant scanner into a **fully autonomous AI Agent**
 
 ### Phase 1 — March 2026 · Agent Core `◎ Solana` `🔵 Base`
 
-The BOTANICA Agent launches as an autonomous Claude-powered runtime that:
+The BOTANICA Agent launches as an autonomous AI-powered runtime that:
 
 - **Monitors** your plant collection continuously in the background
 - **Detects** pest risks and watering schedule deviations proactively
@@ -65,7 +65,7 @@ The BOTANICA Agent launches as an autonomous Claude-powered runtime that:
 
 ```
 Agent Stack:
-├── Runtime:     Claude AI (Anthropic) — agentic loop
+├── Runtime:     AI Agent Runtime — agentic loop
 ├── Chain 1:     Solana (Devnet → Mainnet)
 ├── Chain 2:     Base (Sepolia → Mainnet)
 ├── Wallet:      MPC Agent Wallet (non-custodial)
@@ -91,7 +91,7 @@ The agent graduates from notifications to **real on-chain actions**:
 Agent Execution Flow:
 User Collection → Agent Reads State
        ↓
-Claude AI Decision Engine
+AI Decision Engine
        ↓
 On-Chain Action (Solana / Base)
        ↓
@@ -140,8 +140,8 @@ BOTANICA Root Agent
 
 | Layer | Technology |
 |-------|------------|
-| AI Vision | Claude AI by Anthropic |
-| AI Agent Runtime | Claude Agentic Loop |
+| AI Vision | AI Vision API |
+| AI Agent Runtime | AI Agentic Loop |
 | Frontend | HTML, CSS, Vanilla JavaScript |
 | Plant Database | 50,000+ species |
 | Chain 1 | Solana (SPL tokens, Metaplex NFT) |
@@ -231,4 +231,4 @@ Most people encounter plants every day but have no idea what they're looking at.
 ## 📄 License
 
 © 2025–2026 BOTANICA. All rights reserved.
-Powered by Claude AI · Solana · Base · Web3 Ready
+Powered by AI Vision · Solana · Base · Web3 Ready
