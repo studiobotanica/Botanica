@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BOTANICA — Your Plant Expert</title>
-<meta name="description" content="BOTANICA — Identify any plant instantly with AI. Care guides, NFT minting, pest detection and more.">
+<title>BOTANICA — Tu Experto en Plantas</title>
+<meta name="description" content="BOTANICA — Identifica cualquier planta al instante con IA. Guías de cuidado, mint de NFTs, detección de plagas y más.">
 
 <!-- Security headers (best-effort — true HTTP headers should also be set on the host) -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.anthropic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
@@ -14,8 +14,8 @@
 <meta name="theme-color" content="#1a3320">
 
 <!-- Open Graph / Twitter -->
-<meta property="og:title" content="BOTANICA — Your Plant Expert">
-<meta property="og:description" content="Identify any plant instantly with AI. Care guides, NFT minting, pest detection and more.">
+<meta property="og:title" content="BOTANICA — Tu Experto en Plantas">
+<meta property="og:description" content="Identifica cualquier planta al instante con IA. Guías de cuidado, mint de NFTs y detección de plagas.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://botanica.web.id">
 <meta name="twitter:card" content="summary_large_image">
@@ -129,20 +129,9 @@ nav{
     radial-gradient(ellipse 60% 50% at 80% 20%, rgba(106,170,125,.1) 0%, transparent 55%),
     radial-gradient(ellipse 40% 40% at 50% 50%, rgba(208,232,212,.25) 0%, transparent 70%);
 }
-.hero-leaves{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
-.leaf-deco{
-  position:absolute;font-size:4rem;opacity:.06;
-  animation:floatLeaf 8s ease-in-out infinite;
-}
-.leaf-deco:nth-child(1){top:10%;left:5%;animation-delay:0s;font-size:5rem;}
-.leaf-deco:nth-child(2){top:20%;right:8%;animation-delay:2s;font-size:3rem;}
-.leaf-deco:nth-child(3){bottom:20%;left:10%;animation-delay:4s;font-size:6rem;}
-.leaf-deco:nth-child(4){bottom:30%;right:6%;animation-delay:1s;font-size:4rem;}
-.leaf-deco:nth-child(5){top:50%;left:2%;animation-delay:3s;font-size:3.5rem;}
-@keyframes floatLeaf{
-  0%,100%{transform:translateY(0) rotate(0deg);}
-  50%{transform:translateY(-18px) rotate(5deg);}
-}
+
+
+
 .hero-content{position:relative;text-align:center;max-width:800px;padding:0 24px;}
 .hero-tag{
   display:inline-flex;align-items:center;gap:8px;
@@ -722,12 +711,7 @@ section{padding:100px 48px;}
   100%{transform:translate3d(-2%,3%,0) scale(1.04);}
 }
 
-/* Mouse-parallax leaves */
-.hero-leaves{will-change:transform;}
-.leaf-deco{
-  will-change:transform;
-  transition:transform .4s cubic-bezier(.2,.8,.2,1);
-}
+
 
 /* Scroll-reveal */
 .reveal{
@@ -789,8 +773,8 @@ section{padding:100px 48px;}
 }
 .nav-logo-icon{transition:transform .4s cubic-bezier(.2,.8,.2,1);}
 
-/* Sample animation — leaf-grow demo (used on home) */
-.leaf-grow-demo{
+/* leaf-grow-demo removed */
+.leaf-grow-demo-REMOVED{
   margin:64px auto 0;max-width:560px;text-align:center;
   padding:32px 24px;background:rgba(255,255,255,.55);
   border:1px solid var(--mist);border-radius:24px;
@@ -1256,7 +1240,7 @@ footer{
   display:flex;justify-content:space-between;align-items:flex-start;
   margin-bottom:48px;gap:40px;flex-wrap:wrap;
 }
-.footer-brand{}
+.footer-bry{}
 .footer-logo{
   font-family:'Cormorant Garamond',serif;font-size:1.4rem;
   font-weight:700;color:var(--cream);margin-bottom:10px;
@@ -1435,9 +1419,24 @@ footer{
   pointer-events:none;z-index:0;display:block;
 }
 #home .hero-bg,#home .hero-mesh{z-index:1;}
-#home .hero-leaves{z-index:2;}
+
 #home .hero-content{z-index:3;}
-#home > *:not(#forest-canvas):not(.hero-bg):not(.hero-mesh):not(.hero-leaves){position:relative;z-index:3;}
+
+
+/* ── WEATHER TOGGLE ── */
+#weather-toggle{
+  position:absolute;top:16px;right:16px;z-index:10;
+  display:flex;gap:6px;background:rgba(255,255,255,.55);
+  backdrop-filter:blur(8px);border-radius:30px;
+  padding:5px 10px;border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 2px 12px rgba(26,51,32,.08);
+}
+.wx-btn{
+  background:none;border:none;cursor:pointer;font-size:1.1rem;
+  padding:3px 6px;border-radius:16px;transition:background .15s;
+  line-height:1;
+}
+.wx-btn.active,.wx-btn:hover{background:rgba(61,122,80,.15);}
 </style>
 </head>
 <body>
@@ -1449,11 +1448,11 @@ footer{
     <span class="nav-logo-name">BOTANICA</span>
   </a>
   <ul class="nav-links">
-    <li><a onclick="showSection('home')">Home</a></li>
-    <li><a onclick="showSection('scan-section')">Scan Plant</a></li>
-    <li><a onclick="showSection('how-it-works')">How It Works</a></li>
-    <li><a onclick="showSection('features')">Features</a></li>
-    <li><a onclick="showSection('about')">About</a></li>
+    <li><a onclick="showSection('home')">Inicio</a></li>
+    <li><a onclick="showSection('scan-section')">Escanear</a></li>
+    <li><a onclick="showSection('how-it-works')">Cómo Funciona</a></li>
+    <li><a onclick="showSection('features')">Características</a></li>
+    <li><a onclick="showSection('about')">Nosotros</a></li>
     <li><a onclick="showSection('team-section')" style="color:var(--sage);">👥 Team</a></li>
     <li><a onclick="showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a></li>
     <li><a onclick="showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a></li>
@@ -1463,54 +1462,55 @@ footer{
     <span></span><span></span><span></span>
   </button>
   <div class="nav-auth" id="nav-auth">
-    <button class="btn-login" onclick="openModal('login')">Login</button>
-    <button class="btn-signup" onclick="openModal('register')">Sign Up</button>
+    <button class="btn-login" onclick="openModal('login')">Entrar</button>
+    <button class="btn-signup" onclick="openModal('register')">Registrarse</button>
   </div>
   <div class="nav-user" id="nav-user" style="display:none;">
     <div class="nav-avatar" id="nav-avatar">?</div>
     <span class="nav-username" id="nav-username"></span>
     <span class="premium-badge" id="nav-premium" style="display:none;">PRO</span>
-    <button class="btn-logout" onclick="logout()">Logout</button>
+    <button class="btn-logout" onclick="logout()">Salir</button>
   </div>
 </nav>
 
 <!-- ─── MOBILE DRAWER ─── -->
 <div class="nav-drawer" id="nav-drawer">
-  <a onclick="closeDrawer();showSection('home')">🏠 Home</a>
-  <a onclick="closeDrawer();showSection('scan-section')">🔍 Scan Plant</a>
-  <a onclick="closeDrawer();showSection('how-it-works')">📖 How It Works</a>
-  <a onclick="closeDrawer();showSection('features')">✨ Features</a>
-  <a onclick="closeDrawer();showSection('about')">🌿 About</a>
+  <a onclick="closeDrawer();showSection('home')">🏠 Inicio</a>
+  <a onclick="closeDrawer();showSection('scan-section')">🔍 Escanear</a>
+  <a onclick="closeDrawer();showSection('how-it-works')">📖 Cómo Funciona</a>
+  <a onclick="closeDrawer();showSection('features')">✨ Características</a>
+  <a onclick="closeDrawer();showSection('about')">🌿 Nosotros</a>
   <a onclick="closeDrawer();showSection('team-section')" style="color:var(--sage);">👥 Team</a>
   <a onclick="closeDrawer();showSection('testnet-section')" style="color:var(--gold);">🧪 Testnet</a>
   <a onclick="closeDrawer();showSection('roadmap-section')" style="color:var(--sage);">🗺 Roadmap</a>
   <a onclick="closeDrawer();showSection('contracts-section')" style="color:#7ed957;">📄 Contracts</a>
   <div class="nav-drawer-auth">
-    <button class="btn-login" onclick="closeDrawer();openModal('login')">Login</button>
-    <button class="btn-signup" onclick="closeDrawer();openModal('register')">Sign Up</button>
+    <button class="btn-login" onclick="closeDrawer();openModal('login')">Entrar</button>
+    <button class="btn-signup" onclick="closeDrawer();openModal('register')">Registrarse</button>
   </div>
 </div>
 <section id="home" style="padding-top:80px;">
   <canvas id="forest-canvas" aria-hidden="true"></canvas>
+  <canvas id="weather-canvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
+  <div id="weather-toggle" aria-label="Cambiar clima">
+    <button type="button" class="wx-btn active" id="wx-sun"  onclick="setWeather('sun')"  title="Soleado">☀️</button>
+    <button type="button" class="wx-btn"        id="wx-rain" onclick="setWeather('rain')" title="Lluvia">🌧️</button>
+    <button type="button" class="wx-btn"        id="wx-wind" onclick="setWeather('wind')" title="Viento">💨</button>
+    <button type="button" class="wx-btn"        id="wx-night" onclick="setWeather('night')" title="Noche">🌙</button>
+  </div>
   <div class="hero-bg"></div>
   <div class="hero-mesh"></div>
-  <div class="hero-leaves" id="hero-leaves">
-    <div class="leaf-deco" data-depth="0.6">🍃</div>
-    <div class="leaf-deco" data-depth="0.9">🌿</div>
-    <div class="leaf-deco" data-depth="0.4">🍀</div>
-    <div class="leaf-deco" data-depth="0.7">🌱</div>
-    <div class="leaf-deco" data-depth="0.5">🌾</div>
-  </div>
+
   <div class="hero-content">
     
-    <h1>Identify Any Plant<br>or <em>Flower</em> Instantly</h1>
-    <p class="hero-sub">Upload a photo or scan with your camera. BOTANICA tells you everything — name, traits, care tips, pest detection, and even lets you mint it as an NFT.</p>
+    <h1>Identifica Cualquier Planta<br>o <em>Flor</em> al Instante</h1>
+    <p class="hero-sub">Sube una foto o escanea con tu cámara. BOTANICA te lo dice todo — nombre, características, guía de cuidado, detección de plagas, y hasta puedes mintear un NFT.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="showSection('scan-section')">🔍 Scan a Plant</button>
-      <button class="btn-secondary" onclick="showSection('how-it-works')">How It Works</button>
+      <button class="btn-primary" onclick="showSection('scan-section')">🔍 Escanear Planta</button>
+      <button class="btn-secondary" onclick="showSection('how-it-works')">Cómo Funciona</button>
     </div>
     <div class="store-badges">
-      <a href="#" class="store-badge" onclick="showToast('🍎 App Store coming soon!','success');return false;">
+      <a href="#" class="store-badge" onclick="showToast('🍎 App Store próximamente!','success');return false;">
         <!-- Apple App Store icon - clean version -->
         <svg width="36" height="36" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <rect width="512" height="512" rx="120" fill="url(#appleg)"/>
@@ -1523,11 +1523,11 @@ footer{
           <path fill="white" d="M307.9 80.7c-14.1 16.6-36.7 29.5-58.7 27.6-2.8-22.2 8.1-45.8 21-60.3C284.3 30.8 308.9 18.6 328.4 18c2.3 23.5-6.8 46.4-20.5 62.7zM328.1 113.6c-32.5-1.9-60.2 18.4-75.7 18.4-15.8 0-39.7-17.4-65.8-17-33.8.5-65.3 19.7-82.7 50.2-35.5 61.3-9.3 151.9 25.1 201.7 16.8 24.5 36.8 51.8 63.2 50.9 25-.9 34.7-16.2 64.9-16.2 30.4 0 38.9 16.2 65.4 15.7 27.4-.5 44.8-24.5 61.5-49.1 19.5-28.2 27.5-55.5 27.9-57-1.3-.6-53.5-20.5-54-81.2-.4-50.8 41.4-75.2 43.3-76.5-23.7-34.9-60.5-38.9-73.1-39.9z"/>
         </svg>
         <div class="store-badge-text">
-          <span class="store-badge-sub">Download on the</span>
+          <span class="store-badge-sub">Descarga en</span>
           <span class="store-badge-main">App Store</span>
         </div>
       </a>
-      <a href="#" class="store-badge" onclick="showToast('🤖 Play Store coming soon!','success');return false;">
+      <a href="#" class="store-badge" onclick="showToast('🤖 Play Store próximamente!','success');return false;">
         <!-- Google Play icon - clean version -->
         <svg width="36" height="36" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <rect width="512" height="512" rx="120" fill="#fff"/>
@@ -1537,59 +1537,45 @@ footer{
           <path d="M89 442 L275 255 L340 320 L122 449C113 454 101 453 89 442Z" fill="#00E676"/>
         </svg>
         <div class="store-badge-text">
-          <span class="store-badge-sub">Get it on</span>
+          <span class="store-badge-sub">Disponible en</span>
           <span class="store-badge-main">Google Play</span>
         </div>
       </a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num" data-count="50000" data-suffix="+">0</div><div class="stat-label">Plant Species</div></div>
-      <div class="stat"><div class="stat-num" data-count="98" data-suffix="%">0</div><div class="stat-label">Accuracy</div></div>
-      <div class="stat"><div class="stat-num" data-count="12000" data-suffix="+">0</div><div class="stat-label">Happy Users</div></div>
+      <div class="stat"><div class="stat-num" data-count="50000" data-suffix="+">0</div><div class="stat-label">Especies de Plantas</div></div>
+      <div class="stat"><div class="stat-num" data-count="98" data-suffix="%">0</div><div class="stat-label">Precisión</div></div>
+      <div class="stat"><div class="stat-num" data-count="12000" data-suffix="+">0</div><div class="stat-label">Usuarios Felices</div></div>
     </div>
 
-    <!-- Sample animation: a plant growing — pure CSS, decorative -->
-    <div class="leaf-grow-demo reveal" aria-hidden="true">
-      <h3>Watch it grow.</h3>
-      <p>A tiny preview of the care you'll give every plant in your collection.</p>
-      <div class="leaf-stage">
-        <div class="leaf-stem"></div>
-        <span class="leaf-petal">🌿</span>
-        <span class="leaf-petal">🍃</span>
-        <span class="leaf-petal">🌿</span>
-        <span class="leaf-petal">🌱</span>
-        <span class="leaf-petal">🌱</span>
-        <div class="leaf-soil"></div>
-      </div>
-      <div class="leaf-grow-caption">A living preview · powered by motion</div>
-    </div>
+
   </div>
 </section>
 
 <!-- ─── HOW IT WORKS ─── -->
 <section id="how-it-works">
   <div class="hiw-header">
-    <div class="section-tag">How It Works</div>
-    <h2 class="section-title" style="color:var(--cream);">Three Simple Steps</h2>
-    <p class="section-sub" style="margin-inline:auto;text-align:center;">From photo to expert knowledge in seconds — no botany degree required.</p>
+    <div class="section-tag">Cómo Funciona</div>
+    <h2 class="section-title" style="color:var(--cream);">Tres Pasos Simples</h2>
+    <p class="section-sub" style="margin-inline:auto;text-align:center;">De la foto al conocimiento experto en segundos — sin necesidad de ser botánico.</p>
   </div>
   <div class="hiw-steps">
     <div class="hiw-step">
       <div class="step-num">01</div>
       <div class="step-icon">📷</div>
-      <div class="step-title">Upload or Scan</div>
+      <div class="step-title">Sube o Escanea</div>
       <div class="step-desc">Take a photo with your camera or upload an existing image of any plant, flower, leaf, or tree you want to identify.</div>
     </div>
     <div class="hiw-step">
       <div class="step-num">02</div>
       <div class="step-icon">🧠</div>
-      <div class="step-title">AI Analysis</div>
-      <div class="step-desc">Your image is analyzed against a database of 50,000+ species, identifying visual traits, patterns, and characteristics.</div>
+      <div class="step-title">Análisis con IA</div>
+      <div class="step-desc">Tu imagen se analiza contra una base de datos de más de 50,000 especies, identificando rasgos visuales, patrones y características.</div>
     </div>
     <div class="hiw-step">
       <div class="step-num">03</div>
       <div class="step-icon">📋</div>
-      <div class="step-title">Get Results</div>
+      <div class="step-title">Obtén Resultados</div>
       <div class="step-desc">Receive the plant's local and Latin name, description, care guide, and pest detection. Premium users can also mint their find as an NFT.</div>
     </div>
     <div class="hiw-step">
@@ -1603,31 +1589,31 @@ footer{
 
 <!-- ─── SCAN ─── -->
 <section id="scan-section">
-  <div class="section-tag" style="display:block;text-align:center;">Plant Scanner</div>
-  <h2 class="section-title" style="text-align:center;">Identify Your Plant</h2>
-  <p class="section-sub" style="text-align:center;margin-inline:auto;">Upload a clear photo or use your camera for the best results.</p>
+  <div class="section-tag" style="display:block;text-align:center;">Escáner de Plantas</div>
+  <h2 class="section-title" style="text-align:center;">Identifica Tu Planta</h2>
+  <p class="section-sub" style="text-align:center;margin-inline:auto;">Sube una foto clara o usa tu cámara para mejores resultados.</p>
 
   <div class="scan-box">
     <div class="scan-tabs">
-      <div class="scan-tab active" onclick="switchScanTab('upload',this)">📁 Upload Photo</div>
-      <div class="scan-tab" onclick="switchScanTab('camera',this)">📷 Use Camera</div>
+      <div class="scan-tab active" onclick="switchScanTab('upload',this)">📁 Subir Foto</div>
+      <div class="scan-tab" onclick="switchScanTab('camera',this)">📷 Usar Cámara</div>
     </div>
 
     <div class="scan-body" id="scan-upload-body">
       <div class="scan-limit-bar">
-        <span class="scan-limit-text">🌿 Daily Scans</span>
-        <span class="scan-limit-count"><span id="scans-left">3</span> / 3 remaining today</span>
+        <span class="scan-limit-text">🌿 Escaneos Diarios</span>
+        <span class="scan-limit-count"><span id="scans-left">3</span> / 3 restantes hoy</span>
       </div>
       <div class="upload-zone" id="upload-zone" ondragover="handleDrag(event,true)" ondragleave="handleDrag(event,false)" ondrop="handleDrop(event)">
         <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])">
         <div class="upload-icon">🖼️</div>
-        <div class="upload-title">Drop your photo here</div>
-        <div class="upload-hint">or click to browse · JPG, PNG, WEBP</div>
+        <div class="upload-title">Suelta tu foto aquí</div>
+        <div class="upload-hint">o haz clic para explorar · JPG, PNG, WEBP</div>
       </div>
       <div id="preview-wrap">
         <img id="preview-img" src="" alt="Plant preview">
         <button class="btn-scan" id="scan-btn" onclick="runScan()">
-          <span>🔍</span> Identify This Plant
+          <span>🔍</span> Identificar Planta
         </button>
       </div>
     </div>
@@ -1635,14 +1621,14 @@ footer{
     <div class="scan-body" id="scan-camera-body" style="display:none;">
       <div class="scan-limit-bar">
         <span class="scan-limit-text">🌿 Daily Scans</span>
-        <span class="scan-limit-count"><span id="scans-left-cam">3</span> / 3 remaining today</span>
+        <span class="scan-limit-count"><span id="scans-left-cam">3</span> / 3 restantes hoy</span>
       </div>
       <div class="camera-wrap">
         <div class="camera-placeholder" id="cam-placeholder">
           <div style="font-size:2.5rem;margin-bottom:12px;">📷</div>
-          <div style="font-weight:600;color:var(--forest);margin-bottom:6px;">Camera Access Required</div>
-          <div style="font-size:.82rem;color:var(--fog);">Point your camera at a plant to identify it</div>
-          <button class="btn-cam" onclick="startCamera()">Start Camera</button>
+          <div style="font-weight:600;color:var(--forest);margin-bottom:6px;">Acceso a Cámara Requerido</div>
+          <div style="font-size:.82rem;color:var(--fog);">Apunta tu cámara hacia una planta para identificarla</div>
+          <button class="btn-cam" onclick="startCamera()">Iniciar Cámara</button>
         </div>
         <video id="camera-video" autoplay playsinline></video>
         <canvas id="camera-canvas" style="display:none;"></canvas>
@@ -1653,12 +1639,12 @@ footer{
     <!-- Loading -->
     <div class="loading-wrap" id="loading-wrap">
       <div class="loading-spinner"></div>
-      <div class="loading-text">Analyzing your plant...</div>
+      <div class="loading-text">Analizando tu planta...</div>
       <div class="loading-steps">
-        <div class="loading-step active" id="ls1">🔍 Detecting plant features</div>
-        <div class="loading-step" id="ls2">🧬 Matching species database</div>
-        <div class="loading-step" id="ls3">📋 Generating plant profile</div>
-        <div class="loading-step" id="ls4">🐛 Checking for pests</div>
+        <div class="loading-step active" id="ls1">🔍 Detectando características</div>
+        <div class="loading-step" id="ls2">🧬 Comparando base de datos</div>
+        <div class="loading-step" id="ls3">📋 Generando perfil</div>
+        <div class="loading-step" id="ls4">🐛 Verificando plagas</div>
       </div>
     </div>
 
@@ -1691,18 +1677,18 @@ footer{
         </div>
       </div>
     </div>
-    <button class="btn-new-scan" id="btn-new-scan" onclick="resetScan()">🔄 Scan Another Plant</button>
+    <button class="btn-new-scan" id="btn-new-scan" onclick="resetScan()">🔄 Escanear Otra Planta</button>
   </div>
 
   <!-- ─── SAMPLE PLANTS ─── -->
   <div class="samples-section">
-    <div class="samples-label">✨ Or try a demo — no upload needed</div>
+    <div class="samples-label">✨ Prueba un demo — sin subir foto</div>
     <div class="samples-grid">
       <div class="sample-card" onclick="loadSample('monstera')">
         <span class="sample-emoji">🌿</span>
         <div class="sample-name">Monstera</div>
         <div class="sample-latin">Monstera deliciosa</div>
-        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('monstera')">Try Demo</button>
+        <button type="button" class="sample-try-btn" onclick="event.stopPropagation();loadSample('monstera')">Try Demo</button>
       </div>
       <div class="sample-card" onclick="loadSample('lavender')">
         <span class="sample-emoji">💜</span>
@@ -1729,61 +1715,61 @@ footer{
         <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('fern')">Try Demo</button>
       </div>
     </div>
-    <div class="samples-divider">or upload your own photo above</div>
+    <div class="samples-divider">o sube tu propia foto arriba</div>
   </div>
 </section>
 
 <!-- ─── FEATURES ─── -->
 <section id="features">
   <div class="features-header">
-    <div class="section-tag">Features</div>
-    <h2 class="section-title">Everything You Need</h2>
-    <p class="section-sub">Free features to get started, premium features for plant enthusiasts.</p>
+    <div class="section-tag">Características</div>
+    <h2 class="section-title">Todo Lo Que Necesitas</h2>
+    <p class="section-sub">Funciones gratuitas para comenzar, premium para los entusiastas de las plantas.</p>
   </div>
   <div class="features-grid">
     <div class="feature-card">
       <div class="fc-icon">🔍</div>
-      <div class="fc-title">Plant Identification</div>
-      <div class="fc-desc">Identify 50,000+ species of plants and flowers by uploading a photo or scanning with your camera.</div>
+      <div class="fc-title">Identificación de Plantas</div>
+      <div class="fc-desc">Identifica más de 50,000 especies de plantas y flores subiendo una foto o escaneando con tu cámara.</div>
     </div>
     <div class="feature-card">
       <div class="fc-icon">📖</div>
-      <div class="fc-title">Full Plant Profile</div>
-      <div class="fc-desc">Get local name, Latin name, detailed description, physical traits, origin, and family classification.</div>
+      <div class="fc-title">Perfil Completo de Planta</div>
+      <div class="fc-desc">Obtén nombre local, nombre latino, descripción detallada, rasgos físicos, origen y clasificación familiar.</div>
     </div>
     <div class="feature-card">
       <div class="fc-icon">💧</div>
-      <div class="fc-title">Care Guide <span class="feat-premium-tag">PRO</span></div>
-      <div class="fc-desc">Watering frequency, light requirements, soil type, humidity, fertilizer needs, and seasonal tips.</div>
+      <div class="fc-title">Guía de Cuidado <span class="feat-premium-tag">PRO</span></div>
+      <div class="fc-desc">Frecuencia de riego, requerimientos de luz, tipo de suelo, humedad, fertilizantes y consejos estacionales.</div>
     </div>
     <div class="feature-card premium-card">
       <div class="premium-label">PRO</div>
       <div class="fc-icon">🐛</div>
       <div class="fc-title">Pest & Disease Scanner</div>
-      <div class="fc-desc">Detect common pests and diseases from your plant photo. Get treatment and prevention advice instantly.</div>
+      <div class="fc-desc">Detecta plagas y enfermedades comunes desde la foto de tu planta. Obtén consejos de tratamiento y prevención al instante.</div>
     </div>
     <div class="feature-card premium-card">
       <div class="premium-label">PRO</div>
       <div class="fc-icon">📚</div>
-      <div class="fc-title">Scan History</div>
-      <div class="fc-desc">Keep a full record of all your plant scans with timestamps, results, and easy access to previous identifications.</div>
+      <div class="fc-title">Historial de Escaneos</div>
+      <div class="fc-desc">Mantén un registro completo de todos tus escaneos con fecha, resultados y fácil acceso a identificaciones anteriores.</div>
     </div>
     <div class="feature-card premium-card">
       <div class="premium-label">PRO</div>
       <div class="fc-icon">🌺</div>
-      <div class="fc-title">My Collection</div>
-      <div class="fc-desc">Build a personal botanical collection. Organize, tag, and revisit every plant you've discovered.</div>
+      <div class="fc-title">Mi Colección</div>
+      <div class="fc-desc">Crea tu colección botánica personal. Organiza, etiqueta y revisa cada planta que hayas descubierto.</div>
     </div>
     <div class="feature-card premium-card">
       <div class="premium-label">PRO</div>
       <div class="fc-icon">🪙</div>
-      <div class="fc-title">Mint Plant NFTs</div>
-      <div class="fc-desc">Turn your plant discoveries into unique NFT cards. Connect MetaMask or any Web3 wallet to mint on-chain.</div>
+      <div class="fc-title">Mintear NFTs de Plantas</div>
+      <div class="fc-desc">Convierte tus descubrimientos en NFTs únicos. Conecta MetaMask o cualquier wallet Web3 para mintear on-chain.</div>
     </div>
     <div class="feature-card">
       <div class="fc-icon">🔓</div>
-      <div class="fc-title">Free Plan</div>
-      <div class="fc-desc">3 free scans per day with full identification and basic plant info. No credit card required to start.</div>
+      <div class="fc-title">Plan Gratuito</div>
+      <div class="fc-desc">3 escaneos gratis por día con identificación completa e información básica. Sin tarjeta de crédito para comenzar.</div>
     </div>
   </div>
 </section>
@@ -1808,9 +1794,9 @@ footer{
       </div>
     </div>
     <div class="about-text">
-      <div class="section-tag">About BOTANICA</div>
+      <div class="section-tag">Sobre BOTANICA</div>
       <h2 class="section-title">Your Personal<br>Plant Expert</h2>
-      <p class="about-desc">BOTANICA combines the power of advanced AI vision capabilities with a comprehensive botanical database to give everyone — from curious beginners to passionate gardeners — instant, accurate plant knowledge at their fingertips.</p>
+      <p class="about-desc">BOTANICA combina capacidades avanzadas de visión con IA y una base de datos botánica completa para dar a todos — desde principiantes curiosos hasta jardineros apasionados — conocimiento instantáneo y preciso de plantas al alcance de la mano.</p>
       <div class="about-features">
         <div class="about-feat">
           <div class="feat-icon">🎯</div>
@@ -2725,7 +2711,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
   <div class="team-header">
     <div class="section-tag">👥 The Team</div>
     <h2 class="section-title">People Behind<br>BOTANICA</h2>
-    <p class="section-sub">A small, focused team building the future of botanical intelligence — built on Solana and Base.</p>
+    <p class="section-sub">Un equipo pequeño y enfocado construyendo el futuro de la inteligencia botánica — construido sobre Solana y Base.</p>
   </div>
 
   <div class="team-grid">
@@ -2736,9 +2722,9 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
         <div class="team-avatar">F</div>
         <div class="team-role-dot dot-founder">★</div>
       </div>
-      <div class="team-name">Founder</div>
+      <div class="team-name">Fundador</div>
       <div class="team-role role-founder">⚡ Founder & CEO</div>
-      <p class="team-desc">Visionary behind BOTANICA. Driving the product from concept to AI Agent — building the bridge between botanical knowledge and Web3.</p>
+      <p class="team-desc">El visionario detrás de BOTANICA. Llevando el producto desde el concepto hasta el Agente IA — construyendo el puente entre el conocimiento botánico y Web3.</p>
       <a href="https://x.com/todoparatumasc3" target="_blank" rel="noopener" class="team-x-btn">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         @todoparatumasc3
@@ -2751,12 +2737,12 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
         <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);">M</div>
         <div class="team-role-dot dot-marketing">📣</div>
       </div>
-      <div class="team-name">Marketing</div>
-      <div class="team-role role-marketing">📣 Head of Marketing</div>
-      <p class="team-desc">Growing the BOTANICA community and brand. Crafting the story of how AI and Web3 are changing how people connect with the natural world.</p>
-      <a href="https://x.com/arthousebase" target="_blank" rel="noopener" class="team-x-btn">
+      <div class="team-name">Sofía Ramírez</div>
+      <div class="team-role role-marketing">📣 Directora de Marketing</div>
+      <p class="team-desc">Construyendo la comunidad y el brand de BOTANICA. Contando la historia de cómo el Web3 está transformando la relación entre las personas y la naturaleza.</p>
+      <a href="https://x.com/sofiaramirez_bo" target="_blank" rel="noopener" class="team-x-btn">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        @arthousebase
+        @sofiaramirez_bo
       </a>
     </div>
 
@@ -2766,8 +2752,8 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
         <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#8b5cf6);">D</div>
         <div class="team-role-dot dot-dev">⌨</div>
       </div>
-      <div class="team-name">Developer</div>
-      <div class="team-role role-dev">⌨️ Lead Developer</div>
+      <div class="team-name">Desarrollador</div>
+      <div class="team-role role-dev">⌨️ Desarrollador Principal</div>
       <p class="team-desc">Architect of BOTANICA's full-stack — from the AI integration and smart contracts on Solana & Base to the mobile-first web experience.</p>
       <a href="https://x.com/rootclank" target="_blank" rel="noopener" class="team-x-btn">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -2790,7 +2776,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-logo">🌿 BOTANICA</div>
-      <div class="footer-desc">Your personal plant expert. Identify, learn, collect, and mint botanical discoveries.</div>
+      <div class="footer-desc">Tu experto personal en plantas. Identifica, aprende, colecciona y mintea descubrimientos botánicos.</div>
       <div class="footer-social">
         <!-- X / Twitter -->
         <a href="https://x.com/botanicalai" target="_blank" rel="noopener" class="social-link" title="Follow on X">
@@ -2804,25 +2790,25 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
 
     </div>
     <div class="footer-links-group">
-      <div class="footer-links-title">Navigate</div>
+      <div class="footer-links-title">Navegar</div>
       <ul class="footer-links">
-        <li><a onclick="showSection('home')">Home</a></li>
-        <li><a onclick="showSection('scan-section')">Scan Plant</a></li>
-        <li><a onclick="showSection('how-it-works')">How It Works</a></li>
-        <li><a onclick="showSection('about')">About</a></li>
-        <li><a onclick="showSection('team-section')">Team</a></li>
+        <li><a onclick="showSection('home')">Inicio</a></li>
+        <li><a onclick="showSection('scan-section')">Escanear Planta</a></li>
+        <li><a onclick="showSection('how-it-works')">Cómo Funciona</a></li>
+        <li><a onclick="showSection('about')">Nosotros</a></li>
+        <li><a onclick="showSection('team-section')">Equipo</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
-      <div class="footer-links-title">Features</div>
+      <div class="footer-links-title">Características</div>
       <ul class="footer-links">
-        <li><a onclick="showSection('features')">All Features</a></li>
-        <li><a onclick="openModal('register')">Sign Up Free</a></li>
-        <li><a onclick="openPremiumUpgrade()">Go Premium ★</a></li>
+        <li><a onclick="showSection('features')">Características</a></li>
+        <li><a onclick="openModal('register')">Registro Gratis</a></li>
+        <li><a onclick="openPremiumUpgrade()">Ir a Premium ★</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
-      <div class="footer-links-title">Links</div>
+      <div class="footer-links-title">Enlaces</div>
       <ul class="footer-links">
         <li><a href="https://x.com/botanicalai" target="_blank" rel="noopener">𝕏 Twitter / X</a></li>
         <li><a href="https://github.com/studiobotanica" target="_blank" rel="noopener">GitHub</a></li>
@@ -2831,8 +2817,8 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 BOTANICA. All rights reserved.</span>
-    <span>Web3 Ready</span>
+    <span>© 2025 BOTANICA. Todos los derechos reservados.</span>
+    <span>Listo para Web3</span>
   </div>
 </footer>
 
@@ -2841,11 +2827,11 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
   <div class="modal">
     <button class="modal-close" onclick="closeModal('login')">✕</button>
     <div class="modal-logo">🌿 BOTANICA</div>
-    <div class="modal-sub">Welcome back, plant lover</div>
+    <div class="modal-sub">Bienvenido de vuelta, amante de las plantas</div>
     <div class="social-btns">
       <button class="btn-social" onclick="socialLogin('google')">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Continue with Google
+        Continuar con Google
       </button>
       <button class="btn-social" onclick="socialLogin('twitter')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -2853,10 +2839,10 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
       </button>
     </div>
     <div class="divider">or</div>
-    <input class="modal-input" type="email" placeholder="Email address" id="login-email">
-    <input class="modal-input" type="password" placeholder="Password" id="login-pass">
+    <input class="modal-input" type="email" placeholder="Correo electrónico" id="login-email">
+    <input class="modal-input" type="password" placeholder="Contraseña" id="login-pass">
     <button class="btn-modal-submit" onclick="emailLogin()">Login</button>
-    <div class="modal-switch">Don't have an account? <a onclick="switchModal('login','register')">Sign up free</a></div>
+    <div class="modal-switch">¿No tienes cuenta? <a onclick="switchModal('login','register')">Regístrate free</a></div>
   </div>
 </div>
 
@@ -2865,7 +2851,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
   <div class="modal">
     <button class="modal-close" onclick="closeModal('register')">✕</button>
     <div class="modal-logo">🌿 BOTANICA</div>
-    <div class="modal-sub">Start your botanical journey</div>
+    <div class="modal-sub">Comienza tu viaje botánico</div>
     <div class="social-btns">
       <button class="btn-social" onclick="socialLogin('google')">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
@@ -2880,8 +2866,8 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
     <input class="modal-input" type="text" placeholder="Your name" id="reg-name">
     <input class="modal-input" type="email" placeholder="Email address" id="reg-email">
     <input class="modal-input" type="password" placeholder="Password (min 8 chars)" id="reg-pass">
-    <button class="btn-modal-submit" onclick="emailRegister()">Create Account</button>
-    <div class="modal-switch">Already have an account? <a onclick="switchModal('register','login')">Log in</a></div>
+    <button class="btn-modal-submit" onclick="emailRegister()">Crear Cuenta</button>
+    <div class="modal-switch">¿Ya tienes cuenta? <a onclick="switchModal('register','login')">Iniciar sesión</a></div>
   </div>
 </div>
 
@@ -2906,7 +2892,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
       </div>
     </div>
     <div style="margin-top:16px;font-size:.75rem;color:var(--fog);text-align:center;">
-      By connecting, you agree to our Terms of Service. Wallet integration is for demonstration purposes.
+      By connecting, you agree to our Términos de Servicio. Wallet integration is for demonstration purposes.
     </div>
   </div>
 </div>
@@ -3616,31 +3602,7 @@ window.escapeHtml = escapeHtml;
   numbers.forEach(el => io.observe(el));
 })();
 
-// ─── MOUSE-PARALLAX HERO LEAVES ───
-(() => {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
-  const wrap = document.getElementById('hero-leaves');
-  if (!wrap) return;
-  const leaves = wrap.querySelectorAll('.leaf-deco');
-  let frame = null;
-  let mx = 0, my = 0;
-  function apply() {
-    leaves.forEach((leaf) => {
-      const depth = parseFloat(leaf.dataset.depth || '0.5');
-      const tx = mx * 18 * depth;
-      const ty = my * 18 * depth;
-      // Keep the existing floatLeaf keyframe by combining via CSS variable
-      leaf.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-    });
-    frame = null;
-  }
-  window.addEventListener('mousemove', (e) => {
-    mx = (e.clientX / window.innerWidth)  - 0.5;
-    my = (e.clientY / window.innerHeight) - 0.5;
-    if (!frame) frame = requestAnimationFrame(apply);
-  }, { passive: true });
-})();
+
 
 // ─── NAV SHADOW ON SCROLL ───
 (() => {
@@ -3983,6 +3945,142 @@ function loadSample(key) {
   resize();
   window.addEventListener('resize', function(){ resize(); }, {passive:true});
   requestAnimationFrame(draw);
+})();
+
+
+
+
+
+// ═══════════════════════════════════════════════════════
+// WEATHER EFFECTS OVERLAY
+// ═══════════════════════════════════════════════════════
+(() => {
+  const wc = document.getElementById('weather-canvas');
+  const fc = document.getElementById('forest-canvas');
+  if (!wc || !fc) return;
+  const wx = wc.getContext('2d');
+  let W, H, mode = 'sun';
+  let drops = [], stars = [];
+
+  function resize() {
+    const r = wc.parentElement.getBoundingClientRect();
+    W = wc.width  = fc.width  = r.width  || window.innerWidth;
+    H = wc.height = fc.height = r.height || window.innerHeight;
+    buildStars();
+  }
+
+  function buildStars() {
+    stars = [];
+    const n = Math.floor(W * H / 3000);
+    for (let i = 0; i < n; i++) {
+      stars.push({x: Math.random()*W, y: Math.random()*H*0.6, r: 0.5+Math.random()*1.2, phase: Math.random()*Math.PI*2});
+    }
+  }
+
+  function seedRain() {
+    drops = [];
+    for (let i = 0; i < 120; i++) {
+      drops.push({x: Math.random()*W, y: Math.random()*H - H, speed: 10+Math.random()*8, len: 16+Math.random()*12, alpha: 0.2+Math.random()*0.3, wx: -1.5});
+    }
+  }
+
+  window.setWeather = function(m) {
+    mode = m;
+    document.querySelectorAll('.wx-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('wx-' + m);
+    if (btn) btn.classList.add('active');
+    if (m === 'rain') seedRain();
+  };
+
+  let t = 0;
+  function draw() {
+    wx.clearRect(0, 0, W, H);
+
+    if (mode === 'rain') {
+      // Dim overlay
+      wx.fillStyle = 'rgba(20,40,30,0.15)';
+      wx.fillRect(0,0,W,H);
+      // Rain drops
+      wx.strokeStyle = 'rgba(180,220,255,0.35)';
+      wx.lineWidth = 1;
+      for (const d of drops) {
+        d.y += d.speed;
+        d.x += d.wx;
+        if (d.y > H) { d.y = -20; d.x = Math.random()*W; }
+        wx.beginPath();
+        wx.moveTo(d.x, d.y);
+        wx.lineTo(d.x + d.wx*1.5, d.y + d.len);
+        wx.globalAlpha = d.alpha;
+        wx.stroke();
+      }
+      wx.globalAlpha = 1;
+      // Fog at bottom
+      const fogGrad = wx.createLinearGradient(0, H*0.6, 0, H);
+      fogGrad.addColorStop(0, 'rgba(200,220,210,0)');
+      fogGrad.addColorStop(1, 'rgba(200,220,210,0.35)');
+      wx.fillStyle = fogGrad;
+      wx.fillRect(0, H*0.6, W, H*0.4);
+    }
+
+    else if (mode === 'wind') {
+      // Wind streaks
+      wx.globalAlpha = 0.04 + 0.03 * Math.sin(t * 3);
+      for (let i = 0; i < 12; i++) {
+        const yy = (H * 0.15 * i + t * 80 * (1 + i*0.1)) % (H * 1.2) - H*0.1;
+        const len = 80 + Math.sin(t + i) * 40;
+        wx.beginPath();
+        wx.moveTo(0, yy);
+        wx.bezierCurveTo(W*0.3, yy - 20 + i*3, W*0.7, yy + 15 - i*2, W, yy + Math.sin(t+i)*10);
+        wx.strokeStyle = 'rgba(255,255,255,0.6)';
+        wx.lineWidth = 1 + Math.sin(t*2+i)*0.5;
+        wx.stroke();
+      }
+      wx.globalAlpha = 1;
+      // Dust particles on ground
+      wx.fillStyle = 'rgba(180,200,160,0.06)';
+      for (let i = 0; i < 6; i++) {
+        const px = (t * 200 * (1+i*0.3) + i*300) % (W+200) - 100;
+        const py = H * (0.75 + i*0.04);
+        wx.beginPath();
+        wx.ellipse(px, py, 40+i*10, 4+i*2, 0, 0, Math.PI*2);
+        wx.fill();
+      }
+    }
+
+    else if (mode === 'night') {
+      // Dark overlay
+      wx.fillStyle = 'rgba(5,15,20,0.60)';
+      wx.fillRect(0,0,W,H);
+      // Stars
+      for (const s of stars) {
+        s.phase += 0.02;
+        const brightness = 0.4 + 0.6 * Math.sin(s.phase);
+        wx.beginPath();
+        wx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        wx.fillStyle = 'rgba(255,255,240,' + brightness + ')';
+        wx.fill();
+      }
+      // Moon
+      const mx = W * 0.82, my = H * 0.12, mr = Math.min(W,H)*0.055;
+      const moonGlow = wx.createRadialGradient(mx,my,0,mx,my,mr*3);
+      moonGlow.addColorStop(0,'rgba(255,250,200,0.18)');
+      moonGlow.addColorStop(1,'rgba(255,250,200,0)');
+      wx.fillStyle = moonGlow;
+      wx.beginPath(); wx.arc(mx,my,mr*3,0,Math.PI*2); wx.fill();
+      wx.beginPath(); wx.arc(mx,my,mr,0,Math.PI*2);
+      wx.fillStyle='rgba(255,250,210,0.92)'; wx.fill();
+      // Shadow crescent
+      wx.beginPath(); wx.arc(mx-mr*0.3,my-mr*0.1,mr*0.85,0,Math.PI*2);
+      wx.fillStyle='rgba(5,15,20,0.55)'; wx.fill();
+    }
+
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+  draw();
 })();
 
 </script>
