@@ -7,7 +7,7 @@
 <meta name="description" content="BOTANICA — Identify any plant instantly with AI. Care guides, NFT minting, pest detection and more.">
 
 <!-- Security headers (best-effort — true HTTP headers should also be set on the host) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.anthropic.com https://orynth.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.anthropic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="color-scheme" content="light">
@@ -1321,8 +1321,8 @@ footer{
 .social-link:hover{background:rgba(255,255,255,.2);color:var(--cream);}
 .social-link svg{width:16px;height:16px;fill:currentColor;}
 .footer-social{display:flex;gap:10px;margin-top:16px;align-items:center;}
-.orynth-badge{display:block;margin-top:14px;opacity:.9;transition:opacity .2s;}
-.orynth-badge:hover{opacity:1;}
+
+
 
 /* ── HAMBURGER ── */
 .nav-hamburger{
@@ -1404,6 +1404,30 @@ footer{
 
   .store-badges{flex-direction:column;align-items:center;}
 }
+
+/* ── INTERACTIVE SAMPLE PLANTS ── */
+.samples-section{margin:32px 0 0;padding:0 24px 8px;}
+.samples-label{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fog);margin-bottom:14px;text-align:center;}
+.samples-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.sample-card{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:var(--dew);border:1.5px solid var(--mist);border-radius:14px;
+  padding:14px 18px;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s;
+  min-width:110px;max-width:130px;
+}
+.sample-card:hover{transform:translateY(-3px);border-color:var(--sage);box-shadow:0 6px 20px rgba(61,122,80,.14);}
+.sample-card:active{transform:translateY(0);}
+.sample-emoji{font-size:2.2rem;line-height:1;}
+.sample-name{font-size:.78rem;font-weight:600;color:var(--forest);text-align:center;line-height:1.3;}
+.sample-latin{font-size:.67rem;color:var(--fog);font-style:italic;text-align:center;}
+.sample-try-btn{
+  font-size:.68rem;font-weight:600;letter-spacing:.04em;
+  background:var(--forest);color:#fff;border:none;border-radius:6px;
+  padding:4px 10px;margin-top:2px;cursor:pointer;transition:background .15s;
+}
+.sample-try-btn:hover{background:var(--fern);}
+.samples-divider{display:flex;align-items:center;gap:10px;margin:22px 24px 4px;color:var(--fog);font-size:.78rem;}
+.samples-divider::before,.samples-divider::after{content:'';flex:1;height:1px;background:var(--mist);}
 </style>
 </head>
 <body>
@@ -1658,6 +1682,44 @@ footer{
     </div>
     <button class="btn-new-scan" id="btn-new-scan" onclick="resetScan()">🔄 Scan Another Plant</button>
   </div>
+
+  <!-- ─── SAMPLE PLANTS ─── -->
+  <div class="samples-section">
+    <div class="samples-label">✨ Or try a demo — no upload needed</div>
+    <div class="samples-grid">
+      <div class="sample-card" onclick="loadSample('monstera')">
+        <span class="sample-emoji">🌿</span>
+        <div class="sample-name">Monstera</div>
+        <div class="sample-latin">Monstera deliciosa</div>
+        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('monstera')">Try Demo</button>
+      </div>
+      <div class="sample-card" onclick="loadSample('lavender')">
+        <span class="sample-emoji">💜</span>
+        <div class="sample-name">Lavender</div>
+        <div class="sample-latin">Lavandula angustifolia</div>
+        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('lavender')">Try Demo</button>
+      </div>
+      <div class="sample-card" onclick="loadSample('orchid')">
+        <span class="sample-emoji">🌸</span>
+        <div class="sample-name">Orchid</div>
+        <div class="sample-latin">Phalaenopsis amabilis</div>
+        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('orchid')">Try Demo</button>
+      </div>
+      <div class="sample-card" onclick="loadSample('succulent')">
+        <span class="sample-emoji">🪴</span>
+        <div class="sample-name">Echeveria</div>
+        <div class="sample-latin">Echeveria elegans</div>
+        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('succulent')">Try Demo</button>
+      </div>
+      <div class="sample-card" onclick="loadSample('fern')">
+        <span class="sample-emoji">🌱</span>
+        <div class="sample-name">Boston Fern</div>
+        <div class="sample-latin">Nephrolepis exaltata</div>
+        <button class="sample-try-btn" onclick="event.stopPropagation();loadSample('fern')">Try Demo</button>
+      </div>
+    </div>
+    <div class="samples-divider">or upload your own photo above</div>
+  </div>
 </section>
 
 <!-- ─── FEATURES ─── -->
@@ -1872,12 +1934,11 @@ footer{
         <div class="tl-body">
           <div class="tl-tag tag-done">✅ Shipped</div>
           <div class="tl-title">Mobile Optimization & Social Layer</div>
-          <div class="tl-desc">Full mobile responsiveness audit, hamburger nav, camera improvements, and social integration — Twitter/X, GitHub, and Orynth badge launched.</div>
+          <div class="tl-desc">Full mobile responsiveness audit, hamburger nav, camera improvements, and social integration — Twitter/X and GitHub integration launched.</div>
           <div class="tl-features">
             <span class="tl-feat">Mobile First UI</span>
             <span class="tl-feat">X / Twitter</span>
             <span class="tl-feat">GitHub</span>
-            <span class="tl-feat">Orynth Badge</span>
           </div>
         </div>
       </div>
@@ -2729,9 +2790,7 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
           <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
         </a>
       </div>
-      <a href="https://orynth.dev/projects/botanica" target="_blank" rel="noopener" class="orynth-badge">
-        <img src="https://orynth.dev/api/badge/botanica?theme=light&style=default" alt="Featured on Orynth" width="180" height="54" loading="lazy" />
-      </a>
+
     </div>
     <div class="footer-links-group">
       <div class="footer-links-title">Navigate</div>
@@ -2756,7 +2815,6 @@ declare_id!(<span class="str">"BotaDAO1111111111111111111111111111111111111"</sp
       <ul class="footer-links">
         <li><a href="https://x.com/botanicalai" target="_blank" rel="noopener">𝕏 Twitter / X</a></li>
         <li><a href="https://github.com/studiobotanica" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://orynth.dev/projects/botanica" target="_blank" rel="noopener">Orynth</a></li>
         <li><a href="https://botanica.web.id" target="_blank" rel="noopener">Website</a></li>
       </ul>
     </div>
@@ -3602,6 +3660,95 @@ window.escapeHtml = escapeHtml;
     }
   });
 })();
+
+// ─── SAMPLE PLANT DEMO ───
+const SAMPLE_DATA = {
+  monstera: {
+    common: 'Monstera', latin: 'Monstera deliciosa', local: 'Swiss Cheese Plant',
+    confidence: 97, emoji: '🌿',
+    desc: '<p><strong>Monstera deliciosa</strong>, known as the Swiss Cheese Plant, is a tropical aroid native to southern Mexico and Central America. Its iconic perforated leaves are an adaptation to survive heavy tropical rainfall and allow wind to pass through without snapping the leaf.</p><p style="margin-top:8px">Family: <em>Araceae</em>. Leaves can reach 90 cm wide in the wild. The fruit is fragrant and safe to eat only when fully ripe (ripens over 12 months).</p>',
+    care: '<ul style="padding-left:1.2em;line-height:2.1"><li>💧 <strong>Water:</strong> Every 1–2 weeks; let top 2 cm dry between waterings</li><li>☀️ <strong>Light:</strong> Bright indirect; tolerates lower light</li><li>🌡️ <strong>Temp:</strong> 18–27°C</li><li>💨 <strong>Humidity:</strong> 60%+; mist leaves weekly</li><li>🪴 <strong>Soil:</strong> Well-draining aroid mix with perlite</li><li>🌱 <strong>Fertilizer:</strong> Monthly balanced liquid feed during growing season</li></ul>',
+    pests: '<p>🟡 <strong>Risk: Low</strong></p><ul style="padding-left:1.2em;line-height:2;margin-top:6px"><li>🕷️ <strong>Spider mites</strong> — common in dry air; treat with neem oil</li><li>🐛 <strong>Mealybugs</strong> — wipe with isopropyl alcohol on cotton</li><li>🐜 <strong>Fungus gnats</strong> — let soil dry; use sticky traps</li></ul>',
+    nft: '<p style="text-align:center;padding:12px 0">🌿 <strong>Monstera deliciosa #001</strong><br><span style="color:var(--fog);font-size:.82rem">Rare tropical aroid · Rarity: Uncommon</span></p><p style="text-align:center;font-size:.82rem">Estimated floor: <strong>0.08 SOL</strong></p>'
+  },
+  lavender: {
+    common: 'Lavender', latin: 'Lavandula angustifolia', local: 'English Lavender',
+    confidence: 95, emoji: '💜',
+    desc: '<p><strong>Lavandula angustifolia</strong> is a flowering plant in the mint family native to the Mediterranean. Widely cultivated for its aromatic purple flowers and essential oil.</p><p style="margin-top:8px">A hardy perennial shrub that thrives in hot, dry conditions. The flowers attract pollinators, particularly bees, making it a cornerstone of pollinator gardens.</p>',
+    care: '<ul style="padding-left:1.2em;line-height:2.1"><li>💧 <strong>Water:</strong> Every 2–3 weeks; drought-tolerant once established</li><li>☀️ <strong>Light:</strong> Full sun (6+ hours direct)</li><li>🌡️ <strong>Temp:</strong> –15 to 35°C; cold-hardy</li><li>💨 <strong>Humidity:</strong> Low; prefers dry air</li><li>🪴 <strong>Soil:</strong> Sandy, alkaline, well-draining</li><li>✂️ <strong>Pruning:</strong> Trim after bloom to encourage second flowering</li></ul>',
+    pests: '<p>🟢 <strong>Risk: Very Low</strong></p><ul style="padding-left:1.2em;line-height:2;margin-top:6px"><li>🐞 <strong>Spittlebugs</strong> — wash off with strong water jet</li><li>🍄 <strong>Root rot</strong> — prevent with excellent drainage</li></ul>',
+    nft: '<p style="text-align:center;padding:12px 0">💜 <strong>Lavandula angustifolia #014</strong><br><span style="color:var(--fog);font-size:.82rem">Aromatic herb · Rarity: Common</span></p><p style="text-align:center;font-size:.82rem">Estimated floor: <strong>0.03 SOL</strong></p>'
+  },
+  orchid: {
+    common: 'Moth Orchid', latin: 'Phalaenopsis amabilis', local: 'Anggrek Bulan',
+    confidence: 99, emoji: '🌸',
+    desc: '<p><strong>Phalaenopsis amabilis</strong>, the Moth Orchid, is the national flower of Indonesia and one of the most popular houseplants worldwide. Native to Southeast Asia and Australia, it produces long-lasting blooms in white, pink, and purple.</p><p style="margin-top:8px">It is an epiphyte — in the wild it grows on tree bark, absorbing moisture from the air and rainwater rather than soil.</p>',
+    care: '<ul style="padding-left:1.2em;line-height:2.1"><li>💧 <strong>Water:</strong> Once a week; let roots dry between waterings</li><li>☀️ <strong>Light:</strong> Bright indirect; avoid direct sun</li><li>🌡️ <strong>Temp:</strong> 18–29°C; cool nights encourage reblooming</li><li>💨 <strong>Humidity:</strong> 50–70%; avoid cold drafts</li><li>🪴 <strong>Media:</strong> Bark chips or sphagnum moss — never soil</li><li>🌱 <strong>Fertilizer:</strong> Orchid feed at 1/4 strength weekly</li></ul>',
+    pests: '<p>🟡 <strong>Risk: Moderate</strong></p><ul style="padding-left:1.2em;line-height:2;margin-top:6px"><li>🕷️ <strong>Spider mites</strong> — raise humidity</li><li>🐛 <strong>Scale insects</strong> — scrape off; systemic insecticide</li><li>🍄 <strong>Root rot</strong> — overwatering; repot in fresh bark</li></ul>',
+    nft: '<p style="text-align:center;padding:12px 0">🌸 <strong>Phalaenopsis amabilis #007</strong><br><span style="color:var(--fog);font-size:.82rem">National flower of Indonesia · Rarity: Rare</span></p><p style="text-align:center;font-size:.82rem">Estimated floor: <strong>0.15 SOL</strong></p>'
+  },
+  succulent: {
+    common: 'Echeveria', latin: 'Echeveria elegans', local: 'Mexican Snowball',
+    confidence: 94, emoji: '🪴',
+    desc: '<p><strong>Echeveria elegans</strong>, known as the Mexican Snowball, is a popular succulent native to semi-arid Mexico. It forms perfect rosettes of fleshy, silvery-blue leaves and produces pink-tipped yellow flowers in spring.</p><p style="margin-top:8px">A member of Crassulaceae, it stores water in its leaves and is extremely drought-tolerant — ideal for beginners.</p>',
+    care: '<ul style="padding-left:1.2em;line-height:2.1"><li>💧 <strong>Water:</strong> Every 2–4 weeks; soak-and-dry method</li><li>☀️ <strong>Light:</strong> Full sun to bright indirect</li><li>🌡️ <strong>Temp:</strong> 4–27°C; not frost-hardy</li><li>💨 <strong>Humidity:</strong> Low; excellent air circulation needed</li><li>🪴 <strong>Soil:</strong> Cactus mix with coarse sand</li><li>🌱 <strong>Fertilizer:</strong> Diluted cactus feed once in spring only</li></ul>',
+    pests: '<p>🟢 <strong>Risk: Low</strong></p><ul style="padding-left:1.2em;line-height:2;margin-top:6px"><li>🐛 <strong>Mealybugs</strong> — most common; treat with rubbing alcohol</li><li>🍄 <strong>Root rot</strong> — from overwatering; plant is drought-adapted</li></ul>',
+    nft: '<p style="text-align:center;padding:12px 0">🪴 <strong>Echeveria elegans #023</strong><br><span style="color:var(--fog);font-size:.82rem">Desert gem · Rarity: Common</span></p><p style="text-align:center;font-size:.82rem">Estimated floor: <strong>0.02 SOL</strong></p>'
+  },
+  fern: {
+    common: 'Boston Fern', latin: 'Nephrolepis exaltata', local: 'Sword Fern',
+    confidence: 96, emoji: '🌱',
+    desc: '<p><strong>Nephrolepis exaltata</strong>, the Boston Fern, is prized for its lush, arching fronds of bright green leaflets. Native to tropical regions worldwide, it thrives in warm, humid environments.</p><p style="margin-top:8px">An excellent air purifier — NASA clean-air studies show it removes formaldehyde and xylene from indoor air. Fronds reach 90 cm in optimal conditions.</p>',
+    care: '<ul style="padding-left:1.2em;line-height:2.1"><li>💧 <strong>Water:</strong> Keep evenly moist; never let dry completely</li><li>☀️ <strong>Light:</strong> Indirect light; no direct sun</li><li>🌡️ <strong>Temp:</strong> 15–26°C; no cold drafts</li><li>💨 <strong>Humidity:</strong> 70%+; mist daily or use pebble tray</li><li>🪴 <strong>Soil:</strong> Rich, well-draining potting mix</li><li>🌱 <strong>Fertilizer:</strong> Balanced liquid feed every 2 weeks in summer</li></ul>',
+    pests: '<p>🟡 <strong>Risk: Moderate</strong></p><ul style="padding-left:1.2em;line-height:2;margin-top:6px"><li>🕷️ <strong>Spider mites</strong> — common in dry conditions; raise humidity</li><li>🐛 <strong>Scale</strong> — treat with neem oil</li><li>🐜 <strong>Fungus gnats</strong> — let surface dry slightly between waterings</li></ul>',
+    nft: '<p style="text-align:center;padding:12px 0">🌱 <strong>Nephrolepis exaltata #031</strong><br><span style="color:var(--fog);font-size:.82rem">Air purifier champion · Rarity: Common</span></p><p style="text-align:center;font-size:.82rem">Estimated floor: <strong>0.02 SOL</strong></p>'
+  }
+};
+
+function loadSample(key) {
+  const d = SAMPLE_DATA[key];
+  if (!d) return;
+  showSection('scan-section');
+  document.getElementById('r-common').textContent = d.common;
+  document.getElementById('r-latin').textContent   = d.latin;
+  document.getElementById('r-local').textContent   = d.local;
+  const fill = document.getElementById('r-conf-fill');
+  const pct  = document.getElementById('r-conf-pct');
+  if (fill) fill.style.width = d.confidence + '%';
+  if (pct)  pct.textContent  = d.confidence + '% match';
+  const img = document.getElementById('r-img');
+  if (img) {
+    const svgB64 = btoa('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" rx="12" fill="#edf6ee"/><text x="60" y="75" font-size="54" text-anchor="middle">' + d.emoji + '</text></svg>');
+    img.src = 'data:image/svg+xml;base64,' + svgB64;
+    img.alt = d.common;
+  }
+  const tabDesc  = document.getElementById('rtab-desc');
+  const tabCare  = document.getElementById('rtab-care');
+  const tabPests = document.getElementById('rtab-pests');
+  const tabNft   = document.getElementById('rtab-nft');
+  if (tabDesc)  tabDesc.innerHTML  = d.desc;
+  if (tabCare)  tabCare.innerHTML  = d.care;
+  if (tabPests) tabPests.innerHTML = d.pests;
+  if (tabNft)   tabNft.innerHTML   = d.nft;
+  document.querySelectorAll('.rtab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.rtab-content').forEach(t => t.classList.remove('active'));
+  const firstTab = document.querySelector('.rtab');
+  const firstContent = document.getElementById('rtab-desc');
+  if (firstTab) firstTab.classList.add('active');
+  if (firstContent) firstContent.classList.add('active');
+  document.getElementById('scan-upload-body').style.display = 'none';
+  if (document.getElementById('scan-camera-body')) document.getElementById('scan-camera-body').style.display = 'none';
+  const loadWrap = document.getElementById('loading-wrap');
+  if (loadWrap) loadWrap.style.display = 'none';
+  const rWrap = document.getElementById('result-wrap');
+  if (rWrap) rWrap.style.display = 'block';
+  const newScanBtn = document.getElementById('btn-new-scan');
+  if (newScanBtn) newScanBtn.style.display = 'flex';
+  setTimeout(() => {
+    if (rWrap) rWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 120);
+}
+
 </script>
 </body>
 </html>
