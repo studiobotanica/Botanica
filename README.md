@@ -4,7 +4,7 @@
 
 ![Last Updated](https://img.shields.io/badge/last%20updated-2026-05-01-brightgreen) ![Interactive Demo](https://img.shields.io/badge/demo-live%20samples-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-BOTANICA is an AI-powered plant identification web app that lets you scan any plant or flower and instantly get its name, care guide, pest diagnosis, and more — powered by AI. Starting March 2026, BOTANICA evolves into a fully autonomous **AI Agent** with deep integration on **Solana** and **Base**.
+BOTANICA is an  plant identification web app that lets you scan any plant or flower and instantly get its name, care guide, pest diagnosis, and more — built on Solana and Base. Starting March 2026, BOTANICA evolves into a fully autonomous **AI Agent** with deep integration on **Solana** and **Base**.
 
 
 ---
@@ -55,7 +55,7 @@ BOTANICA is evolving beyond a plant scanner into a **fully autonomous AI Agent**
 
 ### Phase 1 — March 2026 · Agent Core `◎ Solana` `🔵 Base`
 
-The BOTANICA Agent launches as an autonomous AI-powered runtime that:
+The BOTANICA Agent launches as an autonomous  runtime that:
 
 - **Monitors** your plant collection continuously in the background
 - **Detects** pest risks and watering schedule deviations proactively
@@ -231,4 +231,4 @@ Most people encounter plants every day but have no idea what they're looking at.
 ## 📄 License
 
 © 2025–2026 BOTANICA. All rights reserved.
-Powered by AI Vision · Solana · Base · Web3 Ready
+built on Solana and Base Vision · Solana · Base · Web3 Ready
