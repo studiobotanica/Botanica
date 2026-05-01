@@ -1428,6 +1428,16 @@ footer{
 .sample-try-btn:hover{background:var(--fern);}
 .samples-divider{display:flex;align-items:center;gap:10px;margin:22px 24px 4px;color:var(--fog);font-size:.78rem;}
 .samples-divider::before,.samples-divider::after{content:'';flex:1;height:1px;background:var(--mist);}
+
+/* ── FOREST CANVAS BACKGROUND ── */
+#forest-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;display:block;
+}
+#home .hero-bg,#home .hero-mesh{z-index:1;}
+#home .hero-leaves{z-index:2;}
+#home .hero-content{z-index:3;}
+#home > *:not(#forest-canvas):not(.hero-bg):not(.hero-mesh):not(.hero-leaves){position:relative;z-index:3;}
 </style>
 </head>
 <body>
@@ -1481,6 +1491,7 @@ footer{
   </div>
 </div>
 <section id="home" style="padding-top:80px;">
+  <canvas id="forest-canvas" aria-hidden="true"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-mesh"></div>
   <div class="hero-leaves" id="hero-leaves">
@@ -3748,6 +3759,231 @@ function loadSample(key) {
     if (rWrap) rWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 120);
 }
+
+
+// ═══════════════════════════════════════════════════════
+// FOREST CANVAS ANIMATION
+// ═══════════════════════════════════════════════════════
+(() => {
+  const canvas = document.getElementById('forest-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  const C = {
+    sky1:'#edf6ee', sky2:'#d0e8d4',
+    layers:[
+      {fill:'rgba(61,122,80,0.07)',  leaf:'rgba(61,122,80,0.09)'},
+      {fill:'rgba(36,92,53,0.12)',   leaf:'rgba(36,92,53,0.15)'},
+      {fill:'rgba(26,51,32,0.20)',   leaf:'rgba(26,51,32,0.26)'},
+      {fill:'rgba(20,42,25,0.32)',   leaf:'rgba(20,42,25,0.40)'},
+    ],
+  };
+
+  let W, H, t = 0, trees = [], particles = [], fireflies = [];
+  let mouse = {x: -999, y: -999};
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width  = rect.width  || window.innerWidth;
+    H = canvas.height = rect.height || window.innerHeight;
+    buildTrees();
+    buildFireflies();
+  }
+
+  const section = document.getElementById('home');
+  if (section) {
+    section.addEventListener('mousemove', function(e) {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    }, {passive:true});
+    section.addEventListener('click', function(e) {
+      const r = canvas.getBoundingClientRect();
+      burst(e.clientX - r.left, e.clientY - r.top, 14);
+    });
+  }
+
+  function burst(x, y, n) {
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI * 2 / n) * i + Math.random() * 0.5;
+      const speed = 1.5 + Math.random() * 3.5;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 2.5,
+        life: 1, decay: 0.011 + Math.random() * 0.009,
+        size: 3 + Math.random() * 5,
+        rot: Math.random() * Math.PI * 2,
+        rotV: (Math.random() - 0.5) * 0.14,
+      });
+    }
+  }
+
+  function spawnLeaf() {
+    if (particles.length >= 70) return;
+    particles.push({
+      x: Math.random() * W, y: -12,
+      vx: (Math.random() - 0.5) * 0.7,
+      vy: 0.45 + Math.random() * 0.75,
+      life: 1, decay: 0.0025 + Math.random() * 0.003,
+      size: 2.5 + Math.random() * 5,
+      rot: Math.random() * Math.PI * 2,
+      rotV: (Math.random() - 0.5) * 0.055,
+    });
+  }
+
+  function buildFireflies() {
+    fireflies = [];
+    const n = Math.min(20, Math.floor(W / 55));
+    for (let i = 0; i < n; i++) {
+      fireflies.push({
+        x: Math.random() * W,
+        y: H * 0.28 + Math.random() * H * 0.6,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        phase: Math.random() * Math.PI * 2,
+        spd: 0.018 + Math.random() * 0.025,
+        r: 1.5 + Math.random() * 1.8,
+      });
+    }
+  }
+
+  // Recursive branch drawing with wind sway
+  function branch(x, y, angle, len, depth, windMult) {
+    if (depth === 0 || len < 1.5) return;
+    const sway = Math.sin(t * 0.55 + x * 0.006 + depth * 0.5) * windMult * (1 / (depth + 0.5));
+    const a = angle + sway;
+    const ex = x + Math.cos(a) * len;
+    const ey = y + Math.sin(a) * len;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(ex, ey);
+    ctx.lineWidth = Math.max(0.4, depth * 1.1);
+    ctx.stroke();
+    if (depth <= 2) {
+      const lr = len * (0.65 + Math.random() * 0.45);
+      ctx.beginPath();
+      ctx.arc(ex, ey, lr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    const spr = 0.27 + 0.06 / (depth + 1);
+    branch(ex, ey, a - spr, len * 0.67, depth - 1, windMult);
+    branch(ex, ey, a + spr, len * 0.64, depth - 1, windMult);
+    if (depth > 3 && Math.random() > 0.55) {
+      branch(ex, ey, a + (Math.random()-0.5)*0.55, len * 0.52, depth-2, windMult);
+    }
+  }
+
+  function drawTree(tr) {
+    const mWind = mouse.x > 0 ? Math.exp(-Math.pow(tr.x - mouse.x, 2) / (W * W * 0.035)) * 0.30 * Math.sin(t * 1.8) : 0;
+    ctx.strokeStyle = tr.layer.fill;
+    ctx.fillStyle   = tr.layer.leaf;
+    ctx.lineCap = 'round';
+    branch(tr.x, tr.y, -Math.PI / 2, tr.h, tr.depth, tr.wind + mWind);
+  }
+
+  function buildTrees() {
+    trees = [];
+    const layers = [
+      {yFrac:0.52, hFrac:0.10, depth:4, wind:0.16, count: Math.max(5, Math.floor(W/160)), li:0},
+      {yFrac:0.60, hFrac:0.14, depth:5, wind:0.21, count: Math.max(4, Math.floor(W/200)), li:1},
+      {yFrac:0.70, hFrac:0.20, depth:6, wind:0.28, count: Math.max(3, Math.floor(W/280)), li:2},
+      {yFrac:0.82, hFrac:0.27, depth:7, wind:0.35, count: Math.max(2, Math.floor(W/380)), li:3},
+    ];
+    for (const lc of layers) {
+      for (let i = 0; i < lc.count; i++) {
+        const slot = W / lc.count;
+        trees.push({
+          x: slot * i + slot * 0.5 + (Math.random()-0.5) * slot * 0.6,
+          y: H * lc.yFrac + (Math.random()-0.5) * H * 0.03,
+          h: H * lc.hFrac * (0.85 + Math.random() * 0.3),
+          depth: lc.depth,
+          wind: lc.wind,
+          layer: C.layers[lc.li],
+        });
+      }
+    }
+  }
+
+  function drawMist() {
+    const g = ctx.createLinearGradient(0, H * 0.72, 0, H);
+    g.addColorStop(0, 'rgba(237,246,238,0)');
+    g.addColorStop(1, 'rgba(237,246,238,0.6)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, H * 0.72, W, H * 0.28);
+  }
+
+  function drawLeafParticle(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.globalAlpha = p.life * 0.65;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size, p.size * 0.48, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(61,122,80,' + (p.life * 0.7) + ')';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, C.sky1);
+    sky.addColorStop(1, C.sky2);
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Trees (back to front)
+    for (const tr of trees) drawTree(tr);
+
+    // Ground mist
+    drawMist();
+
+    // Ambient leaf spawn
+    if (Math.random() < 0.035) spawnLeaf();
+
+    // Update & draw particles
+    particles = particles.filter(function(p){ return p.life > 0; });
+    for (const p of particles) {
+      p.x  += p.vx + Math.sin(t * 0.85 + p.y * 0.018) * 0.22;
+      p.y  += p.vy;
+      p.rot += p.rotV;
+      p.life -= p.decay;
+      drawLeafParticle(p);
+    }
+
+    // Fireflies
+    for (const f of fireflies) {
+      f.phase += f.spd;
+      f.x += f.vx + Math.sin(f.phase) * 0.38;
+      f.y += f.vy + Math.cos(f.phase * 0.65) * 0.28;
+      if (f.x < 0)  f.x = W;
+      if (f.x > W)  f.x = 0;
+      if (f.y < H * 0.2) f.y = H * 0.2, f.vy *= -1;
+      if (f.y > H * 0.95) f.y = H * 0.95, f.vy *= -1;
+      const bright = 0.45 + 0.55 * Math.sin(f.phase * 1.8);
+      const gr = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 5);
+      gr.addColorStop(0,   'rgba(180,220,80,' + (bright * 0.95) + ')');
+      gr.addColorStop(0.45,'rgba(180,220,80,' + (bright * 0.38) + ')');
+      gr.addColorStop(1,   'rgba(180,220,80,0)');
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r * 5, 0, Math.PI * 2);
+      ctx.fillStyle = gr;
+      ctx.fill();
+    }
+
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', function(){ resize(); }, {passive:true});
+  requestAnimationFrame(draw);
+})();
 
 </script>
 </body>
