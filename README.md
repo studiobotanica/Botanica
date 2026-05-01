@@ -2,9 +2,10 @@
 
 > **Your Plants, Identified Instantly.**
 
+![Last Updated](https://img.shields.io/badge/last%20updated-2026-05-01-brightgreen) ![Interactive Demo](https://img.shields.io/badge/demo-live%20samples-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+
 BOTANICA is an AI-powered plant identification web app that lets you scan any plant or flower and instantly get its name, care guide, pest diagnosis, and more — powered by Claude AI. Starting March 2026, BOTANICA evolves into a fully autonomous **AI Agent** with deep integration on **Solana** and **Base**.
 
-[![Featured on Orynth](https://orynth.dev/api/badge/botanica?theme=light&style=default)](https://orynth.dev/projects/botanica)
 
 ---
 
@@ -15,7 +16,6 @@ BOTANICA is an AI-powered plant identification web app that lets you scan any pl
 | 🌐 Website | [botanica.web.id](https://botanica.web.id) |
 | 𝕏 Twitter / X | [@botanicalai](https://x.com/botanicalai) |
 | 🐙 GitHub | [github.com/studiobotanica](https://github.com/studiobotanica) |
-| 🏅 Orynth | [orynth.dev/projects/botanica](https://orynth.dev/projects/botanica) |
 
 ---
 
